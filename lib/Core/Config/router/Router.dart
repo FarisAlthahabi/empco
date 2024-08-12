@@ -5,11 +5,11 @@ import 'package:empco/Features/Auth/View/Login/login_page.dart';
 import 'package:empco/Features/Auth/View/Register/register_page.dart';
 import 'package:empco/Features/Auth/View/Select_Role/select_role_page.dart';
 import 'package:empco/Features/Auth/View/Verify_Email/verify_email_page.dart';
+import 'package:empco/Features/Intro/View/intro_pages/Info_Screens.dart';
+import 'package:empco/Features/Intro/View/intro_pages/Spalsh_Screen.dart';
 import 'package:empco/Features/Roles/Company/navigation_bar/navigation_bar.dart';
 import 'package:empco/Features/Roles/Freelancer/Job_Details/View/job_details.dart';
 import 'package:empco/Features/Roles/Freelancer/Navigation_Bar/navigation_bar.dart';
-import 'package:empco/Features/Intro/View/intro_pages/info_screens.dart';
-import 'package:empco/Features/Intro/View/intro_pages/spalsh_screen.dart';
 import 'package:go_router/go_router.dart';
 
 const mainRoute = '/';
@@ -23,23 +23,24 @@ const freelancerHomePageRoute = 'freelancerHomePage';
 const companyHomePageRoute = 'companyHomePage';
 const customerHomePageRoute = 'customerHomePage';
 const jobDetailsRoute = 'JobDetails';
+const profileRoute = 'profile';
 
 GoRouter router = GoRouter(routes: [
   GoRoute(
       path: mainRoute,
-      builder: (context, state) => const SplashScreen(),
+      builder: (context, state) => const SplashView(),
       routes: [
         GoRoute(
             path: introRoute,
-            builder: (context, state) => const InfoScreens(),
+            builder: (context, state) => const IntroView(),
             routes: [
               GoRoute(
                 path: loginRoute,
-                builder: (context, state) => const LoginPage(),
+                builder: (context, state) => const LoginView(),
               ),
               GoRoute(
                 path: selectRoleRoute,
-                builder: (context, state) => const SelectRolePage(),
+                builder: (context, state) => const SelectRoleView(),
               ),
               GoRoute(
                 path: signUpRoute,
@@ -72,6 +73,10 @@ GoRouter router = GoRouter(routes: [
                 path: jobDetailsRoute,
                 builder: (context, state) => const FreelancerJobDetailsView(),
               ),
+              // GoRoute(
+              //   path: profileRoute,
+              //   builder: (context, state) => const FreelancerJobDetailsView(),
+              // ),
             ]),
       ]),
 ]);

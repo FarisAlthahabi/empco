@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 
-class MyBlocObserver extends BlocObserver {
+class EmpcoBlocObserver extends BlocObserver {
   @override
   void onCreate(BlocBase bloc) {
     super.onCreate(bloc);

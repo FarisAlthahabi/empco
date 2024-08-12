@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "854121097016",
+    "project_id": "job-and-freelancing",
+    "storage_bucket": "job-and-freelancing.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:854121097016:android:2f478a9c17cacbb72183cd",
+        "android_client_info": {
+          "package_name": "com.example.empco"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1eDQl0tHqlyJdNyh-X8mwI-DpT5D-mWA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

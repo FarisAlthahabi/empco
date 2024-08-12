@@ -16,22 +16,17 @@ class SuccessToRegisterState extends AuthState {
 }
 
 class FailedToRegisterState extends AuthState {
-  final ErrorModel error;
+  final String error;
   FailedToRegisterState({
     required this.error,
   });
 }
 
 // Verify.......................................
-class SuccessToVerifyState extends AuthState {
-  final MessageModel message;
-  SuccessToVerifyState({
-    required this.message,
-  });
-}
+class SuccessToVerifyState extends AuthState {}
 
 class FailedToVerifyState extends AuthState {
-  final ErrorModel error;
+  final String error;
   FailedToVerifyState({
     required this.error,
   });
@@ -46,11 +41,12 @@ class SuccessToLoginWithGoogleState extends AuthState {
 }
 
 class FailedToLoginWithGoogleState extends AuthState {
-  final ErrorModel error;
+  final String error;
   FailedToLoginWithGoogleState({
     required this.error,
   });
 }
+
 // Login.......................................
 class SuccessToLoginState extends AuthState {
   final TokenModel token;
@@ -60,37 +56,27 @@ class SuccessToLoginState extends AuthState {
 }
 
 class FailedToLoginState extends AuthState {
-  final ErrorModel error;
+  final String error;
   FailedToLoginState({
     required this.error,
   });
 }
 
 // Logout.......................................
-class SuccessToLogoutState extends AuthState {
-  final MessageModel message;
-  SuccessToLogoutState({
-    required this.message,
-  });
-}
+class SuccessToLogoutState extends AuthState {}
 
 class FailedToLogoutState extends AuthState {
-  final ErrorModel error;
+  final String error;
   FailedToLogoutState({
     required this.error,
   });
 }
 
 // Forget password.......................................
-class SuccessToForgetPasswordState extends AuthState {
-  final MessageModel message;
-  SuccessToForgetPasswordState({
-    required this.message,
-  });
-}
+class SuccessToForgetPasswordState extends AuthState {}
 
 class FailedToForgetPasswordState extends AuthState {
-  final ErrorModel error;
+  final String error;
   FailedToForgetPasswordState({
     required this.error,
   });
@@ -98,29 +84,23 @@ class FailedToForgetPasswordState extends AuthState {
 
 // Check code.......................................
 class SuccessToCheckCodeState extends AuthState {
- final UserCheckCodeModel userCheckCode;
-  SuccessToCheckCodeState({
-    required this.userCheckCode,
-  });
+  final UserCheckCodeModel userCheckCodeModel;
+
+  SuccessToCheckCodeState(this.userCheckCodeModel);
 }
 
 class FailedToCheckCodeState extends AuthState {
-  final ErrorModel error;
+  final String error;
   FailedToCheckCodeState({
     required this.error,
   });
 }
 
 // Reset password.......................................
-class SuccessToResetPasswordState extends AuthState {
-  final MessageModel message;
-  SuccessToResetPasswordState({
-    required this.message,
-  });
-}
+class SuccessToResetPasswordState extends AuthState {}
 
 class FailedToResetPasswordState extends AuthState {
-  final ErrorModel error;
+  final String error;
   FailedToResetPasswordState({
     required this.error,
   });

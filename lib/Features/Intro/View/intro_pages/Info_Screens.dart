@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:auto_route/auto_route.dart';
 import 'package:empco/Core/Config/router/Router.dart';
 import 'package:empco/Core/Resources/Constants/colors.dart';
 import 'package:empco/Core/Resources/Constants/Texts.dart';
@@ -14,6 +15,16 @@ abstract class InfoViewCallBacks {
   onGetStartedTap(BuildContext context);
 
   onSignUpTap(BuildContext context);
+}
+
+@RoutePage()
+class IntroView extends StatelessWidget {
+  const IntroView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const InfoScreens();
+  }
 }
 
 class InfoScreens extends StatelessWidget implements InfoViewCallBacks {

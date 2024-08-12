@@ -1,133 +1,172 @@
 import 'package:bloc/bloc.dart';
-import 'package:empco/Features/Auth/Models/Base_Model.dart';
-import 'package:empco/Features/Auth/Models/User_model/User_Chaeck_Code_model.dart';
-import 'package:empco/Features/Auth/Models/User_model/User_Forget_Password_model.dart';
-import 'package:empco/Features/Auth/Models/User_model/User_Login_Model.dart';
+import 'package:empco/Core/models/token_model/token_model.dart';
+import 'package:empco/Core/repos/user_repo.dart';
 import 'package:empco/Features/Auth/Models/User_model/User_Model.dart';
-import 'package:empco/Features/Auth/Models/User_model/User_Reset_Password_model.dart';
-import 'package:empco/Features/Auth/Models/User_model/User_Verify_Model.dart';
-import 'package:empco/Features/Auth/Service/Auth_Service.dart';
+
+import 'package:empco/Features/Auth/Models/user_check_code_model.dart/User_Chaeck_Code_model.dart';
+import 'package:empco/Features/Auth/Models/user_forget_password_model/User_Forget_Password_model.dart';
+import 'package:empco/Features/Auth/Models/user_login_model/User_Login_Model.dart';
+import 'package:empco/Features/Auth/Models/user_reset_password_model/User_Reset_Password_model.dart';
+import 'package:empco/Features/Auth/Models/user_verify_model/User_Verify_Model.dart';
+import 'package:empco/Features/Auth/Service/http_auth_Service.dart';
+import 'package:empco/Features/auth_manager/bloc/auth_manager_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
+
 part 'auth_event.dart';
 part 'auth_state.dart';
 
+@injectable
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitial()) {
-    // late String firstName;
-    // late String lastName;
-    // late String email;
-    // late String password;
-    // on<GetFirstNameEvent>(
-    //   (event, emit) {
-    //     firstName = event.firstName;
-    //   },
-    // );
-    // on<GetLastNameEvent>(
-    //   (event, emit) {
-    //     lastName = event.lastName;
-    //   },
-    // );
-    // on<GetEmailEvent>(
-    //   (event, emit) {
-    //     email = event.email;
-    //   },
-    // );
-    // on<GetPasswordEvent>(
-    //   (event, emit) {
-    //     password = event.password;
-    //   },
-    // );
+    final UserRepo userRepo = UserRepo();
+
+    final HttpAuthService authService = HttpAuthService();
+
+    final AuthenticationBloc authenticationBloc = AuthenticationBloc(userRepo);
 
     on<RegisterEvent>((event, emit) async {
-      emit(await LoadingState());
-      UserModel user = UserModel(
-          first_name: event.firstName,
-          last_name: event.lastName,
-          email: event.email,
-          password: event.password);
-      dynamic data = await AuthService().register(user);
-      if (data is TokenModel) {
+      emit(LoadingState());
+
+      try {
+        UserModel user = UserModel(
+            firstName: event.firstName,
+            lastName: event.lastName,
+            email: event.email,
+            password: event.password);
+
+        dynamic data = await authService.register(user);
         emit(SuccessToRegisterState(token: data));
-      } else {
-        emit(FailedToRegisterState(error: data));
+        authenticationBloc.add(
+          SignInRequested(
+            data,
+          ),
+        );
+      } catch (e) {
+        emit(FailedToRegisterState(error: e.toString()));
       }
     });
     on<VerifyEvent>((event, emit) async {
       emit(LoadingState());
-      UserVerifyModel userVerify =
-          UserVerifyModel(email: event.email, token: event.token);
-      dynamic data = await AuthService().verify(userVerify);
-      if (data is MessageModel) {
-        emit(SuccessToVerifyState(message: data));
-      } else {
-        emit(FailedToVerifyState(error: data));
+
+      try {
+        UserVerifyModel userVerify = UserVerifyModel(
+          email: event.email,
+          token: event.token,
+        );
+        await authService.verify(userVerify);
+        emit(SuccessToVerifyState());
+        authenticationBloc.add(
+          VerifyRequested(
+            userVerify,
+          ),
+        );
+      } catch (e) {
+        emit(FailedToVerifyState(error: e.toString()));
       }
     });
 
     on<LoginWithGoogleEvent>((event, emit) async {
       emit(LoadingState());
-      dynamic data = await AuthService().loginWithGoogle();
-      if (data is TokenModel) {
+      try {
+        final data = await authService.loginWithGoogle();
         emit(SuccessToLoginWithGoogleState(token: data));
-      } else {
-        emit(FailedToLoginWithGoogleState(error: data));
+        authenticationBloc.add(
+          SignInRequested(
+            data,
+          ),
+        );
+      } catch (e) {
+        emit(FailedToLoginWithGoogleState(error: e.toString()));
       }
     });
 
     on<LoginEvent>((event, emit) async {
       emit(LoadingState());
-      UserLoginModel userLogin =
-          UserLoginModel(email: event.email, password: event.password);
-      dynamic data = await AuthService().login(userLogin);
-      if (data is TokenModel) {
+      UserLoginModel userLogin = UserLoginModel(
+        email: event.email,
+        password: event.password,
+      );
+      try {
+        final data = await authService.login(userLogin);
         emit(SuccessToLoginState(token: data));
-      } else {
-        emit(FailedToLoginState(error: data));
+        authenticationBloc.add(
+          SignInRequested(
+            data,
+          ),
+        );
+      } catch (e) {
+        emit(FailedToLoginState(error: e.toString()));
       }
     });
 
     on<LogoutEvent>((event, emit) async {
       emit(LoadingState());
-      dynamic data = await AuthService().logout();
-      if (data is MessageModel) {
-        emit(SuccessToLogoutState(message: data));
-      } else {
-        emit(FailedToLogoutState(error: data));
+      try {
+        await authService.logout();
+        emit(SuccessToLogoutState());
+        authenticationBloc.add(
+          SignOutRequested(),
+        );
+      } catch (e) {
+        emit(
+          FailedToLogoutState(
+            error: e.toString(),
+          ),
+        );
       }
     });
 
     on<ForgetPasswordEvent>((event, emit) async {
       emit(LoadingState());
-      UserForgetPasswordModel userForgetPassword =
-          UserForgetPasswordModel(email: event.email);
-      dynamic data = await AuthService().forgetPassword(userForgetPassword);
-      if (data is MessageModel) {
-        emit(SuccessToForgetPasswordState(message: data));
-      } else {
-        emit(FailedToForgetPasswordState(error: data));
+      UserForgetPasswordModel userForgetPassword = UserForgetPasswordModel(
+        email: event.email,
+      );
+      try {
+        await authService.forgetPassword(userForgetPassword);
+        emit(SuccessToForgetPasswordState());
+        authenticationBloc.add(
+          const ForgetPasswordRequested(),
+        );
+      } catch (e) {
+        emit(
+          FailedToForgetPasswordState(
+            error: e.toString(),
+          ),
+        );
       }
     });
 
     on<CheckCodeEvent>((event, emit) async {
       emit(LoadingState());
       TokenModel token = TokenModel(token: event.token);
-      dynamic data = await AuthService().checkCode(token);
-      if (data is UserCheckCodeModel) {
-        emit(SuccessToCheckCodeState(userCheckCode: data));
-      } else {
-        emit(FailedToCheckCodeState(error: data));
+      try {
+        final data = await authService.checkCode(token);
+        emit(SuccessToCheckCodeState(data));
+      } catch (e) {
+        emit(
+          FailedToCheckCodeState(
+            error: e.toString(),
+          ),
+        );
       }
     });
 
     on<ResetPasswordEvent>((event, emit) async {
       emit(LoadingState());
-      UserResetPasswordModel userResetPassword =
-          UserResetPasswordModel(password: event.password, token: event.token);
-      dynamic data = await AuthService().resetPassword(userResetPassword);
-      if (data is MessageModel) {
-        emit(SuccessToResetPasswordState(message: data));
-      } else {
-        emit(FailedToResetPasswordState(error: data));
+      UserResetPasswordModel userResetPassword = UserResetPasswordModel(
+        password: event.password,
+        token: event.token,
+      );
+      try {
+        await authService.resetPassword(userResetPassword);
+        emit(SuccessToResetPasswordState());
+      } catch (e) {
+        emit(
+          FailedToResetPasswordState(
+            error: e.toString(),
+          ),
+        );
       }
     });
   }

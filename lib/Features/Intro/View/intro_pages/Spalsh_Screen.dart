@@ -1,9 +1,20 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:auto_route/auto_route.dart';
 import 'package:empco/Core/Config/router/Router.dart';
 import 'package:empco/Core/Resources/Constants/Colors.dart';
 import 'package:empco/Core/Widgets/empcoIcon_and_empcoText.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+@RoutePage()
+class SplashView extends StatelessWidget {
+  const SplashView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const SplashScreen();
+  }
+}
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -23,9 +34,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return const SafeArea(
       child: Scaffold(
-        backgroundColor: const Color.fromRGBO(29, 91, 164, 0.91),
+        backgroundColor: Color.fromRGBO(29, 91, 164, 0.91),
         body: Center(
           child: EmpcoIconAndEmpcoText(
             width: 200,

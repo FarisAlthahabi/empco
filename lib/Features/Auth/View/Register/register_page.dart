@@ -1,4 +1,3 @@
-import 'package:empco/Core/Config/Shared_Preferences.dart';
 import 'package:empco/Core/Config/router/Router.dart';
 import 'package:empco/Core/Resources/Constants/colors.dart';
 import 'package:empco/Core/Resources/Constants/Texts.dart';
@@ -9,13 +8,13 @@ import 'package:empco/Core/Widgets/empcoIcon_and_empcoText.dart';
 import 'package:empco/Core/Widgets/auth_text_field.dart';
 import 'package:empco/Core/Widgets/show_snack_bar_method.dart';
 import 'package:empco/Core/Widgets/text_widgets.dart';
+import 'package:empco/Core/repos/user_repo.dart';
 import 'package:empco/Features/Auth/View/Register/widgets/Texts.dart';
 import 'package:empco/Features/Auth/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class RegisterViewCallbacks {
   void onSignUpTap(BuildContext context);
@@ -23,14 +22,6 @@ abstract class RegisterViewCallbacks {
   void onContinueWithGoogleTap(BuildContext context);
 
   void onLoginTap(BuildContext context);
-
-  void onSuccessToRegisterStateListened(BuildContext context);
-
-  void onFailedToRegisterStateListened(BuildContext context, String text);
-
-  void onSuccessToLoginWithGoogleStateListened(BuildContext context);
-
-  void onFailedToLoginWithGoogleStateListened(BuildContext context);
 
   void onFirstNameChanged(String firstName);
 
@@ -66,11 +57,13 @@ class _RegisterPageState extends State<RegisterPage>
     implements RegisterViewCallbacks {
   late final AuthBloc authBloc = context.read();
 
-   String firstName = '';
-   String lastName = '';
-   String email = '';
-   String password = '';
-   String confirmPassword = '';
+  final UserRepo userRepo = UserRepo();
+
+  String firstName = '';
+  String lastName = '';
+  String email = '';
+  String password = '';
+  String confirmPassword = '';
 
   final firstNameFocusNode = FocusNode();
 
@@ -163,38 +156,6 @@ class _RegisterPageState extends State<RegisterPage>
   }
 
   @override
-  void onFailedToLoginWithGoogleStateListened(BuildContext context) {
-    showSnackBarMethod(context, loginWithGoogleFail, red);
-  }
-
-  @override
-  void onFailedToRegisterStateListened(BuildContext context, String text) {
-    showSnackBarMethod(context, text, red);
-  }
-
-  @override
-  void onSuccessToLoginWithGoogleStateListened(BuildContext context) {
-    showSnackBarMethod(context, loginSuccess, green);
-    if(config.get<SharedPreferences>().getString(role) == 'freelancer'){
-      context.go('$mainRoute$introRoute/$freelancerHomePageRoute');
-    }
-    else if(config.get<SharedPreferences>().getString(role) == 'owner'){
-      context.go('$mainRoute$introRoute/$companyHomePageRoute');
-    }
-    else{
-      context.go('$mainRoute$introRoute/$customerHomePageRoute');
-    }
-    
-  }
-
-  @override
-  void onSuccessToRegisterStateListened(BuildContext context) {
-    showSnackBarMethod(context, registerSuccess, green);
-    context.goNamed("VerifyPage", pathParameters: {'email': email});
-   // dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     var deviceData = MediaQuery.of(context);
     var screenSize = deviceData.size;
@@ -204,6 +165,30 @@ class _RegisterPageState extends State<RegisterPage>
     return BlocProvider(
       create: (context) => AuthBloc(),
       child: BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state) async {
+          if (password == confirmPassword) {
+            if (state is SuccessToRegisterState) {
+              showSnackBarMethod(context, registerSuccess, green);
+              context.goNamed("VerifyPage", pathParameters: {'email': email});
+            } else if (state is FailedToRegisterState) {
+              showSnackBarMethod(context, state.error, red);
+            }
+          } else {
+            showSnackBarMethod(context, passwordAndConfirmSame, red);
+          }
+          if (state is SuccessToLoginWithGoogleState) {
+            showSnackBarMethod(context, loginSuccess, green);
+            if (await userRepo.getKey(role) == 'freelancer') {
+              context.go('$mainRoute$introRoute/$freelancerHomePageRoute');
+            } else if (await userRepo.getKey(role) == 'owner') {
+              context.go('$mainRoute$introRoute/$companyHomePageRoute');
+            } else {
+              context.go('$mainRoute$introRoute/$customerHomePageRoute');
+            }
+          } else if (state is FailedToLoginWithGoogleState) {
+            showSnackBarMethod(context, loginWithGoogleFail, red);
+          }
+        },
         builder: (context, state) {
           if (state is LoadingState) {
             return const LoadingPage();
@@ -230,7 +215,7 @@ class _RegisterPageState extends State<RegisterPage>
                             height: 0.045 * screenHeight,
                             //height: 30,
                           ),
-                          TitleOfPage(text: registeringYou),
+                          const TitleOfPage(text: registeringYou),
                           SvgPicture.asset(
                             signUpImage,
                             height: 0.18 * screenHeight,
@@ -370,22 +355,6 @@ class _RegisterPageState extends State<RegisterPage>
                 ),
               ),
             );
-          }
-        },
-        listener: (context, state) {
-          if (password == confirmPassword) {
-            if (state is SuccessToRegisterState) {
-              onSuccessToRegisterStateListened(context);
-            } else if (state is FailedToRegisterState) {
-              onFailedToRegisterStateListened(context, state.error.error);
-            }
-          } else {
-            showSnackBarMethod(context, passwordAndConfirmSame, red);
-          }
-          if (state is SuccessToLoginWithGoogleState) {
-            onSuccessToLoginWithGoogleStateListened(context);
-          } else if (state is FailedToLoginWithGoogleState) {
-            onFailedToLoginWithGoogleStateListened(context);
           }
         },
       ),

@@ -1,4 +1,4 @@
-import 'package:empco/Core/Config/Shared_Preferences.dart';
+import 'package:empco/Core/Config/di/di.dart';
 import 'package:empco/Core/Config/router/Router.dart';
 import 'package:empco/Core/Resources/Constants/Colors.dart';
 import 'package:empco/Core/Resources/Constants/Texts.dart';
@@ -103,7 +103,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage>
           if (state is SuccessToForgetPasswordState) {
             onSuccessToForgetPasswordStateListened(context);
           } else if (state is FailedToForgetPasswordState) {
-            onFailedToForgetPasswordStateListened(context, state.error.error);
+            onFailedToForgetPasswordStateListened(context, state.error);
           }
         },
         builder: (context, state) {

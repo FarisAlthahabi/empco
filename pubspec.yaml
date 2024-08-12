@@ -38,7 +38,7 @@ dependencies:
   go_router: ^13.2.2
   full_screen_image: ^2.0.0
   flutter_launcher_icons: ^0.13.1
-  dio: ^5.4.3+1
+  dio: ^5.5.0+1
   get_it: ^7.6.9
   shared_preferences: ^2.2.3
   bloc: ^8.1.4
@@ -50,10 +50,24 @@ dependencies:
   flutter_spinkit: ^5.2.1
   google_nav_bar: ^5.0.6
   modal_bottom_sheet: ^3.0.0
+  firebase_core: ^2.24.2
+  injectable: ^2.4.4
+  json_annotation: ^4.9.0
+  flutter_secure_storage: ^9.2.2
+  meta: ^1.12.0
+  firebase_messaging: ^14.7.10
+  pretty_dio_logger: ^1.4.0
+  logger: ^2.4.0
+  auto_route: ^9.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  injectable_generator: ^2.6.2
+  json_serializable: ^6.8.0
+  auto_route_generator: ^9.0.0
+  build_runner: ^2.4.11
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

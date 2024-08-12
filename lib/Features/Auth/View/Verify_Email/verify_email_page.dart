@@ -1,5 +1,5 @@
+import 'package:empco/Core/Config/di/di.dart';
 import 'package:empco/Core/Config/router/Router.dart';
-import 'package:empco/Core/Config/Shared_Preferences.dart';
 import 'package:empco/Core/Resources/Constants/Colors.dart';
 import 'package:empco/Core/Resources/Constants/Texts.dart';
 import 'package:empco/Core/Resources/Constants/assets.dart';
@@ -7,6 +7,7 @@ import 'package:empco/Core/Widgets/show_snack_bar_method.dart';
 import 'package:empco/Core/Widgets/buttons.dart';
 import 'package:empco/Core/Widgets/empcoIcon_and_empcoText.dart';
 import 'package:empco/Core/Widgets/text_widgets.dart';
+import 'package:empco/Core/repos/user_repo.dart';
 import 'package:empco/Features/Auth/View/Verify_Email/Widgets/code_textfields.dart';
 import 'package:empco/Features/Auth/View/Verify_Email/Widgets/is_wrong_widget.dart';
 import 'package:empco/Features/Auth/View/Verify_Email/Widgets/texts.dart';
@@ -15,7 +16,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:empco/Features/Auth/bloc/auth_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 late List<TextEditingController> verificationCode;
 late List<FocusNode> focusNode;
@@ -48,6 +48,7 @@ class VerifyEmailPage extends StatefulWidget {
 
 class _VerifyEmailPageState extends State<VerifyEmailPage>
     implements VerifyViewCallBacks {
+  final UserRepo userRepo = UserRepo();
   @override
   void initState() {
     isWrongCode = false;
@@ -113,7 +114,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage>
   @override
   void onSuccessToVerifyStateListened(BuildContext context) {
     showSnackBarMethod(context, verifySuccess, green);
-    config.get<SharedPreferences>().setBool(isRegistered, true);
+    userRepo.setKey(isRegistered, true);
     context.go('$mainRoute$introRoute/$loginRoute');
     dispose();
   }
@@ -162,7 +163,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage>
                             const SizedBox(
                               height: 30,
                             ),
-                            TitleOfPage(text: registeringYou),
+                            const TitleOfPage(text: registeringYou),
                             SvgPicture.asset(
                               verifyImage,
                             ),

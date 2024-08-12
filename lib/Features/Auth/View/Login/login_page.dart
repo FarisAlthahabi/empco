@@ -1,4 +1,4 @@
-import 'package:empco/Core/Config/Shared_Preferences.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:empco/Core/Config/router/Router.dart';
 import 'package:empco/Core/Resources/Constants/Colors.dart';
 import 'package:empco/Core/Resources/Constants/Texts.dart';
@@ -9,6 +9,7 @@ import 'package:empco/Core/Widgets/auth_text_field.dart';
 import 'package:empco/Core/Widgets/empcoIcon_and_empcoText.dart';
 import 'package:empco/Core/Widgets/show_snack_bar_method.dart';
 import 'package:empco/Core/Widgets/text_widgets.dart';
+import 'package:empco/Core/repos/user_repo.dart';
 import 'package:empco/Features/Auth/View/Login/Widgets/Texts.dart';
 import 'package:empco/Features/Auth/View/Login/Widgets/buttons.dart';
 import 'package:empco/Features/Auth/bloc/auth_bloc.dart';
@@ -16,7 +17,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class LoginViewCallbacks {
   void onForgetPasswordTap(BuildContext context);
@@ -27,14 +27,6 @@ abstract class LoginViewCallbacks {
 
   void onSignUpTap(BuildContext context);
 
-  void onSuccessToLoginStateListened(BuildContext context);
-
-  void onFailedToLoginStateListened(BuildContext context);
-
-  void onSuccessToLoginWithGoogleStateListened(BuildContext context);
-
-  void onFailedToLoginWithGoogleStateListened(BuildContext context);
-
   void onEmailChanged(String email);
 
   void onPasswordChanged(String password);
@@ -42,6 +34,16 @@ abstract class LoginViewCallbacks {
   void onEmailSubmitted(String email);
 
   void onPasswordSubmitted(String password);
+}
+
+@RoutePage()
+class LoginView extends StatelessWidget {
+  const LoginView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const LoginPage();
+  }
 }
 
 class LoginPage extends StatefulWidget {
@@ -53,6 +55,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> implements LoginViewCallbacks {
   late final AuthBloc authBloc = context.read();
+
+  final UserRepo userRepo = UserRepo();
 
   String email = '';
   String password = '';
@@ -110,52 +114,6 @@ class _LoginPageState extends State<LoginPage> implements LoginViewCallbacks {
   }
 
   @override
-  void onFailedToLoginStateListened(BuildContext context) {
-    if (email.isEmpty || password.isEmpty) {
-      showSnackBarMethod(context, emailOrPasswordEmpty, red);
-    } else {
-      showSnackBarMethod(context, loginFail, red);
-      email = '';
-      password = '';
-    }
-  }
-
-  @override
-  void onFailedToLoginWithGoogleStateListened(BuildContext context) {
-    showSnackBarMethod(context, loginWithGoogleFail, red);
-  }
-
-  @override
-  void onSuccessToLoginStateListened(BuildContext context) {
-    config.get<SharedPreferences>().setBool(isLogin, true);
-    showSnackBarMethod(context, loginSuccess, green);
-    if(config.get<SharedPreferences>().getString(role) == 'freelancer'){
-      context.go('$mainRoute$introRoute/$freelancerHomePageRoute');
-    }
-    else if(config.get<SharedPreferences>().getString(role) == 'owner'){
-      context.go('$mainRoute$introRoute/$companyHomePageRoute');
-    }
-    else{
-      context.go('$mainRoute$introRoute/$customerHomePageRoute');
-    }
-    //dispose();
-  }
-
-  @override
-  void onSuccessToLoginWithGoogleStateListened(BuildContext context) {
-    showSnackBarMethod(context, loginSuccess, green);
-    if(config.get<SharedPreferences>().getString(role) == 'freelancer'){
-      context.go('$mainRoute$introRoute/$freelancerHomePageRoute');
-    }
-    else if(config.get<SharedPreferences>().getString(role) == 'owner'){
-      context.go('$mainRoute$introRoute/$companyHomePageRoute');
-    }
-    else{
-      context.go('$mainRoute$introRoute/$customerHomePageRoute');
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     var deviceData = MediaQuery.of(context);
     var screenSize = deviceData.size;
@@ -164,16 +122,37 @@ class _LoginPageState extends State<LoginPage> implements LoginViewCallbacks {
     return BlocProvider(
       create: (context) => AuthBloc(),
       child: BlocConsumer<AuthBloc, AuthState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is SuccessToLoginState) {
-            onSuccessToLoginStateListened(context);
+            userRepo.setKey(isLogin, true);
+            showSnackBarMethod(context, loginSuccess, green);
+            if (await userRepo.getKey(role) == 'freelancer') {
+              context.go('$mainRoute$introRoute/$freelancerHomePageRoute');
+            } else if (await userRepo.getKey(role) == 'owner') {
+              context.go('$mainRoute$introRoute/$companyHomePageRoute');
+            } else {
+              context.go('$mainRoute$introRoute/$customerHomePageRoute');
+            }
           } else if (state is FailedToLoginState) {
-            onFailedToLoginStateListened(context);
+            if (email.isEmpty || password.isEmpty) {
+              showSnackBarMethod(context, emailOrPasswordEmpty, red);
+            } else {
+              showSnackBarMethod(context, loginFail, red);
+              email = '';
+              password = '';
+            }
           } else {
             if (state is SuccessToLoginWithGoogleState) {
-              onSuccessToLoginWithGoogleStateListened(context);
+              showSnackBarMethod(context, loginSuccess, green);
+              if (await userRepo.getKey(role) == 'freelancer') {
+                context.go('$mainRoute$introRoute/$freelancerHomePageRoute');
+              } else if (await userRepo.getKey(role) == 'owner') {
+                context.go('$mainRoute$introRoute/$companyHomePageRoute');
+              } else {
+                context.go('$mainRoute$introRoute/$customerHomePageRoute');
+              }
             } else if (state is FailedToLoginWithGoogleState) {
-              onFailedToLoginWithGoogleStateListened(context);
+              showSnackBarMethod(context, loginWithGoogleFail, red);
             }
           }
         },
@@ -202,7 +181,7 @@ class _LoginPageState extends State<LoginPage> implements LoginViewCallbacks {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             const SizedBox(height: 20),
-                            TitleOfPage(text: welcomeBack),
+                            const TitleOfPage(text: welcomeBack),
                             SvgPicture.asset(
                               loginImage,
                             ),
