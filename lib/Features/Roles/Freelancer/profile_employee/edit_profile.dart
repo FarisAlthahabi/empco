@@ -3,15 +3,15 @@ import 'package:empco/Core/Resources/Constants/assets.dart';
 import 'package:empco/Core/Widgets/buttons.dart';
 import 'package:empco/Core/Widgets/empco_app_bar.dart';
 
-import 'package:empco/Features/Roles/Freelancer/profile/widgets/TextFormFieldToProfile.dart';
-import 'package:empco/Features/Roles/Freelancer/profile/widgets/TextFormFieldToProfile2.dart';
-import 'package:empco/Features/Roles/Freelancer/profile/widgets/icon_and_text.dart';
+import 'package:empco/Features/Roles/Freelancer/profile_company/widgets/TextFormFieldToProfile.dart';
+import 'package:empco/Features/Roles/Freelancer/profile_company/widgets/TextFormFieldToProfile2.dart';
+import 'package:empco/Features/Roles/Freelancer/profile_company/widgets/icon_and_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class EditProfileView extends StatelessWidget {
-  const EditProfileView({
+class EditProfileEmployeeView extends StatelessWidget {
+  const EditProfileEmployeeView({
     super.key,
     this.title,
   });
@@ -90,7 +90,7 @@ class EditProfileView extends StatelessWidget {
                         icon: personIcon,
                         text: ' Name',
                         sizetext: 15,
-                        sizeicon: 25,
+                        sizeicon: 20,
                       ),
                       const SizedBox(
                         height: 3,
@@ -121,8 +121,8 @@ class EditProfileView extends StatelessWidget {
                       ),
                       const IconWithText(
                         coloricon: Colors.black,
-                        icon: connectionIcon,
-                        text: 'Establish Yea',
+                        icon: workIcon,
+                        text: 'Job title',
                         sizetext: 15,
                         sizeicon: 25,
                       ),
@@ -138,8 +138,8 @@ class EditProfileView extends StatelessWidget {
                       ),
                       const IconWithText(
                         coloricon: Colors.black,
-                        icon: ceoIcon,
-                        text: 'Ceo',
+                        icon: companyIcon,
+                        text: 'Work place',
                         sizetext: 15,
                         sizeicon: 25,
                       ),
@@ -159,21 +159,7 @@ class EditProfileView extends StatelessWidget {
                       const IconWithText(
                         coloricon: Colors.black,
                         icon: aboutIcon,
-                        text: 'Overview',
-                        sizetext: 20,
-                        sizeicon: 25,
-                      ),
-                      TextFormFieldToProfile2(
-                        height: 125,
-                        width: 400,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const IconWithText(
-                        coloricon: Colors.black,
-                        icon: workIcon,
-                        text: 'Projects',
+                        text: 'Brief',
                         sizetext: 20,
                         sizeicon: 25,
                       ),
@@ -194,11 +180,27 @@ class EditProfileView extends StatelessWidget {
                       const SizedBox(
                         height: 7,
                       ),
-                      TextFormFieldToProfile(width: 400, height: 45),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.phone,
+                            size: 30,
+                          ),
+                          TextFormFieldToProfile(width: 320, height: 45),
+                        ],
+                      ),
                       const SizedBox(
                         height: 7,
                       ),
-                      TextFormFieldToProfile(width: 400, height: 45),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.email,
+                            size: 30,
+                          ),
+                          TextFormFieldToProfile(width: 320, height: 45),
+                        ],
+                      ),
                       const SizedBox(
                         height: 20,
                       ),

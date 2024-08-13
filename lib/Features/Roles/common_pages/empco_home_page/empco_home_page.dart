@@ -1,3 +1,4 @@
+import 'package:empco/Core/Config/Shared_Preferences.dart';
 import 'package:empco/Core/Resources/Constants/assets.dart';
 import 'package:empco/Core/Resources/Constants/colors.dart';
 import 'package:empco/Core/Resources/Constants/font_weights.dart';
@@ -7,17 +8,26 @@ import 'package:empco/Core/Widgets/filter_icon_button.dart';
 import 'package:empco/Core/Widgets/notification_icon.dart';
 import 'package:empco/Core/Widgets/search_text_field.dart';
 import 'package:empco/Core/Widgets/job_details_contact.dart';
-import 'package:empco/Core/Widgets/show_snack_bar_method.dart';
-import 'package:empco/Features/Auth/View/Login/login_page.dart';
+
 import 'package:empco/Features/Auth/bloc/auth_bloc.dart';
+import 'package:empco/Features/Roles/Company/apply_job/apply_job.dart';
+import 'package:empco/Features/Roles/Company/job_app/job_app_view.dart';
+import 'package:empco/Features/Roles/Company/my_app/my_appliction.dart';
+import 'package:empco/Features/Roles/Company/jop_post/view/job_post_view.dart';
+import 'package:empco/Features/Roles/Company/saved_post/saved_post_view.dart';
+
 
 import 'package:empco/Features/Roles/Freelancer/Verification/VerificationVerified.dart';
+import 'package:empco/Features/Roles/Freelancer/navigator_profile/navigator_company_profile.dart';
 
-import 'package:empco/Features/Roles/Freelancer/profile/profile.dart';
+
+import 'package:empco/Features/Roles/Freelancer/profile_employee/profile.dart';
+import 'package:empco/Features/Roles/common_pages/empco_home_page/drawer_company.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class EmpcoHomePageCallBacks {
   void onAccountVerifyTap();
@@ -29,11 +39,24 @@ abstract class EmpcoHomePageCallBacks {
   void onSettingsTap();
 
   void onLogoutTap();
+
+  void onPostAJobsTap();
+
+  void onMyApplicationsTap();
+
+  void onFreelanceProjectsTap();
+
+  void onSavedPostsTap();
+
+  void onFollowingsTap();
+
+  void onOrderedServicesTap();
 }
 
 class EmpcoHomePage extends StatefulWidget {
   const EmpcoHomePage({
     super.key,
+    required this.intSideBar,
     required this.onNotificationTap,
     required this.searchJobController,
     required this.onFilterTap,
@@ -50,6 +73,7 @@ class EmpcoHomePage extends StatefulWidget {
   final VoidCallback? onEditTap;
   final bool haveNewNotification;
   final double screenWidth;
+  final int intSideBar; // 1 (COMPANY) 2 (FREELANCER) ELSE (CUSTOMER)
 
   @override
   State<EmpcoHomePage> createState() => _EmpcoHomePageState();
@@ -57,6 +81,81 @@ class EmpcoHomePage extends StatefulWidget {
 
 class _EmpcoHomePageState extends State<EmpcoHomePage>
     implements EmpcoHomePageCallBacks {
+  List<String> companytitles = [
+    'Post a job',
+    'Account Verification',
+    'Jobs Applications',
+    'Profile',
+    'Settings',
+    'Log out'
+  ];
+  List<String> freelancertitles = [
+    'Account Verification',
+    'My applications',
+    'Freelance projects',
+    'Saved posts ',
+    'Followings',
+    'Profile',
+    'Settings',
+    'Log out'
+  ];
+  List<String> customertitles = [
+    'Ordered services',
+    'Profile',
+    'Settings',
+    'Log out'
+  ];
+  List<String> freelancericons = [
+    verifiedIcon,
+    applyIcon,
+    freelancerProjectIcon,
+    savedIcon,
+    followingsIcon,
+    profileIcon,
+    settingsIcon,
+    logoutIcon
+  ];
+  List<String> companyicons = [
+    addPostIcon,
+    verifiedIcon,
+    applyIcon,
+    profileIcon,
+    settingsIcon,
+    logoutIcon
+  ];
+  List<String> customericons = [
+    orderedServicesIcon,
+    profileIcon,
+    settingsIcon,
+    logoutIcon
+  ];
+  late List<VoidCallback> freelancerCallBacks = [
+    onAccountVerifyTap,
+    onMyApplicationsTap,
+    onFreelanceProjectsTap,
+    onSavedPostsTap,
+    onFollowingsTap,
+    onProfileTap,
+    onSettingsTap,
+    onLogoutTap,
+  ];
+
+  late List<VoidCallback> companyCallBacks = [
+    onPostAJobsTap,
+    onAccountVerifyTap,
+    onJobApplicationsTap,
+    onProfileTap,
+    onSettingsTap,
+    onLogoutTap,
+  ];
+
+  late List<VoidCallback> customerCallBacks = [
+    onOrderedServicesTap,
+    onProfileTap,
+    onSettingsTap,
+    onLogoutTap,
+  ];
+
   @override
   void onAccountVerifyTap() {
     Navigator.push(
@@ -69,7 +168,16 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
   }
 
   @override
-  void onJobApplicationsTap() {}
+  void onJobApplicationsTap() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const JobAppView(),
+        ));
+    if (config.get<SharedPreferences>().getString(role) == 'freelancer') {
+    } else if (config.get<SharedPreferences>().getString(role) == 'company') {
+    } else {}
+  }
 
   @override
   void onLogoutTap() {
@@ -81,13 +189,55 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const ProfileView(),
+          builder: (context) => const ProfileEmployeeView(),
         ));
     // context.go('$mainRoute$introRoute/$profileRoute');
   }
 
   @override
-  void onSettingsTap() {}
+  void onSettingsTap() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ApplyJob(),
+        ));
+  }
+
+  @override
+  void onPostAJobsTap() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const JobPostView(),
+        ));
+  }
+
+  @override
+  void onMyApplicationsTap() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MyApplictionView(),
+        ));
+  }
+
+  @override
+  void onFreelanceProjectsTap() {}
+
+  @override
+  void onSavedPostsTap() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const SavedPostView(),
+        ));
+  }
+
+  @override
+  void onFollowingsTap() {}
+
+  @override
+  void onOrderedServicesTap() {}
 
   @override
   Widget build(BuildContext context) {
@@ -95,133 +245,23 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
       create: (context) => AuthBloc(),
       child: SafeArea(
           child: Scaffold(
-        drawer: Drawer(
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(30),
-                  bottomRight: Radius.circular(30))),
-          child: ListView(
-            children: [
-              DrawerHeader(
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                  image: AssetImage(
-                    drawerBackgroundImage,
-                  ),
-                  fit: BoxFit.cover,
-                )),
-                child: Center(
-                    child: ListTile(
-                  leading: const CircleAvatar(
-                    backgroundImage: AssetImage(notionImage),
-                  ),
-                  title: Text(
-                    'Notion',
-                    style: GoogleFonts.poppins(
-                      textStyle: TextStyle(
-                        color: white,
-                        fontSize: 20,
-                        fontWeight: weightlevel7,
-                        height: 1.30,
-                      ),
-                    ),
-                  ),
-                  subtitle: Text(
-                    'Technology and Software',
-                    style: GoogleFonts.poppins(
-                      textStyle: TextStyle(
-                        color: const Color(0xFFDDDDDD),
-                        fontSize: 13,
-                        fontWeight: weightlevel7,
-                        height: 1.20,
-                      ),
-                    ),
-                  ),
-                )),
-              ),
-              ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    List<String> icons = [
-                      verifiedIcon,
-                      applyIcon,
-                      profileIcon,
-                      settingsIcon,
-                      logoutIcon
-                    ];
-                    List<String> titles = [
-                      'Account Verification',
-                      'Jobs Applications',
-                      'Profile',
-                      'Settings',
-                      'Log out'
-                    ];
-                    List<VoidCallback> callBacks = [
-                      onAccountVerifyTap,
-                      onJobApplicationsTap,
-                      onProfileTap,
-                      onSettingsTap,
-                      onLogoutTap,
-                    ];
-                    return ListTile(
-                      leading: BlocConsumer<AuthBloc, AuthState>(
-                        listener: (context, state) {
-                          if (state is SuccessToLogoutState) {
-                            if (index == 4) {
-                              showSnackBarMethod(
-                                  context, 'Logout out Successfully', green);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const LoginPage(),
-                                  ));
-                            }
-                          } else if (state is FailedToLogoutState) {
-                            if (index == 4) {
-                              showSnackBarMethod(
-                                  context, state.error.error, red);
-                            }
-                          }
-                        },
-                        builder: (context, state) {
-                          if (state is LoadingState) {
-                            if (index != 4) {
-                              return SvgPicture.asset(icons[index]);
-                            } else {
-                              return SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: CircularProgressIndicator(
-                                    color: red,
-                                  ));
-                            }
-                          }
-                          return SvgPicture.asset(icons[index]);
-                        },
-                      ),
-                      onTap: index == 4
-                          ? () {
-                              BlocProvider.of<AuthBloc>(context)
-                                  .add(LogoutEvent());
-                            }
-                          : callBacks[index],
-                      title: Text(
-                        titles[index],
-                        style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                            color: const Color(0xFF393939),
-                            fontSize: 14.5,
-                            fontWeight: weightlevel6,
-                            height: 1.21,
-                          ),
-                        ),
-                      ),
-                    );
-                  })
-            ],
-          ),
-        ),
+        drawer: widget.intSideBar == 1
+            ? FreelancerDrawer(
+                callBacks: companyCallBacks,
+                titles: companytitles,
+                icons: companyicons,
+                image: companyBackground)
+            : widget.intSideBar == 2
+                ? FreelancerDrawer(
+                    callBacks: freelancerCallBacks,
+                    titles: freelancertitles,
+                    icons: freelancericons,
+                    image: freelancerBackround)
+                : FreelancerDrawer(
+                    callBacks: customerCallBacks,
+                    titles: customertitles,
+                    icons: customericons,
+                    image: customerBackground),
         appBar: EmpcoAppBar(
           centerTitle: true,
           title: SearchTextField(
@@ -275,8 +315,18 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const CircleAvatar(
-                            radius: 14,
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const NavigatorProfileView(),
+                                  ));
+                            },
+                            child: const CircleAvatar(
+                              radius: 14,
+                            ),
                           ),
                           const SizedBox(
                             width: 5,

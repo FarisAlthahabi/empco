@@ -1,11 +1,11 @@
-import 'package:empco/Core/Resources/Constants/Colors.dart';
+
 import 'package:empco/Core/Resources/Constants/assets.dart';
 
 import 'package:empco/Core/Resources/Constants/texts.dart';
 import 'package:empco/Core/Widgets/empco_app_bar.dart';
 import 'package:empco/Core/Widgets/job_details_contact.dart';
-import 'package:empco/Features/Roles/Freelancer/profile/edit_profile.dart';
-import 'package:empco/Features/Roles/Freelancer/profile/widgets/icon_and_text.dart';
+import 'package:empco/Features/Roles/Freelancer/profile_company/edit_profile.dart';
+import 'package:empco/Features/Roles/Freelancer/profile_company/widgets/icon_and_text.dart';
 import 'package:flutter/material.dart';
 
 class ProfileView extends StatelessWidget {
@@ -33,14 +33,15 @@ class ProfileView extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 75, left: 25),
                   child: Container(
-                    // child: Image(
-                    //   image: AssetImage(),
-                    // ),
                     width: 100,
                     height: 100,
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(50)),
                         color: Colors.black),
+                    child: const CircleAvatar(
+                      radius: 30,
+                      backgroundImage: AssetImage(backgroungProfile),
+                    ),
                   ),
                 ),
                 Padding(
@@ -50,19 +51,21 @@ class ProfileView extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const EditProfileView(title: 'Edit Profile',),
+                              builder: (context) => const EditProfileView(
+                                title: 'Edit Profile',
+                              ),
                             ));
                       },
                       icon: const Icon(Icons.edit)),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 35),
+                const Padding(
+                  padding: EdgeInsets.only(left: 35),
                   child: Column(
                     children: [
-                      const SizedBox(
+                      SizedBox(
                         height: 180,
                       ),
-                      const Row(
+                      Row(
                         children: [
                           Text(
                             'Deware Company',
@@ -84,7 +87,7 @@ class ProfileView extends StatelessWidget {
                           )
                         ],
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 5,
                       ),
                       IconWithText(
@@ -93,7 +96,7 @@ class ProfileView extends StatelessWidget {
                         sizetext: 15,
                         sizeicon: 30,
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 3,
                       ),
                       IconWithText(
@@ -102,7 +105,7 @@ class ProfileView extends StatelessWidget {
                         sizetext: 15,
                         sizeicon: 25,
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 3,
                       ),
                       IconWithText(
@@ -111,7 +114,7 @@ class ProfileView extends StatelessWidget {
                         sizetext: 15,
                         sizeicon: 25,
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 3,
                       ),
                       IconWithText(
@@ -120,10 +123,10 @@ class ProfileView extends StatelessWidget {
                         sizetext: 15,
                         sizeicon: 25,
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 3,
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 25,
                       ),
                       IconWithText(
@@ -132,12 +135,12 @@ class ProfileView extends StatelessWidget {
                         sizetext: 20,
                         sizeicon: 25,
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.only(right: 10, left: 8),
                         child: Text(
                             'A great victory is the result of a great work, Deware provides  full software Services based on your needs, with its great team and superior stuff'),
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 20,
                       ),
                       IconWithText(
@@ -146,12 +149,12 @@ class ProfileView extends StatelessWidget {
                         sizetext: 20,
                         sizeicon: 25,
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.only(left: 8, right: 10),
                         child: Text(
                             'website for DDS company  Mobile application for PDA company  Landing page for Travello company'),
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.only(right: 190, top: 30),
                         child: JobContactDetails(
                           fontSize: 15,

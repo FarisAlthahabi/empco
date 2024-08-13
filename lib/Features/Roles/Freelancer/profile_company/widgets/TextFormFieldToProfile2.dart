@@ -1,4 +1,4 @@
-import 'dart:ffi';
+
 
 import 'package:flutter/material.dart';
 
@@ -11,7 +11,7 @@ class TextFormFieldToProfile2 extends StatelessWidget {
       {super.key, this.labletitle, required this.width, required this.height});
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: width,
       height: height,
       child: TextFormField(

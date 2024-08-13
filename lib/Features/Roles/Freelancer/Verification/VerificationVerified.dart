@@ -10,10 +10,10 @@ import 'package:google_fonts/google_fonts.dart';
 class VerificationVerified extends StatefulWidget {
   const VerificationVerified({
     super.key,
-    required this.verificationStatus,
+    required this.verificationStatus, // 1 Revewing - 2 Verified - else Rejected 
   });
 
-  final int verificationStatus;
+  final int verificationStatus; // 1 Revewing - 2 Verified - else Rejected 
 
   @override
   State<VerificationVerified> createState() => _VerificationVerifiedState();

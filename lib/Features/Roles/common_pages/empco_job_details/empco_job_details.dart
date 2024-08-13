@@ -42,10 +42,13 @@ class JobDetailsView extends StatelessWidget {
                 const SizedBox(
                   width: 15,
                 ),
-                JobDetailsMainInfo(
-                  screenWidth: screenWidth,
-                  onApplyTap: onApplyTap,
-                  onMessageTap: onMessageTap,
+                Padding(
+                  padding: const EdgeInsets.only(right: 0),
+                  child: JobDetailsMainInfo(
+                    screenWidth: screenWidth,
+                    onApplyTap: onApplyTap,
+                    onMessageTap: onMessageTap,
+                  ),
                 )
               ],
             ),

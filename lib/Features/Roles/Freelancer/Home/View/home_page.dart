@@ -1,3 +1,4 @@
+import 'package:empco/Features/Roles/VAR_GLOBAL.dart';
 import 'package:empco/Features/Roles/common_pages/empco_home_page/empco_home_page.dart';
 import 'package:flutter/material.dart';
 
@@ -10,28 +11,24 @@ abstract class HomePageCallBacks {
   onFilterTap();
 }
 
-
-class FreelancerHomePage extends StatefulWidget{
+class FreelancerHomePage extends StatefulWidget {
   const FreelancerHomePage({super.key});
 
   @override
   State<FreelancerHomePage> createState() => _FreelancerHomePageState();
-  
 }
 
-class _FreelancerHomePageState extends State<FreelancerHomePage> implements HomePageCallBacks{
-  
-   @override
+class _FreelancerHomePageState extends State<FreelancerHomePage>
+    implements HomePageCallBacks {
+  @override
   void initState() {
     searchJobController = TextEditingController();
     super.initState();
   }
 
-    @override
-  onFilterTap() {
+  @override
+  onFilterTap() {}
 
-  }
-  
   @override
   onNotificationTap() {
     setState(() {
@@ -46,6 +43,7 @@ class _FreelancerHomePageState extends State<FreelancerHomePage> implements Home
     double screenWidth = screenSize.width;
 
     return EmpcoHomePage(
+      intSideBar: sidebarr,
       haveNewNotification: haveNewNotification,
       onFilterTap: onFilterTap,
       onNotificationTap: onNotificationTap,
@@ -53,6 +51,4 @@ class _FreelancerHomePageState extends State<FreelancerHomePage> implements Home
       searchJobController: searchJobController,
     );
   }
-  
-
 }
