@@ -8,14 +8,19 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class JobDetailsMainInfo extends StatelessWidget {
-  const JobDetailsMainInfo({
+  JobDetailsMainInfo({
     super.key,
     required this.screenWidth,
     this.onApplyTap,
     this.onMessageTap,
     required this.job,
   });
-
+  final List<String> listIcons = [
+    loctionIcon,
+    onstieIcon,
+    salaryIcon,
+    timeIcon
+  ];
   final double screenWidth;
   final VoidCallback? onApplyTap;
   final VoidCallback? onMessageTap;
@@ -112,12 +117,14 @@ class JobDetailsMainInfo extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            SizedBox(
-              width: 230,
-              height: 100,
-              child: ListView.separated(
-                itemCount: 4,
-                itemBuilder: (context, index) {
+            Padding(
+              padding: const EdgeInsets.only(right: 50),
+              child: SizedBox(
+                width: 230,
+                height: 100,
+                child: ListView.separated(
+                  itemCount: 4,
+                  itemBuilder: (context, index) {
                    List<String> jobDetailsData = [
                     job.location,
                     job.location,
@@ -125,55 +132,57 @@ class JobDetailsMainInfo extends StatelessWidget {
                     job.jobType,
                     job.deadTime.toString()
                   ];
-                  return SizedBox(
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.location_on,
-                          size: 15,
-                          color: Color.fromRGBO(236, 227, 227, 1),
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text.rich(
-                          textAlign: TextAlign.center,
-                          TextSpan(
-                              style: GoogleFonts.poppins(
-                                textStyle: const TextStyle(
-                                    color: Color.fromRGBO(236, 227, 227, 1),
-                                    fontSize: 9.35,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                              text: jobDetailsTitle[index],
-                              children: const [
-                                TextSpan(
-                                    text: ':',
-                                    style: TextStyle(fontSize: 9.35)),
-                              ]),
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          jobDetailsData[index],
-                          style: GoogleFonts.poppins(
-                            textStyle: const TextStyle(
-                                color: AppColors.white,
-                                fontSize: 9.35,
-                                fontWeight: FontWeight.w700),
+                    return SizedBox(
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(
+                            listIcons[index],
+                            width: 20,
+                            // ignore: deprecated_member_use
+                            color: const Color(0xffECE3E3),
                           ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  );
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return const SizedBox(
-                    height: 7,
-                  );
-                },
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text.rich(
+                            textAlign: TextAlign.center,
+                            TextSpan(
+                                style: GoogleFonts.poppins(
+                                  textStyle: const TextStyle(
+                                      color: Color.fromRGBO(236, 227, 227, 1),
+                                      fontSize: 9.35,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                text: jobDetailsTitle[index],
+                                children: const [
+                                  TextSpan(
+                                      text: ':',
+                                      style: TextStyle(fontSize: 9.35)),
+                                ]),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            jobDetailsData[index],
+                            style: GoogleFonts.poppins(
+                              textStyle: const TextStyle(
+                                  color: AppColors.white,
+                                  fontSize: 9.35,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(
+                      height: 7,
+                    );
+                  },
+                ),
               ),
             ),
             Row(

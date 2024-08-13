@@ -22,6 +22,16 @@ const String logoutIcon = 'lib/Core/Resources/assets/SVG/logout.svg';
 const String profileIcon = 'lib/Core/Resources/assets/SVG/profile.svg';
 const String settingsIcon = 'lib/Core/Resources/assets/SVG/setting.svg';
 const String verifiedIcon = 'lib/Core/Resources/assets/SVG/verified.svg';
+
+const String orderedServicesIcon =
+    'lib/Core/Resources/assets/SVG/ordered_services_icon.svg';
+const String addPostIcon = 'lib/Core/Resources/assets/SVG/add_post_icon.svg';
+const String freelancerProjectIcon =
+    'lib/Core/Resources/assets/SVG/freelancer_project_icon.svg';
+const String savedIcon = 'lib/Core/Resources/assets/SVG/saved_icon.svg';
+const String followingsIcon =
+    'lib/Core/Resources/assets/SVG/followings_icon.svg';
+
 const String filterSearchIcon = 'lib/Core/Resources/assets/SVG/filter_search.svg';
 //profile image
 const String backgroungProfile =
@@ -34,6 +44,9 @@ const String connectionIcon =
 const String ceoIcon = 'lib/Core/Resources/assets/SVG/ceo_icon.svg';
 const String aboutIcon = 'lib/Core/Resources/assets/SVG/about_icon.svg';
 const String workIcon = 'lib/Core/Resources/assets/SVG/work_icon.svg';
+const String dateIcon = 'lib/Core/Resources/assets/SVG/date_icon.svg';
+const String companyPrfileIcon =
+    'lib/Core/Resources/assets/SVG/company_profile_icon.svg';
 const String backgroundEditProfile =
     'lib/Core/Resources/assets/PNG/background_edit_profile.png';
 
@@ -48,3 +61,38 @@ const String regectedImage = 'lib/Core/Resources/assets/SVG/image_rejected.svg';
 const String verifiedImage = 'lib/Core/Resources/assets/SVG/image_verified.svg';
 const String reviewingImage =
     'lib/Core/Resources/assets/SVG/image_reviewing.svg';
+//side_bar
+const String companyBackground =
+    'lib/Core/Resources/assets/PNG/company_background.png';
+const String freelancerBackround =
+    'lib/Core/Resources/assets/PNG/freelancer_background.png';
+const String customerBackground =
+    'lib/Core/Resources/assets/PNG/customer_background.png';
+// my application
+const String JobSearchIcon =
+    'lib/Core/Resources/assets/SVG/jpb_search_icon.svg';
+const String onstieIcon = 'lib/Core/Resources/assets/SVG/icon_onsite.svg';
+
+//saved posts
+const String isEmptyImage = 'lib/Core/Resources/assets/PNG/is_empty_png.png';
+// job app
+const String memberIcon = 'lib/Core/Resources/assets/SVG/member_icon.svg';
+// settings
+
+const String languageIcon = 'lib/Core/Resources/assets/SVG/language_icon.svg';
+const String themesIcon = 'lib/Core/Resources/assets/SVG/themes_icon.svg';
+
+// apply image
+const String applyImage = 'lib/Core/Resources/assets/SVG/apply_image.svg';
+const String emailIcon = 'lib/Core/Resources/assets/SVG/email_icon.svg';
+
+//details icon
+const String salaryIcon = 'lib/Core/Resources/assets/SVG/salary_icon.svg';
+const String timeIcon = 'lib/Core/Resources/assets/SVG/time_icon.svg';
+
+//post icon
+const String fullTimeIcon = 'lib/Core/Resources/assets/SVG/full_time_icon.svg';
+const String partTimeIcon = 'lib/Core/Resources/assets/SVG/part_time_icon.svg';
+const String remoteIcon = 'lib/Core/Resources/assets/SVG/remote_icon.svg';
+const String hybridIcon = 'lib/Core/Resources/assets/SVG/hybrid_icon.svg';
+const String aiIcon = 'lib/Core/Resources/assets/PNG/icon_ai.png';

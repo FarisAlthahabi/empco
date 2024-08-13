@@ -1,4 +1,5 @@
 import 'package:empco/Core/Widgets/show_dialog.dart';
+import 'package:empco/Features/Roles/VAR_GLOBAL.dart';
 import 'package:empco/Features/Roles/common_pages/empco_home_page/empco_home_page.dart';
 import 'package:flutter/material.dart';
 
@@ -53,7 +54,8 @@ class _CompanyHomePageState extends State<CompanyHomePage>
     var deviceData = MediaQuery.of(context);
     var screenSize = deviceData.size;
     double screenWidth = screenSize.width;
-    return EmpcoHomePage(
+    return EmpcoHomePageView(
+        intSideBar: sidebarr,
         onNotificationTap: onNotificationTap,
         onDeleteTap: onDeleteTap,
         onEditTap: onEditTap,

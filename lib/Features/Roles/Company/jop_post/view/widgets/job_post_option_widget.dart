@@ -1,16 +1,18 @@
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:empco/Features/Roles/Company/jop_post/view/widgets/text_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class JobPostOptionWidget extends StatelessWidget {
   const JobPostOptionWidget({
     super.key,
     required this.text,
-    this.icon,
+    required this.icon,
     required this.onTap,
   });
 
   final String text;
-  final IconData? icon;
+  final String icon;
   final VoidCallback onTap;
 
   @override
@@ -25,7 +27,14 @@ class JobPostOptionWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(3)),
         child: Row(
           children: [
-            if (icon != null) Icon(icon),
+            SvgPicture.asset(
+              icon,
+              // ignore: deprecated_member_use
+              color: AppColors.black,
+            ),
+            const SizedBox(
+              width: 5,
+            ),
             JobPostOptionTitle(
               text: text,
             ),

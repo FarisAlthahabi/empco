@@ -67,11 +67,14 @@ class _JobDetailsViewState extends State<JobDetailsView> {
                       const SizedBox(
                         width: 15,
                       ),
-                      JobDetailsMainInfo(
-                        job: state.job,
+                      Padding(
+                  padding: const EdgeInsets.only(right: 0),
+                  child: JobDetailsMainInfo(
+                          job: state.job,
                         screenWidth: widget.screenWidth,
-                        onApplyTap: widget.onApplyTap,
-                        onMessageTap: widget.onMessageTap,
+                          onApplyTap: widget.onApplyTap,
+                          onMessageTap: widget.onMessageTap,
+                  ),
                       )
                     ],
                   ),

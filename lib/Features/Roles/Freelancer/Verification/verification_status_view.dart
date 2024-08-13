@@ -17,10 +17,10 @@ abstract class VerificationStatusViewCallBacks {
 class VerificationStatusView extends StatelessWidget {
   const VerificationStatusView({
     super.key,
-    required this.verificationStatus,
+    required this.verificationStatus, // 1 Revewing - 2 Verified - else Rejected 
   });
 
-  final int verificationStatus;
+  final int verificationStatus; // 1 Revewing - 2 Verified - else Rejected 
 
   @override
   Widget build(BuildContext context) {

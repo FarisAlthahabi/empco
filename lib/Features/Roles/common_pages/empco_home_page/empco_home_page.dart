@@ -39,9 +39,9 @@ abstract class EmpcoHomePageCallBacks {
 
   void onCategorySelected(int index);
 
-  void onSearchChaged(String input);
+  void onSearchChaged(String title);
 
-  void onSearchSubmitted(String input);
+  void onSearchSubmitted(String title);
 
   void onTryAgainTap();
 
@@ -62,11 +62,58 @@ abstract class EmpcoHomePageCallBacks {
   void onCancelTap();
 
   void onApplyFiltersTap();
+
+  void onPostAJobsTap();
+
+  void onMyApplicationsTap();
+
+  void onFreelanceProjectsTap();
+
+  void onSavedPostsTap();
+
+  void onFollowingsTap();
+
+  void onOrderedServicesTap();
+}
+
+class EmpcoHomePageView extends StatelessWidget {
+  const EmpcoHomePageView({
+    super.key,
+    required this.searchJobController,
+    required this.onNotificationTap,
+    this.onDeleteTap,
+    this.onEditTap,
+    required this.haveNewNotification,
+    required this.screenWidth,
+    required this.intSideBar,
+  });
+
+  final TextEditingController searchJobController;
+  final VoidCallback onNotificationTap;
+  final VoidCallback? onDeleteTap;
+  final VoidCallback? onEditTap;
+  final bool haveNewNotification;
+  final double screenWidth;
+  final int intSideBar; // 1 (COMPANY) 2 (FREELANCER) ELSE (CUSTOMER)
+
+  @override
+  Widget build(BuildContext context) {
+    return EmpcoHomePage(
+      haveNewNotification: haveNewNotification,
+      intSideBar: intSideBar,
+      onNotificationTap: onNotificationTap,
+      screenWidth: screenWidth,
+      searchJobController: searchJobController,
+      onDeleteTap: onDeleteTap,
+      onEditTap: onEditTap,
+    );
+  }
 }
 
 class EmpcoHomePage extends StatefulWidget {
   const EmpcoHomePage({
     super.key,
+    required this.intSideBar,
     required this.onNotificationTap,
     required this.searchJobController,
     required this.haveNewNotification,
@@ -81,6 +128,7 @@ class EmpcoHomePage extends StatefulWidget {
   final VoidCallback? onEditTap;
   final bool haveNewNotification;
   final double screenWidth;
+  final int intSideBar; // 1 (COMPANY) 2 (FREELANCER) ELSE (CUSTOMER)
 
   @override
   State<EmpcoHomePage> createState() => _EmpcoHomePageState();
@@ -105,53 +153,6 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
   }
 
   @override
-  void onAccountVerifyTap() {
-    context.go(
-        '$loginRoute/$freelancerHomePageRoute/${accountVerificationRoute.replaceFirst(':verificationStatus', '3')}');
-  }
-
-  @override
-  void onJobApplicationsTap() {}
-
-  @override
-  void onLogoutTap() {
-    authBloc.add(LogoutEvent());
-  }
-
-  @override
-  void onProfileTap() {
-    context.go('$mainRoute/$loginRoute/$freelancerHomePageRoute/$profileRoute');
-  }
-
-  @override
-  void onSettingsTap() {}
-
-  @override
-  void onSearchChaged(String title) {
-    jobsCubit.setTitle(title);
-  }
-
-  @override
-  void onSearchSubmitted(String input) {
-    jobsCubit.getSearchedJobs();
-  }
-
-  @override
-  void onCategorySelected(int index) {
-    jobsCubit.getJobsByCategory(index);
-    setState(
-      () {
-        for (var element in isCategorySelected) {
-          if (element != isCategorySelected[index]) {
-            element = !element;
-          }
-        }
-        isCategorySelected[index] = !isCategorySelected[index];
-      },
-    );
-  }
-
-  @override
   void onApplyFiltersTap() {
     // TODO: implement onApplyFiltersTap
   }
@@ -159,6 +160,41 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
   @override
   void onCancelTap() {
     Navigator.pop(context);
+  }
+
+  @override
+  void onCategorySelected(int index) {
+    jobsCubit.getJobsByCategory(index);
+  }
+
+  @override
+  void onFilterTap() {
+    mainShowBottomSheet(
+      context,
+      backgroundColor: AppColors.greyShade,
+      widget: FilterBottomSheet(
+        locationFocusNode: locationFocusNode,
+        minimumSalaryFocusNode: minimumSalaryFocusNode,
+        onLocationChanged: onLocationChanged,
+        onLocationSubmitted: onLocationSubmitted,
+        onMinimumSalaryChanged: onMinimumSalaryChanged,
+        onMinimumSalarySubmitted: onMinimumSalarySubmitted,
+        onTypeSelected: onTypeSelected,
+        onWorkNatureSelected: onWorkNatureSelected,
+        onCancelTap: onCancelTap,
+        onApplyFiltersTap: onApplyFiltersTap,
+      ),
+    );
+  }
+
+  @override
+  void onFollowingsTap() {
+    // TODO: implement onFollowingsTap
+  }
+
+  @override
+  void onFreelanceProjectsTap() {
+    // TODO: implement onFreelanceProjectsTap
   }
 
   @override
@@ -182,6 +218,41 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
   }
 
   @override
+  void onMyApplicationsTap() {
+    // TODO: implement onMyApplicationsTap
+  }
+
+  @override
+  void onOrderedServicesTap() {
+    // TODO: implement onOrderedServicesTap
+  }
+
+  @override
+  void onPostAJobsTap() {
+    // TODO: implement onPostAJobsTap
+  }
+
+  @override
+  void onSavedPostsTap() {
+    // TODO: implement onSavedPostsTap
+  }
+
+  @override
+  void onSearchChaged(String title) {
+    jobsCubit.setTitle(title);
+  }
+
+  @override
+  void onSearchSubmitted(String input) {
+    jobsCubit.getSearchedJobs();
+  }
+
+  @override
+  void onSettingsTap() {
+    // TODO: implement onSettingsTap
+  }
+
+  @override
   void onTypeSelected() {
     // TODO: implement onTypeSelected
   }
@@ -191,24 +262,98 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
     // TODO: implement onWorkNatureSelected
   }
 
+  List<String> companytitles = [
+    'Post a job',
+    'Account Verification',
+    'Jobs Applications',
+    'Profile',
+    'Settings',
+    'Log out'
+  ];
+  List<String> freelancertitles = [
+    'Account Verification',
+    'My applications',
+    'Freelance projects',
+    'Saved posts ',
+    'Followings',
+    'Profile',
+    'Settings',
+    'Log out'
+  ];
+  List<String> customertitles = [
+    'Ordered services',
+    'Profile',
+    'Settings',
+    'Log out'
+  ];
+  List<String> freelancericons = [
+    verifiedIcon,
+    applyIcon,
+    freelancerProjectIcon,
+    savedIcon,
+    followingsIcon,
+    profileIcon,
+    settingsIcon,
+    logoutIcon
+  ];
+  List<String> companyicons = [
+    addPostIcon,
+    verifiedIcon,
+    applyIcon,
+    profileIcon,
+    settingsIcon,
+    logoutIcon
+  ];
+  List<String> customericons = [
+    orderedServicesIcon,
+    profileIcon,
+    settingsIcon,
+    logoutIcon
+  ];
+  late List<VoidCallback> freelancerCallBacks = [
+    onAccountVerifyTap,
+    onMyApplicationsTap,
+    onFreelanceProjectsTap,
+    onSavedPostsTap,
+    onFollowingsTap,
+    onProfileTap,
+    onSettingsTap,
+    onLogoutTap,
+  ];
+
+  late List<VoidCallback> companyCallBacks = [
+    onPostAJobsTap,
+    onAccountVerifyTap,
+    onJobApplicationsTap,
+    onProfileTap,
+    onSettingsTap,
+    onLogoutTap,
+  ];
+
+  late List<VoidCallback> customerCallBacks = [
+    onOrderedServicesTap,
+    onProfileTap,
+    onSettingsTap,
+    onLogoutTap,
+  ];
+
   @override
-  onFilterTap() {
-    mainShowBottomSheet(
-      context,
-      backgroundColor: AppColors.greyShade,
-      widget: FilterBottomSheet(
-        locationFocusNode: locationFocusNode,
-        minimumSalaryFocusNode: minimumSalaryFocusNode,
-        onLocationChanged: onLocationChanged,
-        onLocationSubmitted: onLocationSubmitted,
-        onMinimumSalaryChanged: onMinimumSalaryChanged,
-        onMinimumSalarySubmitted: onMinimumSalarySubmitted,
-        onTypeSelected: onTypeSelected,
-        onWorkNatureSelected: onWorkNatureSelected,
-        onCancelTap: onCancelTap,
-        onApplyFiltersTap: onApplyFiltersTap,
-      ),
-    );
+  void onAccountVerifyTap() {
+    context.go(
+        '$loginRoute/$freelancerHomePageRoute/${accountVerificationRoute.replaceFirst(':verificationStatus', '3')}');
+  }
+
+  @override
+  void onJobApplicationsTap() {}
+
+  @override
+  void onLogoutTap() {
+    authBloc.add(LogoutEvent());
+  }
+
+  @override
+  void onProfileTap() {
+    context.go('$mainRoute/$loginRoute/$freelancerHomePageRoute/$profileRoute');
   }
 
   @override

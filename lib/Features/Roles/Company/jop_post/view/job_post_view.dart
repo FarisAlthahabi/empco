@@ -1,3 +1,4 @@
+import 'package:empco/Core/Resources/Constants/assets.dart';
 import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:empco/Core/Widgets/buttons.dart';
 import 'package:empco/Core/Widgets/empco_app_bar.dart';
@@ -165,6 +166,33 @@ class _JobPostViewState extends State<JobPostView>
                   height: 300,
                   width: 330,
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 200),
+                  child: MaterialButton(
+                    onPressed: () {},
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          aiIcon,
+                          width: 25,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        const Text(
+                          'write with Ai',
+                          style: TextStyle(
+                            fontFamily: 'RR',
+                            fontSize: 12,
+                            color: Color(0xffC164D0),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 const SizedBox(height: 25),
                 const TitleWidget(text: 'Type'),
                 const SizedBox(height: 12),
@@ -174,13 +202,13 @@ class _JobPostViewState extends State<JobPostView>
                   children: [
                     JobPostOptionWidget(
                       text: 'Full-time',
-                      icon: Icons.abc,
+                      icon: fullTimeIcon,
                       onTap: onTypeChosen,
                     ),
                     const SizedBox(width: 12),
                     JobPostOptionWidget(
                       text: 'Full-time',
-                      icon: Icons.abc,
+                      icon: partTimeIcon,
                       onTap: onTypeChosen,
                     ),
                   ],
@@ -194,19 +222,19 @@ class _JobPostViewState extends State<JobPostView>
                   children: [
                     JobPostOptionWidget(
                       text: 'On-Site',
-                      icon: Icons.abc,
+                      icon: onstieIcon,
                       onTap: onWorkNatureChosen,
                     ),
                     const SizedBox(width: 12),
                     JobPostOptionWidget(
-                      text: 'On-Site',
-                      icon: Icons.abc,
+                      text: 'Remote',
+                      icon: remoteIcon,
                       onTap: onWorkNatureChosen,
                     ),
                     const SizedBox(width: 12),
                     JobPostOptionWidget(
-                      text: 'On-Site',
-                      icon: Icons.abc,
+                      text: 'Hybrid',
+                      icon: hybridIcon,
                       onTap: onWorkNatureChosen,
                     ),
                   ],
@@ -219,6 +247,7 @@ class _JobPostViewState extends State<JobPostView>
                 Row(
                   children: [
                     JobPostOptionWidget(
+                      icon: dateIcon,
                       text: 'Pick Date',
                       onTap: onDatePicked,
                     ),
