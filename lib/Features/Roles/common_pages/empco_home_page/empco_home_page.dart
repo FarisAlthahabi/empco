@@ -5,9 +5,11 @@ import 'package:empco/Core/Resources/Constants/texts.dart';
 import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:empco/Core/Widgets/buttons.dart';
 import 'package:empco/Core/Widgets/empco_app_bar.dart';
+import 'package:empco/Core/Widgets/filter_bottom_sheet.dart';
 import 'package:empco/Core/Widgets/filter_icon_button.dart';
 import 'package:empco/Core/Widgets/loading_indicator.dart';
 import 'package:empco/Core/Widgets/main_error_widget.dart';
+import 'package:empco/Core/Widgets/main_show_bottom_sheet.dart';
 import 'package:empco/Core/Widgets/notification_icon.dart';
 import 'package:empco/Core/Widgets/search_text_field.dart';
 import 'package:empco/Core/Widgets/job_details_contact.dart';
@@ -42,6 +44,24 @@ abstract class EmpcoHomePageCallBacks {
   void onSearchSubmitted(String input);
 
   void onTryAgainTap();
+
+  void onFilterTap();
+
+  void onTypeSelected();
+
+  void onWorkNatureSelected();
+
+  void onLocationChanged(String location);
+
+  void onLocationSubmitted(String location);
+
+  void onMinimumSalaryChanged(String minimumSalary);
+
+  void onMinimumSalarySubmitted(String minimumSalary);
+
+  void onCancelTap();
+
+  void onApplyFiltersTap();
 }
 
 class EmpcoHomePage extends StatefulWidget {
@@ -49,7 +69,6 @@ class EmpcoHomePage extends StatefulWidget {
     super.key,
     required this.onNotificationTap,
     required this.searchJobController,
-    required this.onFilterTap,
     required this.haveNewNotification,
     required this.screenWidth,
     this.onDeleteTap,
@@ -58,7 +77,6 @@ class EmpcoHomePage extends StatefulWidget {
 
   final TextEditingController searchJobController;
   final VoidCallback onNotificationTap;
-  final VoidCallback onFilterTap;
   final VoidCallback? onDeleteTap;
   final VoidCallback? onEditTap;
   final bool haveNewNotification;
@@ -75,6 +93,10 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
   late final JobsCubit jobsCubit = context.read();
 
   late final UserRepo userRepo = context.read();
+
+  final locationFocusNode = FocusNode();
+
+  final minimumSalaryFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -105,10 +127,8 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
   void onSettingsTap() {}
 
   @override
-  void onSearchChaged(String input) {
-    print(input);
-    print('cndskncjksdkndsndsnfdvfndvnfdvfndvdf');
-    jobsCubit.setInput(input);
+  void onSearchChaged(String title) {
+    jobsCubit.setTitle(title);
   }
 
   @override
@@ -128,6 +148,66 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
         }
         isCategorySelected[index] = !isCategorySelected[index];
       },
+    );
+  }
+
+  @override
+  void onApplyFiltersTap() {
+    // TODO: implement onApplyFiltersTap
+  }
+
+  @override
+  void onCancelTap() {
+    Navigator.pop(context);
+  }
+
+  @override
+  void onLocationChanged(String location) {
+    jobsCubit.setLocation(location);
+  }
+
+  @override
+  void onLocationSubmitted(String location) {
+    // TODO: implement onLocationSubmitted
+  }
+
+  @override
+  void onMinimumSalaryChanged(String minimumSalary) {
+    // TODO: implement onMinimumSalaryChanged
+  }
+
+  @override
+  void onMinimumSalarySubmitted(String minimumSalary) {
+    // TODO: implement onMinimumSalarySubmitted
+  }
+
+  @override
+  void onTypeSelected() {
+    // TODO: implement onTypeSelected
+  }
+
+  @override
+  void onWorkNatureSelected() {
+    // TODO: implement onWorkNatureSelected
+  }
+
+  @override
+  onFilterTap() {
+    mainShowBottomSheet(
+      context,
+      backgroundColor: AppColors.greyShade,
+      widget: FilterBottomSheet(
+        locationFocusNode: locationFocusNode,
+        minimumSalaryFocusNode: minimumSalaryFocusNode,
+        onLocationChanged: onLocationChanged,
+        onLocationSubmitted: onLocationSubmitted,
+        onMinimumSalaryChanged: onMinimumSalaryChanged,
+        onMinimumSalarySubmitted: onMinimumSalarySubmitted,
+        onTypeSelected: onTypeSelected,
+        onWorkNatureSelected: onWorkNatureSelected,
+        onCancelTap: onCancelTap,
+        onApplyFiltersTap: onApplyFiltersTap,
+      ),
     );
   }
 
@@ -318,11 +398,8 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
                   ),
                 ),
                 trailing: FilterIconButton(
-                  // Filter Button
-                  onTap: () {
-                    widget.onFilterTap();
-                  },
-                ),
+                    // Filter Button
+                    onTap: onFilterTap),
               ),
               const SizedBox(
                 height: 10,

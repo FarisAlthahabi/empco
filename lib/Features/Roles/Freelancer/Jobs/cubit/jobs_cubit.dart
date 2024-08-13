@@ -15,13 +15,6 @@ class JobsCubit extends Cubit<JobsState> {
 
   JobSearchPostModel _jobSearchPostModel = const JobSearchPostModel();
 
-  void setInput(String input) {
-    _jobSearchPostModel = _jobSearchPostModel.copyWith(
-      title: () => input,
-      location: () => input,
-    );
-  }
-
   void setTitle(String title) {
     _jobSearchPostModel = _jobSearchPostModel.copyWith(
       title: () => title,
