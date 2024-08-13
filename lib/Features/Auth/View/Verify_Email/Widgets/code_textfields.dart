@@ -1,6 +1,5 @@
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:flutter/material.dart';
-
-import 'package:empco/Core/Resources/Constants/Colors.dart';
 import 'package:flutter/services.dart';
 
 class CodeTextField extends StatelessWidget {
@@ -21,7 +20,7 @@ class CodeTextField extends StatelessWidget {
     return Container(
       width: 43,
       height: 41,
-      color: textFieldBackgroundColor,
+      color: AppColors.textFieldBackgroundColor,
       child: Padding(
         padding: const EdgeInsets.only(left: 8, right: 8, bottom: 20),
         child: TextFormField(

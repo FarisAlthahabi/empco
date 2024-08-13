@@ -1,14 +1,46 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:empco/Core/Resources/Constants/assets.dart';
 
 import 'package:empco/Core/Resources/Constants/texts.dart';
 import 'package:empco/Core/Widgets/empco_app_bar.dart';
 import 'package:empco/Core/Widgets/job_details_contact.dart';
-import 'package:empco/Features/Roles/Freelancer/profile/edit_profile.dart';
+import 'package:empco/Core/router/Router.dart';
 import 'package:empco/Features/Roles/Freelancer/profile/widgets/icon_and_text.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
+abstract class ProfileViewCallBacks {
+  void onEditTap();
+}
+
+@RoutePage()
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const ProfilePage();
+  }
+}
+
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage>
+    implements ProfileViewCallBacks {
+  @override
+  void onEditTap() {
+    context.go(
+      '$loginRoute/$freelancerHomePageRoute/$profileRoute/${editProfileRoute.replaceFirst(
+        ':title',
+        'Edit profile',
+      )}',
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,20 +62,12 @@ class ProfileView extends StatelessWidget {
                   const Image(
                     image: AssetImage(backgroungProfile),
                     fit: BoxFit.cover,
-                    width: 1200,
+                    width: double.maxFinite,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 350, top: 140),
                     child: IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const EditProfileView(
-                                  title: 'Edit Profile',
-                                ),
-                              ));
-                        },
+                        onPressed: onEditTap,
                         icon: const Icon(Icons.edit)),
                   ),
                   const Padding(
@@ -81,8 +105,8 @@ class ProfileView extends StatelessWidget {
                         IconWithText(
                           icon: badgeIcon,
                           text: 'Software Development',
-                          sizetext: 15,
-                          sizeicon: 30,
+                          textSize: 15,
+                          iconSize: 30,
                         ),
                         SizedBox(
                           height: 3,
@@ -90,8 +114,8 @@ class ProfileView extends StatelessWidget {
                         IconWithText(
                           icon: loctionIcon,
                           text: ' Damascus, Syria',
-                          sizetext: 15,
-                          sizeicon: 25,
+                          textSize: 15,
+                          iconSize: 25,
                         ),
                         SizedBox(
                           height: 3,
@@ -99,8 +123,8 @@ class ProfileView extends StatelessWidget {
                         IconWithText(
                           icon: connectionIcon,
                           text: ' 2019',
-                          sizetext: 15,
-                          sizeicon: 25,
+                          textSize: 15,
+                          iconSize: 25,
                         ),
                         SizedBox(
                           height: 3,
@@ -108,8 +132,8 @@ class ProfileView extends StatelessWidget {
                         IconWithText(
                           icon: ceoIcon,
                           text: ' Elon Task',
-                          sizetext: 15,
-                          sizeicon: 25,
+                          textSize: 15,
+                          iconSize: 25,
                         ),
                         SizedBox(
                           height: 3,
@@ -120,8 +144,8 @@ class ProfileView extends StatelessWidget {
                         IconWithText(
                           icon: aboutIcon,
                           text: 'Overview',
-                          sizetext: 20,
-                          sizeicon: 25,
+                          textSize: 20,
+                          iconSize: 25,
                         ),
                         Padding(
                           padding: EdgeInsets.only(right: 10, left: 8),
@@ -134,8 +158,8 @@ class ProfileView extends StatelessWidget {
                         IconWithText(
                           icon: workIcon,
                           text: 'Projects',
-                          sizetext: 20,
-                          sizeicon: 25,
+                          textSize: 20,
+                          iconSize: 25,
                         ),
                         Padding(
                           padding: EdgeInsets.only(left: 8, right: 10),
@@ -153,7 +177,7 @@ class ProfileView extends StatelessWidget {
                       ],
                     ),
                   ),
-                   Padding(
+                  Padding(
                     padding: const EdgeInsets.only(top: 75, left: 25),
                     child: Container(
                       width: 100,

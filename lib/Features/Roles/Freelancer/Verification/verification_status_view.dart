@@ -1,14 +1,21 @@
-import 'package:empco/Core/Resources/Constants/Colors.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:empco/Core/Resources/Constants/assets.dart';
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:empco/Core/Widgets/empco_app_bar.dart';
-import 'package:empco/Features/Roles/Freelancer/Verification/AccountVerification.dart';
-
+import 'package:empco/Core/router/Router.dart';
+import 'package:empco/Features/Roles/Freelancer/Verification/upload_licence_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class VerificationVerified extends StatefulWidget {
-  const VerificationVerified({
+abstract class VerificationStatusViewCallBacks {
+  void onRequestAgainTap();
+}
+
+@RoutePage()
+class VerificationStatusView extends StatelessWidget {
+  const VerificationStatusView({
     super.key,
     required this.verificationStatus,
   });
@@ -16,10 +23,32 @@ class VerificationVerified extends StatefulWidget {
   final int verificationStatus;
 
   @override
-  State<VerificationVerified> createState() => _VerificationVerifiedState();
+  Widget build(BuildContext context) {
+    return VerificationStatusPage(
+      verificationStatus: verificationStatus,
+    );
+  }
 }
 
-class _VerificationVerifiedState extends State<VerificationVerified> {
+class VerificationStatusPage extends StatefulWidget {
+  const VerificationStatusPage({
+    super.key,
+    required this.verificationStatus,
+  });
+
+  final int verificationStatus;
+
+  @override
+  State<VerificationStatusPage> createState() => _VerificationStatusPageState();
+}
+
+class _VerificationStatusPageState extends State<VerificationStatusPage>
+    implements VerificationStatusViewCallBacks {
+  @override
+  void onRequestAgainTap() {
+    context.go('$loginRoute/$freelancerHomePageRoute/$uploadLicenceRoute');
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -70,7 +99,7 @@ class _VerificationVerifiedState extends State<VerificationVerified> {
                         : 'Your verification request was rejected by the admin because your account does not meet the conditions!',
                 style: GoogleFonts.poppins(
                   textStyle: const TextStyle(
-                      color: black, fontSize: 14, fontWeight: FontWeight.bold),
+                      color: AppColors.black, fontSize: 14, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -94,10 +123,11 @@ class _VerificationVerifiedState extends State<VerificationVerified> {
                         const EdgeInsets.symmetric(horizontal: 70, vertical: 8),
                     onPressed: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const AccountVerification(),
-                          ));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const UploadLicencePage(),
+                        ),
+                      );
                     },
                     color: const Color(0xFFF8F8F8),
                     shape: RoundedRectangleBorder(
@@ -110,7 +140,7 @@ class _VerificationVerifiedState extends State<VerificationVerified> {
                       'Request again',
                       style: GoogleFonts.poppins(
                         textStyle: const TextStyle(
-                            color: black,
+                            color: AppColors.black,
                             fontWeight: FontWeight.bold,
                             fontSize: 18),
                       ),

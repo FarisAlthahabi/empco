@@ -1,5 +1,5 @@
 import 'package:empco/Core/Resources/Constants/Font_Weights.dart';
-import 'package:empco/Core/Resources/Constants/colors.dart';
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -41,7 +41,7 @@ class _SearchTextFieldState extends State<SearchTextField> {
           decoration: InputDecoration(
             constraints: const BoxConstraints(maxHeight: 28),
             border:  const OutlineInputBorder(
-              borderSide: BorderSide(width: 1 , color: black),
+              borderSide: BorderSide(width: 1 , color: AppColors.black),
               borderRadius: BorderRadius.all(
                 Radius.circular(10),
               ),

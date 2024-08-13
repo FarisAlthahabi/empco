@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:flutter/material.dart';
-
-import 'package:empco/Core/Resources/Constants/Colors.dart';
 
 class CirclesForCurrentPage extends StatelessWidget {
   final int index;
@@ -24,7 +23,7 @@ class CirclesForCurrentPage extends StatelessWidget {
                 height: 8,
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: index == ind ? blue : white1),
+                    color: index == ind ? AppColors.blue : AppColors.white1),
               );
             }),
           )),

@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:empco/Core/Config/router/Router.dart';
+import 'package:empco/Core/router/Router.dart';
 import 'package:empco/Core/Resources/Constants/Texts.dart';
 import 'package:empco/Core/Resources/Constants/assets.dart';
 import 'package:empco/Core/Widgets/empcoIcon_and_empcoText.dart';
@@ -37,12 +37,15 @@ class SelectRolePage extends StatefulWidget {
 class _SelectRolePageState extends State<SelectRolePage>
     implements SelectRoleViewCallBacks {
   late final AuthenticationBloc authenticationBloc = context.read();
-  final UserRepo userRepo = UserRepo();
+
+  late final UserRepo userRepo = context.read();
+  
   @override
   onRoleSelected(int index, BuildContext context) {
     authenticationBloc.add(IsAuthenticatedOrFirstTime());
     userRepo.setKey(role, userRole[index]);
-    context.go('$mainRoute$introRoute/$signUpRoute');
+    userRepo.setKey(isFirstTime, false);
+    context.go('$mainRoute/$signUpRoute');
   }
 
   @override

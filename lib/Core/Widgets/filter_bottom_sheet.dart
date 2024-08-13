@@ -1,9 +1,9 @@
 import 'package:empco/Core/Resources/Constants/assets.dart';
-import 'package:empco/Core/Resources/Constants/colors.dart';
 import 'package:empco/Core/Resources/Constants/font_weights.dart';
 import 'package:empco/Core/Resources/Constants/shadows.dart';
 import 'package:empco/Core/Resources/Constants/text_styles.dart';
 import 'package:empco/Core/Resources/Constants/texts.dart';
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:empco/Core/Widgets/buttons.dart';
 import 'package:empco/Core/Widgets/jop_post_text_field.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +45,7 @@ class FilterBottomSheet extends StatelessWidget {
         children: [
           const Center(
             child: Divider(
-              color: black,
+              color: AppColors.black,
               thickness: 2,
               endIndent: 130,
               indent: 130,
@@ -84,15 +84,15 @@ class FilterBottomSheet extends StatelessWidget {
                 textStyle: TextStyles.bodyLarge,
                 width: 85,
                 height: 30,
-                buttonColor: darkBlue,
+                buttonColor: AppColors.darkBlue,
               ),
               const SizedBox(width: 20),
               MainActionButton(
                 text: partTimeText,
-                textStyle: TextStyles.bodyLarge.copyWith(color: black),
+                textStyle: TextStyles.bodyLarge.copyWith(color: AppColors.black),
                 width: 85,
                 height: 30,
-                buttonColor: whiteShade,
+                buttonColor: AppColors.whiteShade,
               ),
             ],
           ),
@@ -114,23 +114,23 @@ class FilterBottomSheet extends StatelessWidget {
                 textStyle: TextStyles.bodyLarge,
                 width: 85,
                 height: 30,
-                buttonColor: darkBlue,
+                buttonColor: AppColors.darkBlue,
               ),
               const SizedBox(width: 20),
               MainActionButton(
                 text: remoteText,
-                textStyle: TextStyles.bodyLarge.copyWith(color: black),
+                textStyle: TextStyles.bodyLarge.copyWith(color: AppColors.black),
                 width: 85,
                 height: 30,
-                buttonColor: whiteShade,
+                buttonColor: AppColors.whiteShade,
               ),
               const SizedBox(width: 20),
               MainActionButton(
                 text: hybridText,
-                textStyle: TextStyles.bodyLarge.copyWith(color: black),
+                textStyle: TextStyles.bodyLarge.copyWith(color: AppColors.black),
                 width: 85,
                 height: 30,
-                buttonColor: whiteShade,
+                buttonColor: AppColors.whiteShade,
               ),
             ],
           ),
@@ -178,7 +178,7 @@ class FilterBottomSheet extends StatelessWidget {
               children: [
                 MainActionButton(
                   onTap: onCancelTap,
-                  buttonColor: whiteShade,
+                  buttonColor: AppColors.whiteShade,
                   width: 100,
                   height: 32,
                   text: cancelText,
@@ -186,7 +186,7 @@ class FilterBottomSheet extends StatelessWidget {
                   yAxisOffset: 3.5,
                   shadow: AppShadows.boxShadow1,
                   textStyle: TextStyles.bodyLarge.copyWith(
-                    color: black,
+                    color: AppColors.black,
                     fontWeight: weightlevel7,
                   ),
                 ),
@@ -200,7 +200,7 @@ class FilterBottomSheet extends StatelessWidget {
                   yAxisOffset: 3.5,
                   shadow: AppShadows.boxShadow1,
                   textStyle: TextStyles.bodyLarge.copyWith(
-                    color: white,
+                    color: AppColors.white,
                     fontWeight: weightlevel7,
                   ),
                 ),

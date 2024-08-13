@@ -1,4 +1,4 @@
-import 'package:empco/Core/Resources/Constants/colors.dart';
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -15,7 +15,7 @@ class JobDescriptionText extends StatelessWidget {
         text,
         style: GoogleFonts.poppins(
           textStyle:
-              TextStyle(color: black, fontSize: 8.94, fontWeight: fontWeight),
+              TextStyle(color: AppColors.black, fontSize: 8.94, fontWeight: fontWeight),
         ),
       ),
     );

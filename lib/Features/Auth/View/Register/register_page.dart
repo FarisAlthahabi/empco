@@ -1,5 +1,7 @@
-import 'package:empco/Core/Config/router/Router.dart';
-import 'package:empco/Core/Resources/Constants/colors.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:empco/Core/Theme/components/colors.dart';
+import 'package:empco/Core/di/di.dart';
+import 'package:empco/Core/router/Router.dart';
 import 'package:empco/Core/Resources/Constants/Texts.dart';
 import 'package:empco/Core/Resources/Constants/assets.dart';
 import 'package:empco/Core/Widgets/Buttons.dart';
@@ -45,6 +47,19 @@ abstract class RegisterViewCallbacks {
 }
 
 bool obsecure = true;
+
+@RoutePage()
+class RegisterView extends StatelessWidget {
+  const RegisterView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => config<AuthBloc>(),
+      child: const RegisterPage(),
+    );
+  }
+}
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -136,19 +151,19 @@ class _RegisterPageState extends State<RegisterPage>
 
   @override
   void onContinueWithGoogleTap(BuildContext context) {
-    BlocProvider.of<AuthBloc>(context).add(LoginWithGoogleEvent());
+    authBloc.add(LoginWithGoogleEvent());
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
   }
 
   @override
   void onLoginTap(BuildContext context) {
-    context.go('$mainRoute$introRoute/$loginRoute');
+    context.go('$mainRoute/$loginRoute');
     //dispose();
   }
 
   @override
   void onSignUpTap(BuildContext context) {
-    BlocProvider.of<AuthBloc>(context).add(RegisterEvent(
+    authBloc.add(RegisterEvent(
         firstName: firstName,
         lastName: lastName,
         email: email,
@@ -168,25 +183,27 @@ class _RegisterPageState extends State<RegisterPage>
         listener: (context, state) async {
           if (password == confirmPassword) {
             if (state is SuccessToRegisterState) {
-              showSnackBarMethod(context, registerSuccess, green);
+              showSnackBarMethod(context, registerSuccess, AppColors.green);
               context.goNamed("VerifyPage", pathParameters: {'email': email});
             } else if (state is FailedToRegisterState) {
-              showSnackBarMethod(context, state.error, red);
+              showSnackBarMethod(context, state.error, AppColors.red);
             }
           } else {
-            showSnackBarMethod(context, passwordAndConfirmSame, red);
+            showSnackBarMethod(context, passwordAndConfirmSame, AppColors.red);
           }
           if (state is SuccessToLoginWithGoogleState) {
-            showSnackBarMethod(context, loginSuccess, green);
+            userRepo.setKey(isLogin, true);
+            userRepo.setKey(isFirstTime, false);
+            showSnackBarMethod(context, loginSuccess, AppColors.green);
             if (await userRepo.getKey(role) == 'freelancer') {
-              context.go('$mainRoute$introRoute/$freelancerHomePageRoute');
+              context.go('$mainRoute/$loginRoute/$freelancerHomePageRoute');
             } else if (await userRepo.getKey(role) == 'owner') {
-              context.go('$mainRoute$introRoute/$companyHomePageRoute');
+              context.go('$mainRoute/$loginRoute/$companyHomePageRoute');
             } else {
-              context.go('$mainRoute$introRoute/$customerHomePageRoute');
+              context.go('$mainRoute/$loginRoute/$customerHomePageRoute');
             }
           } else if (state is FailedToLoginWithGoogleState) {
-            showSnackBarMethod(context, loginWithGoogleFail, red);
+            showSnackBarMethod(context, loginWithGoogleFail, AppColors.red);
           }
         },
         builder: (context, state) {
@@ -308,7 +325,7 @@ class _RegisterPageState extends State<RegisterPage>
                             text: signUpText,
                             blurRadius: 4,
                             yAxisOffset: 4,
-                            shadowColor: boxShadowColor1,
+                            shadowColor: AppColors.boxShadowColor1,
                             fontSize: 17.09,
                             onTap: () {
                               onSignUpTap(context);

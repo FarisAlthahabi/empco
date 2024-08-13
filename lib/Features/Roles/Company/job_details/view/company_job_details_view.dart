@@ -32,6 +32,7 @@ class _CompanyJobDetailsViewState extends State<CompanyJobDetailsView> implement
     double screenWidth = screenSize.width;
 
     return JobDetailsView(
+      jobId: 1,
       onDelete: onDelete,
       onEdit: onEdit,
       screenWidth: screenWidth,

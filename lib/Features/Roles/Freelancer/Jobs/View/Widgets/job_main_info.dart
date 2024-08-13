@@ -1,5 +1,5 @@
-import 'package:empco/Core/Resources/Constants/Colors.dart';
 import 'package:empco/Core/Resources/Constants/Font_Weights.dart';
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:empco/Core/Widgets/buttons.dart';
 import 'package:empco/Features/Roles/Freelancer/Jobs/Model/job_model/job_model.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +36,7 @@ class JobMainInfo extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 10),
           width: 0.73 * screenWidth,
           decoration: BoxDecoration(
-            color: const Color.fromRGBO(248, 248, 248, 1),
+            color: const Color(0xFFF8F8F8),
             borderRadius: BorderRadius.circular(11.42),
           ),
           child: Padding(
@@ -55,9 +55,9 @@ class JobMainInfo extends StatelessWidget {
                         child: Text(
                           job.title,
                           style: GoogleFonts.poppins(
-                            textStyle: TextStyle(
-                              color: blue,
-                              fontSize: 14.64,
+                            textStyle: const TextStyle(
+                              color:AppColors. blue,
+                              fontSize: 20,
                               fontWeight: weightlevel7,
                             ),
                           ),
@@ -97,9 +97,9 @@ class JobMainInfo extends StatelessWidget {
                             Text(
                               job.title,
                               style: GoogleFonts.poppins(
-                                textStyle: TextStyle(
-                                    color: const Color.fromRGBO(15, 50, 91, 1),
-                                    fontSize: 8.64,
+                                textStyle: const TextStyle(
+                                    color: Color.fromRGBO(15, 50, 91, 1),
+                                    fontSize: 12,
                                     fontWeight: weightlevel7),
                               ),
                               textAlign: TextAlign.center,
@@ -146,9 +146,9 @@ class JobMainInfo extends StatelessWidget {
                             Text(
                               job.location,
                               style: GoogleFonts.poppins(
-                                textStyle: TextStyle(
+                                textStyle: const TextStyle(
                                     color:
-                                        const Color.fromRGBO(155, 155, 155, 1),
+                                        Color(0xFF373737),
                                     fontSize: 10,
                                     fontWeight: weightlevel7),
                               ),
@@ -166,9 +166,9 @@ class JobMainInfo extends StatelessWidget {
                             Text(
                               job.salary.toString(),
                               style: GoogleFonts.poppins(
-                                textStyle: TextStyle(
+                                textStyle: const TextStyle(
                                     color:
-                                        const Color.fromRGBO(155, 155, 155, 1),
+                                        Color(0xFF373737),
                                     fontSize: 10,
                                     fontWeight: weightlevel7),
                               ),
@@ -198,7 +198,7 @@ class JobMainInfo extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        width: 110,
+                        width: 130,
                         child: Row(
                           children: [
                             const SizedBox(
@@ -213,27 +213,32 @@ class JobMainInfo extends StatelessWidget {
                             Text(
                               job.location,
                               style: GoogleFonts.poppins(
-                                  textStyle: TextStyle(
-                                      color: const Color.fromRGBO(
-                                          155, 155, 155, 1),
+                                  textStyle: const TextStyle(
+                                      color: Color(0xFF373737),
                                       fontSize: 10,
                                       fontWeight: weightlevel7)),
                               textAlign: TextAlign.center,
                             ),
                             const SizedBox(
-                              width: 5,
+                              width: 15,
                             ),
-                            Text(
-                              job.jobType,
-                              style: GoogleFonts.poppins(
-                                textStyle: TextStyle(
-                                  color: const Color.fromRGBO(
-                                      155, 155, 155, 1),
-                                  fontSize: 10,
-                                  fontWeight: weightlevel7,
+                            Container(
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                color: const Color(0x0F325B12),
+                                borderRadius: BorderRadius.circular(5)
                                 ),
+                              child: Text(
+                                job.jobType,
+                                style: GoogleFonts.poppins(
+                                  textStyle: const TextStyle(
+                                    color: Color(0xFF373737),
+                                    fontSize: 10,
+                                    fontWeight: weightlevel7,
+                                  ),
+                                ),
+                                textAlign: TextAlign.center,
                               ),
-                              textAlign: TextAlign.center,
                             ),
                           ],
                         ),
@@ -247,7 +252,7 @@ class JobMainInfo extends StatelessWidget {
                             text: 'Apply',
                             blurRadius: 1.36,
                             yAxisOffset: 1.36,
-                            shadowColor: boxShadowColor2,
+                            shadowColor: AppColors.boxShadowColor2,
                             fontSize: 6.81,
                             onTap: onApplyTap),
                       ),

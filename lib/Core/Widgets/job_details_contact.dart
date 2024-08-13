@@ -1,5 +1,5 @@
-import 'package:empco/Core/Resources/Constants/colors.dart';
 import 'package:empco/Core/Resources/Constants/font_weights.dart';
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -32,7 +32,7 @@ class JobContactDetails extends StatelessWidget {
               title ?? 'Contact',
               style: GoogleFonts.poppins(
                 textStyle: TextStyle(
-                    color: black,
+                    color: AppColors.black,
                     fontSize: fontSize ?? 12.35,
                     fontWeight: weightlevel7),
               ),
@@ -56,7 +56,7 @@ class JobContactDetails extends StatelessWidget {
                 'uzonehr@gmail.com',
                 style: GoogleFonts.poppins(
                   textStyle: TextStyle(
-                      color: black,
+                      color: AppColors.black,
                       fontSize: fontSize == null ? 12.35 : fontSize! - 2,
                       fontWeight: weightlevel7),
                 ),
@@ -81,7 +81,7 @@ class JobContactDetails extends StatelessWidget {
                 '+9639123456789',
                 style: GoogleFonts.poppins(
                   textStyle: TextStyle(
-                      color: black,
+                      color: AppColors.black,
                       fontSize: fontSize == null ? 12.35 : fontSize! - 2,
                       fontWeight: weightlevel7),
                 ),

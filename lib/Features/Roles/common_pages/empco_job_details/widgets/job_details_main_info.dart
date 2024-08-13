@@ -1,7 +1,8 @@
 import 'package:empco/Core/Resources/Constants/assets.dart';
-import 'package:empco/Core/Resources/Constants/colors.dart';
 import 'package:empco/Core/Resources/Constants/texts.dart';
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:empco/Core/Widgets/buttons.dart';
+import 'package:empco/Features/Roles/Freelancer/Jobs/Model/job_model/job_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,13 +11,15 @@ class JobDetailsMainInfo extends StatelessWidget {
   const JobDetailsMainInfo({
     super.key,
     required this.screenWidth,
-   this.onApplyTap,
-   this.onMessageTap,
+    this.onApplyTap,
+    this.onMessageTap,
+    required this.job,
   });
 
   final double screenWidth;
   final VoidCallback? onApplyTap;
   final VoidCallback? onMessageTap;
+  final JobModel job;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,16 +33,15 @@ class JobDetailsMainInfo extends StatelessWidget {
         height: double.maxFinite,
         decoration: BoxDecoration(
           image: const DecorationImage(
-              image: AssetImage(
-                  jobDetailsBackground),
-              fit: BoxFit.fill),
+              image: AssetImage(jobDetailsBackground), fit: BoxFit.fill),
           borderRadius: BorderRadius.circular(11.42),
           boxShadow: const [
             BoxShadow(
-                offset: Offset(0, 2),
-                spreadRadius: 0,
-                blurRadius: 2,
-                color: Color.fromRGBO(0, 0, 0, 0.25))
+              offset: Offset(0, 2),
+              spreadRadius: 0,
+              blurRadius: 2,
+              color: Color.fromRGBO(0, 0, 0, 0.25),
+            ),
           ],
         ),
         child: Column(
@@ -82,20 +84,20 @@ class JobDetailsMainInfo extends StatelessWidget {
                           ],
                         ),
                         Text(
-                          'Uzone',
+                          job.title,
                           style: GoogleFonts.poppins(
                             textStyle: const TextStyle(
-                                color: Colors.white,
+                                color: AppColors.white,
                                 fontSize: 14.62,
                                 fontWeight: FontWeight.w700),
                           ),
                           textAlign: TextAlign.center,
                         ),
                         Text(
-                          'Technology and Software',
+                          job.title,
                           style: GoogleFonts.poppins(
                             textStyle: const TextStyle(
-                                color: Colors.white,
+                                color: AppColors.white,
                                 fontSize: 6.35,
                                 fontWeight: FontWeight.w700),
                           ),
@@ -116,6 +118,13 @@ class JobDetailsMainInfo extends StatelessWidget {
               child: ListView.separated(
                 itemCount: 4,
                 itemBuilder: (context, index) {
+                   List<String> jobDetailsData = [
+                    job.location,
+                    job.location,
+                    '${job.salary} SP',
+                    job.jobType,
+                    job.deadTime.toString()
+                  ];
                   return SizedBox(
                     child: Row(
                       children: [
@@ -150,7 +159,7 @@ class JobDetailsMainInfo extends StatelessWidget {
                           jobDetailsData[index],
                           style: GoogleFonts.poppins(
                             textStyle: const TextStyle(
-                                color: white,
+                                color: AppColors.white,
                                 fontSize: 9.35,
                                 fontWeight: FontWeight.w700),
                           ),
@@ -176,10 +185,10 @@ class JobDetailsMainInfo extends StatelessWidget {
                   text: 'Message',
                   blurRadius: 4,
                   yAxisOffset: 4,
-                  shadowColor: boxShadowColor2,
+                  shadowColor: AppColors.boxShadowColor2,
                   fontSize: 8.73,
-                  buttonColor: white,
-                  textColor: black,
+                  buttonColor: AppColors.white,
+                  textColor: AppColors.black,
                   onTap: onMessageTap,
                 ),
                 const SizedBox(
@@ -191,14 +200,14 @@ class JobDetailsMainInfo extends StatelessWidget {
                     text: 'Apply',
                     blurRadius: 4,
                     yAxisOffset: 4,
-                    shadowColor: boxShadowColor2,
+                    shadowColor: AppColors.boxShadowColor2,
                     fontSize: 8.73,
                     icon: const Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
                           Icons.exit_to_app_outlined,
-                          color: white,
+                          color: AppColors.white,
                           size: 12,
                         ),
                       ],

@@ -1,4 +1,4 @@
-import 'package:empco/Core/Resources/Constants/colors.dart';
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:empco/Core/Widgets/filter_bottom_sheet.dart';
 import 'package:empco/Core/Widgets/main_show_bottom_sheet.dart';
 import 'package:empco/Core/Widgets/show_dialog.dart';
@@ -99,7 +99,7 @@ class _CompanyHomePageState extends State<CompanyHomePage>
   void onFilterTap() {
     mainShowBottomSheet(
       context,
-      backgroundColor: greyShade,
+      backgroundColor: AppColors.greyShade,
       widget: FilterBottomSheet(
         locationFocusNode: locationFocusNode,
         minimumSalaryFocusNode: minimumSalaryFocusNode,

@@ -29,6 +29,90 @@ class AuthenticationRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [EditProfileView]
+class EditProfileRoute extends PageRouteInfo<EditProfileRouteArgs> {
+  EditProfileRoute({
+    Key? key,
+    required String title,
+    List<PageRouteInfo>? children,
+  }) : super(
+          EditProfileRoute.name,
+          args: EditProfileRouteArgs(
+            key: key,
+            title: title,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'EditProfileRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<EditProfileRouteArgs>();
+      return EditProfileView(
+        key: args.key,
+        title: args.title,
+      );
+    },
+  );
+}
+
+class EditProfileRouteArgs {
+  const EditProfileRouteArgs({
+    this.key,
+    required this.title,
+  });
+
+  final Key? key;
+
+  final String title;
+
+  @override
+  String toString() {
+    return 'EditProfileRouteArgs{key: $key, title: $title}';
+  }
+}
+
+/// generated route for
+/// [ForgetPasswordView]
+class ForgetPasswordRoute extends PageRouteInfo<void> {
+  const ForgetPasswordRoute({List<PageRouteInfo>? children})
+      : super(
+          ForgetPasswordRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ForgetPasswordRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ForgetPasswordView();
+    },
+  );
+}
+
+/// generated route for
+/// [FreelancerNavigationBarView]
+class FreelancerNavigationBarRoute extends PageRouteInfo<void> {
+  const FreelancerNavigationBarRoute({List<PageRouteInfo>? children})
+      : super(
+          FreelancerNavigationBarRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'FreelancerNavigationBarRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const FreelancerNavigationBarView();
+    },
+  );
+}
+
+/// generated route for
 /// [IntroRoutePage]
 class IntroRouter extends PageRouteInfo<void> {
   const IntroRouter({List<PageRouteInfo>? children})
@@ -105,6 +189,44 @@ class MainNavigationRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ProfileView]
+class ProfileRoute extends PageRouteInfo<void> {
+  const ProfileRoute({List<PageRouteInfo>? children})
+      : super(
+          ProfileRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProfileRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ProfileView();
+    },
+  );
+}
+
+/// generated route for
+/// [RegisterView]
+class RegisterRoute extends PageRouteInfo<void> {
+  const RegisterRoute({List<PageRouteInfo>? children})
+      : super(
+          RegisterRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'RegisterRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const RegisterView();
+    },
+  );
+}
+
+/// generated route for
 /// [SelectRoleView]
 class SelectRoleRoute extends PageRouteInfo<void> {
   const SelectRoleRoute({List<PageRouteInfo>? children})
@@ -140,4 +262,70 @@ class SplashRoute extends PageRouteInfo<void> {
       return const SplashView();
     },
   );
+}
+
+/// generated route for
+/// [UploadLicenceView]
+class UploadLicenceRoute extends PageRouteInfo<void> {
+  const UploadLicenceRoute({List<PageRouteInfo>? children})
+      : super(
+          UploadLicenceRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'UploadLicenceRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const UploadLicenceView();
+    },
+  );
+}
+
+/// generated route for
+/// [VerificationStatusView]
+class VerificationStatusRoute
+    extends PageRouteInfo<VerificationStatusRouteArgs> {
+  VerificationStatusRoute({
+    Key? key,
+    required int verificationStatus,
+    List<PageRouteInfo>? children,
+  }) : super(
+          VerificationStatusRoute.name,
+          args: VerificationStatusRouteArgs(
+            key: key,
+            verificationStatus: verificationStatus,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'VerificationStatusRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<VerificationStatusRouteArgs>();
+      return VerificationStatusView(
+        key: args.key,
+        verificationStatus: args.verificationStatus,
+      );
+    },
+  );
+}
+
+class VerificationStatusRouteArgs {
+  const VerificationStatusRouteArgs({
+    this.key,
+    required this.verificationStatus,
+  });
+
+  final Key? key;
+
+  final int verificationStatus;
+
+  @override
+  String toString() {
+    return 'VerificationStatusRouteArgs{key: $key, verificationStatus: $verificationStatus}';
+  }
 }

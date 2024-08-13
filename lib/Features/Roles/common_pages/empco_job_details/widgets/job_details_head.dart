@@ -1,4 +1,4 @@
-import 'package:empco/Core/Resources/Constants/Colors.dart';
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -8,11 +8,13 @@ class JobDetailsHead extends StatelessWidget {
     this.onAddToFavoriteTap,
     this.onEdit,
     this.onDelete,
+    required this.title,
   });
 
   final VoidCallback? onAddToFavoriteTap;
   final VoidCallback? onEdit;
   final VoidCallback? onDelete;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class JobDetailsHead extends StatelessWidget {
           width: 45,
         ),
         title: Text(
-          'Ui Ux Designer',
+          title,
           style: GoogleFonts.poppins(
             textStyle: const TextStyle(
                 color: Color.fromRGBO(29, 91, 164, 1),
@@ -33,24 +35,23 @@ class JobDetailsHead extends StatelessWidget {
         trailing: onAddToFavoriteTap != null
             ? InkWell(
                 onTap: onAddToFavoriteTap,
-                child: Icon(
+                child: const Icon(
                   Icons.bookmark_outline,
                   size: 40,
-                  color: black,
+                  color: AppColors.black,
                 ))
             : SizedBox(
-              width: 50,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                      onTap: onEdit,
-                      child: const Icon(Icons.edit_outlined)),
-                  InkWell(
-                      onTap: onDelete,
-                      child: const Icon(Icons.delete_outline_outlined)),
-                ],
-              ),
-            ));
+                width: 50,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                        onTap: onEdit, child: const Icon(Icons.edit_outlined)),
+                    InkWell(
+                        onTap: onDelete,
+                        child: const Icon(Icons.delete_outline_outlined)),
+                  ],
+                ),
+              ));
   }
 }

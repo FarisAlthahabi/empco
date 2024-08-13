@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:empco/Core/Config/di/di.dart';
+import 'package:empco/Core/di/di.dart';
 import 'package:empco/Core/dio/exceptions.dart';
 import 'package:empco/Core/repos/user_repo.dart';
 import 'package:empco/Core/utils/logger.dart';
+import 'package:empco/Features/auth_manager/bloc/auth_manager_bloc.dart';
 import 'package:flutter/cupertino.dart';
 
 class AppInterceptor extends Interceptor {
@@ -49,7 +50,7 @@ class AppInterceptor extends Interceptor {
             );
           case 401:
             //TODO: We should handle this in a different way.
-           // config<AuthenticationBloc>().add(SignOutRequested());
+            config<AuthenticationBloc>().add(SignOutRequested());
             throw UnauthorizedException(err.requestOptions);
           case 403:
             throw AccessForbiddenException(err.requestOptions);

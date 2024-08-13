@@ -1,6 +1,6 @@
-import 'package:empco/Core/Resources/Constants/Colors.dart';
 import 'package:empco/Core/Resources/Constants/Font_Weights.dart';
 import 'package:empco/Core/Resources/Constants/Texts.dart';
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:flutter/material.dart';
 
 class TextForLoginPage extends StatelessWidget {
@@ -8,9 +8,9 @@ class TextForLoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return const Text(
       loginToYourAccount,
-      style: TextStyle(color: black, fontSize: 20, fontWeight: weightlevel8),
+      style: TextStyle(color: AppColors.black, fontSize: 20, fontWeight: weightlevel8),
       textAlign: TextAlign.center,
     );
   }

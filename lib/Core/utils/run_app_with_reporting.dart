@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:empco/Core/Config/bloc/Bloc_Observer.dart';
+import 'package:empco/Core/bloc/Bloc_Observer.dart';
 import 'package:empco/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';

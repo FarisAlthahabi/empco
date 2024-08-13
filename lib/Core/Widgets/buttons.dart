@@ -1,6 +1,6 @@
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:empco/Core/Resources/Constants/Colors.dart';
 import 'package:empco/Core/Resources/Constants/Font_Weights.dart';
 import 'package:empco/Core/Resources/Constants/assets.dart';
 import 'package:empco/Features/Auth/View/Register/widgets/Texts.dart';
@@ -25,13 +25,13 @@ class GlobalTextButton extends StatelessWidget {
         textAlign: TextAlign.center,
         TextSpan(
             style:
-                TextStyle(color: blue, fontSize: 12, fontWeight: weightlevel8),
+                const TextStyle(color: AppColors.blue, fontSize: 12, fontWeight: weightlevel8),
             text: text1,
             children: [
               if (text2 != null)
                 TextSpan(
                     text: text2,
-                    style: const TextStyle(color: bottomAuthPageTextColor2)),
+                    style: const TextStyle(color: AppColors.bottomAuthPageTextColor2)),
             ]),
       ),
     );
@@ -117,7 +117,7 @@ class MainActionButton extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-            color: buttonColor ?? blue,
+            color: buttonColor ?? AppColors.blue,
             borderRadius: BorderRadius.circular(borderRadius ?? 327.16),
             boxShadow: shadow ??
                 [
@@ -125,7 +125,7 @@ class MainActionButton extends StatelessWidget {
                       offset: Offset(0, yAxisOffset ?? 0),
                       spreadRadius: 0,
                       blurRadius: blurRadius ?? 0,
-                      color: shadowColor ?? white)
+                      color: shadowColor ?? AppColors.white)
                 ]),
         child: Center(
           child: Row(
@@ -138,7 +138,7 @@ class MainActionButton extends StatelessWidget {
                 style: textStyle ??
                     GoogleFonts.poppins(
                       textStyle: TextStyle(
-                          color: textColor ?? white,
+                          color: textColor ?? AppColors.white,
                           fontSize: fontSize,
                           fontWeight: weightlevel7),
                     ),
@@ -175,8 +175,8 @@ class BackTextButton extends StatelessWidget {
               onTap: onTap,
               child: Text(
                 text,
-                style: TextStyle(
-                    color: const Color.fromRGBO(75, 72, 72, 1),
+                style: const TextStyle(
+                    color: Color.fromRGBO(75, 72, 72, 1),
                     fontSize: 12,
                     fontWeight: weightlevel7),
                 textAlign: TextAlign.center,

@@ -1,6 +1,6 @@
-import 'package:empco/Core/Resources/Constants/Colors.dart';
 import 'package:empco/Core/Resources/Constants/Font_Weights.dart';
 import 'package:empco/Core/Resources/Constants/Texts.dart';
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:flutter/material.dart';
 
 class Text1InForgetPass extends StatelessWidget {
@@ -8,9 +8,13 @@ class Text1InForgetPass extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return const Text(
       didForgetPasswordText,
-      style: TextStyle(color: black, fontSize: 20, fontWeight: weightlevel8),
+      style: TextStyle(
+        color: AppColors.black,
+        fontSize: 20,
+        fontWeight: weightlevel8,
+      ),
       textAlign: TextAlign.center,
     );
   }
@@ -21,9 +25,13 @@ class Text2InForgetPass extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return const Text(
       noWorriesText,
-      style: TextStyle(color: black, fontSize: 10, fontWeight: weightlevel7),
+      style: TextStyle(
+        color: AppColors.black,
+        fontSize: 10,
+        fontWeight: weightlevel7,
+      ),
       textAlign: TextAlign.center,
     );
   }
@@ -34,9 +42,13 @@ class Text3InForgetPass extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return const Text(
       enterEmail,
-      style: TextStyle(color: black, fontSize: 13, fontWeight: weightlevel7),
+      style: TextStyle(
+        color: AppColors.black,
+        fontSize: 13,
+        fontWeight: weightlevel7,
+      ),
       textAlign: TextAlign.center,
     );
   }

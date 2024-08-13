@@ -15,6 +15,14 @@ class JobsSuccess extends JobsState {
   });
 }
 
+class JobsEmpty extends JobsState {
+  final String error;
+  JobsEmpty({
+    required this.error,
+  });
+}
+
+
 class JobsFail extends JobsState {
   final String error;
   JobsFail({

@@ -1,11 +1,19 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:empco/Features/Auth/View/Forget_Password/forget_password_page.dart';
 import 'package:empco/Features/Auth/View/Login/login_page.dart';
+import 'package:empco/Features/Auth/View/Register/register_page.dart';
 import 'package:empco/Features/Auth/View/Select_Role/select_role_page.dart';
 import 'package:empco/Features/Intro/View/intro_pages/Info_Screens.dart';
 import 'package:empco/Features/Intro/View/intro_pages/Spalsh_Screen.dart';
 import 'package:empco/Features/Intro/View/intro_pages/intro_router.dart';
+import 'package:empco/Features/Roles/Freelancer/Navigation_Bar/navigation_bar.dart';
+import 'package:empco/Features/Roles/Freelancer/Verification/upload_licence_view.dart';
+import 'package:empco/Features/Roles/Freelancer/Verification/verification_status_view.dart';
+import 'package:empco/Features/Roles/Freelancer/profile/edit_profile.dart';
+import 'package:empco/Features/Roles/Freelancer/profile/profile.dart';
 import 'package:empco/Features/auth_manager/view/auth_view.dart';
 import 'package:empco/Features/main_navigation/view/main_navigation_view.dart';
+import 'package:flutter/material.dart';
 
 part 'empco_router.gr.dart';
 

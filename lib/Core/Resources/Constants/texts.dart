@@ -90,13 +90,6 @@ const List<String> jobDetailsTitle = [
   'Type',
   'Deadline:'
 ];
-const List<String> jobDetailsData = [
-  'Damascus,Syria',
-  'On-Site',
-  '2000,000 SP',
-  'Full Time',
-  '3/7/2024'
-];
 
 const filterText = 'Filters';
 const typeText = 'Type';

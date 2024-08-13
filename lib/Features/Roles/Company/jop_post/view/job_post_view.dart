@@ -1,4 +1,4 @@
-import 'package:empco/Core/Resources/Constants/Colors.dart';
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:empco/Core/Widgets/buttons.dart';
 import 'package:empco/Core/Widgets/empco_app_bar.dart';
 import 'package:empco/Core/Widgets/jop_post_text_field.dart';
@@ -257,7 +257,7 @@ class _JobPostViewState extends State<JobPostView>
                         onTap: onResetTap,
                         text: 'Reset',
                         fontSize: 12.3,
-                        textColor: black,
+                        textColor: AppColors.black,
                         buttonColor: const Color.fromRGBO(239, 242, 245, 1),
                         blurRadius: 176,
                         width: 92,
@@ -268,8 +268,8 @@ class _JobPostViewState extends State<JobPostView>
                         onTap: onPostTap,
                         text: 'Post',
                         fontSize: 12.3,
-                        textColor: white,
-                        buttonColor: blue,
+                        textColor: AppColors.white,
+                        buttonColor: AppColors.blue,
                         blurRadius: 176,
                         width: 92,
                         height: 30,

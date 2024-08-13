@@ -1,15 +1,38 @@
-import 'package:empco/Core/Resources/Constants/Colors.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:empco/Core/Resources/Constants/assets.dart';
-
-
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:empco/Core/Widgets/empco_app_bar.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AccountVerification extends StatelessWidget {
-  const AccountVerification({super.key});
+abstract class UploadLicenceViewCallBacks {
+  void onUploadTap();
+}
+
+@RoutePage()
+class UploadLicenceView extends StatelessWidget {
+  const UploadLicenceView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const UploadLicencePage();
+  }
+}
+
+class UploadLicencePage extends StatefulWidget {
+  const UploadLicencePage({super.key});
+
+  @override
+  State<UploadLicencePage> createState() => _UploadLicencePageState();
+}
+
+class _UploadLicencePageState extends State<UploadLicencePage>
+    implements UploadLicenceViewCallBacks {
+  @override
+  void onUploadTap() {
+    // TODO: implement onUploadTap
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +58,7 @@ class AccountVerification extends StatelessWidget {
               'Upload File',
               style: GoogleFonts.poppins(
                 textStyle: const TextStyle(
-                    color: black, fontWeight: FontWeight.bold, fontSize: 20),
+                    color: AppColors.black, fontWeight: FontWeight.bold, fontSize: 20),
               ),
             ),
             const SizedBox(
@@ -47,7 +70,7 @@ class AccountVerification extends StatelessWidget {
                 textAlign: TextAlign.center,
                 'Upload the company"s license to be reviewed for verfication',
                 style: GoogleFonts.poppins(
-                  textStyle: const TextStyle(color: black, fontSize: 13),
+                  textStyle: const TextStyle(color: AppColors.black, fontSize: 13),
                 ),
               ),
             ),

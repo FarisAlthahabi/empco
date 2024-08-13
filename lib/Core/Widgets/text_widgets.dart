@@ -1,7 +1,7 @@
 
-import 'package:empco/Core/Resources/Constants/Colors.dart';
 import 'package:empco/Core/Resources/Constants/Font_Weights.dart';
 import 'package:empco/Core/Resources/Constants/Texts.dart';
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:flutter/material.dart';
 
 class OrText extends StatelessWidget {
@@ -9,10 +9,10 @@ class OrText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Text(
+    return  const Text(
       orText,
       style:  TextStyle(
-          color: black,
+          color: AppColors.black,
           fontSize: 14.06,
           fontWeight: weightlevel8),
       textAlign: TextAlign.center,

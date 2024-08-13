@@ -1,6 +1,6 @@
-import 'package:empco/Core/Resources/Constants/Colors.dart';
 import 'package:empco/Core/Resources/Constants/Font_Weights.dart';
 import 'package:empco/Core/Resources/Constants/Texts.dart';
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:flutter/material.dart';
 
 class VerifyText1 extends StatelessWidget {
@@ -8,9 +8,13 @@ class VerifyText1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return const Text(
       verifyEmailText,
-      style: TextStyle(color: black, fontSize: 15, fontWeight: weightlevel7),
+      style: TextStyle(
+        color: AppColors.black,
+        fontSize: 15,
+        fontWeight: weightlevel7,
+      ),
       textAlign: TextAlign.center,
     );
   }
@@ -21,14 +25,19 @@ class VerifyText2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text.rich(TextSpan(
+    return const Text.rich(
+      TextSpan(
         text: verificationCodeIsSent,
-        style: TextStyle(color: black, fontSize: 10, fontWeight: weightlevel5),
+        style: TextStyle(
+            color: AppColors.black, fontSize: 10, fontWeight: weightlevel5),
         children: [
-          TextSpan(text: emailText, style: TextStyle(fontWeight: bold)),
+          TextSpan(
+            text: emailText,
+            style: TextStyle(fontWeight: bold),
+          ),
           TextSpan(text: putCode)
-        ]));
+        ],
+      ),
+    );
   }
 }
-
-

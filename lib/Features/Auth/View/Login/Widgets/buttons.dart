@@ -1,6 +1,6 @@
-import 'package:empco/Core/Resources/Constants/Colors.dart';
 import 'package:empco/Core/Resources/Constants/Font_Weights.dart';
 import 'package:empco/Core/Resources/Constants/Texts.dart';
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:flutter/material.dart';
 
 class ForgetPasswordTextButton extends StatelessWidget {
@@ -18,10 +18,10 @@ class ForgetPasswordTextButton extends StatelessWidget {
         children: [
           InkWell(
             onTap: onTap,
-            child: Text(
+            child: const Text(
               forgetPasswordText,
               style:
-                  TextStyle(color: black, fontSize: 12.06, fontWeight: weightlevel8),
+                  TextStyle(color: AppColors.black, fontSize: 12.06, fontWeight: weightlevel8),
             ),
           ),
         ],

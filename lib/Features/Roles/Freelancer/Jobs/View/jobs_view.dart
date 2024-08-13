@@ -1,16 +1,20 @@
-import 'package:empco/Core/Config/di/di.dart';
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:empco/Core/Widgets/Loading_Page.dart';
 import 'package:empco/Core/Widgets/empco_app_bar.dart';
-import 'package:empco/Features/Roles/Freelancer/Job_Details/View/job_details.dart';
+import 'package:empco/Core/Widgets/filter_bottom_sheet.dart';
+import 'package:empco/Core/Widgets/main_show_bottom_sheet.dart';
+import 'package:empco/Core/di/di.dart';
+import 'package:empco/Core/router/Router.dart';
 import 'package:empco/Features/Roles/Freelancer/Jobs/View/Widgets/widgets.dart';
 import 'package:empco/Features/Roles/Freelancer/Jobs/cubit/jobs_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 abstract class JobsCallBacks {
   void onNotificationTap();
 
-  void onExpandJopTap(BuildContext context);
+  void onExpandJopTap(BuildContext context, int jobId);
 
   void onFavoriteTap();
 
@@ -23,6 +27,22 @@ abstract class JobsCallBacks {
   void onSearchChaged(String input);
 
   void onSearchSubmitted(String input);
+
+  void onTypeSelected();
+
+  void onWorkNatureSelected();
+
+  void onLocationChanged(String location);
+
+  void onLocationSubmitted(String location);
+
+  void onMinimumSalaryChanged(String minimumSalary);
+
+  void onMinimumSalarySubmitted(String minimumSalary);
+
+  void onCancelTap();
+
+  void onApplyFiltersTap();
 }
 
 class JobsView extends StatelessWidget {
@@ -49,6 +69,10 @@ class JobsPage extends StatefulWidget {
 
 class _JobsPageState extends State<JobsPage> implements JobsCallBacks {
   late final JobsCubit jobsCubit = context.read();
+
+  final locationFocusNode = FocusNode();
+  final minimumSalaryFocusNode = FocusNode();
+
   @override
   void initState() {
     jobsCubit.getJobs();
@@ -60,21 +84,37 @@ class _JobsPageState extends State<JobsPage> implements JobsCallBacks {
   onApplyTap() {}
 
   @override
-  onExpandJopTap(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const FreelancerJobDetailsView(),
-      ),
+  onExpandJopTap(BuildContext context, int jobId) {
+    context.go(
+      '$loginRoute/$freelancerHomePageRoute/${jobDetailsRoute.replaceFirst(
+        ':jobId',
+        jobId.toString(),
+      )}',
     );
-    //context.go('$mainRoute$introRoute/$jobDetailsRoute');
   }
 
   @override
   onFavoriteTap() {}
 
   @override
-  onFilterTap() {}
+  onFilterTap() {
+    mainShowBottomSheet(
+      context,
+      backgroundColor: AppColors.greyShade,
+      widget: FilterBottomSheet(
+        locationFocusNode: locationFocusNode,
+        minimumSalaryFocusNode: minimumSalaryFocusNode,
+        onLocationChanged: onLocationChanged,
+        onLocationSubmitted: onLocationSubmitted,
+        onMinimumSalaryChanged: onMinimumSalaryChanged,
+        onMinimumSalarySubmitted: onMinimumSalarySubmitted,
+        onTypeSelected: onTypeSelected,
+        onWorkNatureSelected: onWorkNatureSelected,
+        onCancelTap: onCancelTap,
+        onApplyFiltersTap: onApplyFiltersTap,
+      ),
+    );
+  }
 
   @override
   onMessageTap() {}
@@ -85,10 +125,52 @@ class _JobsPageState extends State<JobsPage> implements JobsCallBacks {
   }
 
   @override
-  void onSearchChaged(String input) {}
+  void onSearchChaged(String input) {
+  }
 
   @override
-  void onSearchSubmitted(String input) {}
+  void onSearchSubmitted(String input) {
+  }
+
+  @override
+  void onApplyFiltersTap() {
+    // TODO: implement onApplyFiltersTap
+  }
+
+  @override
+  void onCancelTap() {
+    // TODO: implement onCancelTap
+  }
+
+  @override
+  void onLocationChanged(String location) {
+    // TODO: implement onLocationChanged
+  }
+
+  @override
+  void onLocationSubmitted(String location) {
+    // TODO: implement onLocationSubmitted
+  }
+
+  @override
+  void onMinimumSalaryChanged(String minimumSalary) {
+    // TODO: implement onMinimumSalaryChanged
+  }
+
+  @override
+  void onMinimumSalarySubmitted(String minimumSalary) {
+    // TODO: implement onMinimumSalarySubmitted
+  }
+
+  @override
+  void onTypeSelected() {
+    // TODO: implement onTypeSelected
+  }
+
+  @override
+  void onWorkNatureSelected() {
+    // TODO: implement onWorkNatureSelected
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -148,9 +230,7 @@ class _JobsPageState extends State<JobsPage> implements JobsCallBacks {
                           ),
                           FilterIconButton(
                             // Filter Button
-                            onTap: () {
-                              onFilterTap();
-                            },
+                            onTap: onFilterTap,
                           )
                         ],
                       ),
@@ -178,7 +258,8 @@ class _JobsPageState extends State<JobsPage> implements JobsCallBacks {
                                     onApplyTap();
                                   },
                                   onExpandJopTap: () {
-                                    onExpandJopTap(context);
+                                    onExpandJopTap(
+                                        context, state.jobs[index].id);
                                   },
                                   onFavoriteTap: () {
                                     onFavoriteTap();

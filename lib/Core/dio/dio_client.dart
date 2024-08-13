@@ -7,7 +7,6 @@ import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 const baseUrl = 'http://10.0.2.2:8000/';
-//const apiUrl = '${baseUrl}api/';
 
 @singleton
 class DioClient {

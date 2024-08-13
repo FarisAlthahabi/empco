@@ -8,13 +8,17 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:empco/Core/Config/di/modules/app_modules.dart' as _i843;
+import 'package:empco/Core/di/modules/app_modules.dart' as _i723;
 import 'package:empco/Core/dio/dio_client.dart' as _i401;
 import 'package:empco/Core/repos/user_repo.dart' as _i110;
 import 'package:empco/Features/Auth/bloc/auth_bloc.dart' as _i990;
 import 'package:empco/Features/Auth/Service/http_auth_service.dart' as _i12;
 import 'package:empco/Features/auth_manager/bloc/auth_manager_bloc.dart'
     as _i393;
+import 'package:empco/Features/Roles/Freelancer/Job_details/cubit/job_details_cubit.dart'
+    as _i581;
+import 'package:empco/Features/Roles/Freelancer/Job_details/Service/job_details_service.dart'
+    as _i83;
 import 'package:empco/Features/Roles/Freelancer/Jobs/cubit/jobs_cubit.dart'
     as _i457;
 import 'package:empco/Features/Roles/Freelancer/Jobs/Service/jobs_service.dart'
@@ -50,11 +54,14 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.factory<_i638.JobsService>(() => _i638.HttpJobService());
+    gh.factory<_i83.JobDetailsService>(() => _i83.HttpJobDetailsService());
     gh.factory<_i457.JobsCubit>(() => _i457.JobsCubit(gh<_i638.JobsService>()));
+    gh.factory<_i581.JobDetailsCubit>(
+        () => _i581.JobDetailsCubit(gh<_i83.JobDetailsService>()));
     gh.singleton<_i393.AuthenticationBloc>(
         () => _i393.AuthenticationBloc(gh<_i110.UserRepo>()));
     return this;
   }
 }
 
-class _$RegisterModule extends _i843.RegisterModule {}
+class _$RegisterModule extends _i723.RegisterModule {}

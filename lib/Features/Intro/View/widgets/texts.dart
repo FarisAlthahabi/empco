@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:empco/Core/Resources/Constants/Colors.dart';
 import 'package:empco/Core/Resources/Constants/Font_Weights.dart';
 import 'package:empco/Core/Resources/Constants/Texts.dart';
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:flutter/material.dart';
 
 class InfoTextsWidget extends StatelessWidget {
@@ -21,12 +21,12 @@ class InfoTextsWidget extends StatelessWidget {
         Container(
           width: 105.92,
           height: 24.52,
-          color: white,
+          color: AppColors.white,
           child: Center(
             child: Text(
               infoText1[index],
               style: TextStyle(
-                  color: roleColors[index],
+                  color: AppColors.roleColors[index],
                   fontSize: 12.38,
                   fontWeight: weightlevel7),
               textAlign: TextAlign.center,
@@ -38,7 +38,7 @@ class InfoTextsWidget extends StatelessWidget {
           child: Text(
             infoText2[index],
             style: TextStyle(
-                color: black,
+                color: AppColors.black,
                 fontSize: 0.025 * screenHeight,
                 fontWeight: weightlevel8),
             textAlign: TextAlign.center,

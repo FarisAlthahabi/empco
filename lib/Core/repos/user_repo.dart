@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 const isRegistered = 'isRegistered';
 const isLogin = 'isLogin';
+const isFirstTime = 'isFirstTime';
 const role = 'role';
 const userRole = ['freelancer', 'owner', 'seeker'];
 const freelancer = 'freelancer';
@@ -52,8 +53,6 @@ class UserRepo {
       prefs.setBool('first_run', false);
     }
   }
-
-  
 
   Future<TokenModel?> getUser() async {
     try {
