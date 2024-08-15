@@ -1,1 +1,0 @@
-int sidebarr = 2;

@@ -24,14 +24,15 @@ class GlobalTextButton extends StatelessWidget {
       child: Text.rich(
         textAlign: TextAlign.center,
         TextSpan(
-            style:
-                const TextStyle(color: AppColors.blue, fontSize: 12, fontWeight: weightlevel8),
+            style: const TextStyle(
+                color: AppColors.blue, fontSize: 12, fontWeight: weightlevel8),
             text: text1,
             children: [
               if (text2 != null)
                 TextSpan(
                     text: text2,
-                    style: const TextStyle(color: AppColors.bottomAuthPageTextColor2)),
+                    style: const TextStyle(
+                        color: AppColors.bottomAuthPageTextColor2)),
             ]),
       ),
     );
@@ -80,7 +81,7 @@ class MainActionButton extends StatelessWidget {
   final double? yAxisOffset;
   final Color? shadowColor;
   final double? fontSize;
-  final Widget? icon;
+  final String? icon;
   final Color? buttonColor;
   final Border? border;
   final Color? textColor;
@@ -88,6 +89,10 @@ class MainActionButton extends StatelessWidget {
   final double? borderRadius;
   final TextStyle? textStyle;
   final List<BoxShadow>? shadow;
+  final Widget? child;
+  final double? padding;
+  final double? iconHeight;
+  final double? iconWidth;
 
   const MainActionButton({
     super.key,
@@ -105,15 +110,20 @@ class MainActionButton extends StatelessWidget {
     this.shadowColor,
     this.borderRadius,
     this.textStyle,
-    this.shadow, 
+    this.shadow,
+    this.child,
+    this.padding,
+    this.iconHeight,
+    this.iconWidth,
   });
 
   @override
   Widget build(BuildContext context) {
+    final icon = this.icon;
     return InkWell(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(5),
+        padding: EdgeInsets.all(padding ?? 5),
         width: width,
         height: height,
         decoration: BoxDecoration(
@@ -127,27 +137,44 @@ class MainActionButton extends StatelessWidget {
                       blurRadius: blurRadius ?? 0,
                       color: shadowColor ?? AppColors.white)
                 ]),
-        child: Center(
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(
-                text,
-                style: textStyle ??
-                    GoogleFonts.poppins(
-                      textStyle: TextStyle(
-                          color: textColor ?? AppColors.white,
-                          fontSize: fontSize,
-                          fontWeight: weightlevel7),
+        child: child ??
+            Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(width: 25,),
+                  if (icon != null)
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SvgPicture.asset(
+                          icon,
+                          height: iconHeight,
+                          width: iconWidth,
+                          // ignore: deprecated_member_use
+                          color: textColor,
+                        ),
+                        const SizedBox(width: 8,),
+                      ],
                     ),
-                textAlign: TextAlign.center,
+                  Center(
+                    child: Text(
+                      text,
+                      style: textStyle ??
+                          GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                                color: textColor ?? AppColors.white,
+                                fontSize: fontSize,
+                                fontWeight: weightlevel7),
+                          ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  const SizedBox(width: 25,),
+                ],
               ),
-              if (icon != null) icon!
-            ],
-          ),
-        ),
+            ),
       ),
     );
   }

@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:empco/Features/Roles/Company/jop_post/models/job_category_enum/job_category_enum.dart';
+import 'package:empco/Features/Roles/Company/jop_post/models/job_type_enum/job_type_enum.dart';
+import 'package:empco/Features/Roles/Company/jop_post/models/job_work_nature_enum/job_work_nature_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -8,7 +11,7 @@ part 'job_model.g.dart';
 @JsonSerializable()
 @immutable
 class JobModel {
-   const JobModel({
+  const JobModel({
     required this.id,
     required this.title,
     required this.body,
@@ -17,7 +20,8 @@ class JobModel {
     required this.jobType,
     required this.location,
     required this.deadTime,
-    required this.categoryId,
+    required this.jobCategory,
+    required this.workNature,
     required this.ownerId,
     required this.createdAt,
     required this.updatedAt,
@@ -41,7 +45,7 @@ class JobModel {
   final double salary;
 
   @JsonKey(name: 'type_job')
-  final String jobType;
+  final JobTypeEnum jobType;
 
   final String location;
 
@@ -49,7 +53,10 @@ class JobModel {
   final DateTime deadTime;
 
   @JsonKey(name: 'category_id')
-  final int categoryId;
+  final JobCategoryEnum jobCategory;
+
+  @JsonKey(name: 'work_nature')
+  final WorkNatureEnum workNature;
 
   @JsonKey(name: 'owner_id')
   final int ownerId;

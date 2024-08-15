@@ -5,21 +5,40 @@ import 'package:flutter/cupertino.dart';
 abstract class CompanyJobDetailsCallBacks {
   void onEdit();
 
-  void onDelete();
+  void onDeleteTap(int id);
+
+  void onAcceptDeleteTap(int id);
+
+  void onCancelDeleteTap();
 }
 
-class CompanyJobDetailsView extends StatefulWidget
-     {
+class CompanyJobDetailsView extends StatefulWidget {
   const CompanyJobDetailsView({super.key});
 
   @override
   State<CompanyJobDetailsView> createState() => _CompanyJobDetailsViewState();
 }
 
-class _CompanyJobDetailsViewState extends State<CompanyJobDetailsView> implements CompanyJobDetailsCallBacks {
+class _CompanyJobDetailsViewState extends State<CompanyJobDetailsView>
+    implements CompanyJobDetailsCallBacks {
   @override
-  void onDelete() {
-    empcoShowDialog(context);
+  void onAcceptDeleteTap(int id) {
+    // TODO: implement onAcceptDeleteTap
+  }
+
+  @override
+  void onCancelDeleteTap() {
+    // TODO: implement onCancelDeleteTap
+  }
+
+  @override
+  void onDeleteTap(int id) {
+    empcoShowDialog(
+      context,
+      onAcceptDeleteTap,
+      onCancelDeleteTap,
+      id
+    );
   }
 
   @override
@@ -33,7 +52,7 @@ class _CompanyJobDetailsViewState extends State<CompanyJobDetailsView> implement
 
     return JobDetailsView(
       jobId: 1,
-      onDelete: onDelete,
+      onDelete: onDeleteTap,
       onEdit: onEdit,
       screenWidth: screenWidth,
     );

@@ -12,7 +12,7 @@ class FreelancerNavigationBarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return EmpcoNavigationBar(pages: pages);
+    return EmpcoNavigationBarView(pages: pages);
   }
 }
 final List<Widget>pages = [

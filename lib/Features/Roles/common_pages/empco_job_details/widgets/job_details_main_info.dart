@@ -99,7 +99,7 @@ class JobDetailsMainInfo extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                         Text(
-                          job.title,
+                          job.jobCategory.name,
                           style: GoogleFonts.poppins(
                             textStyle: const TextStyle(
                                 color: AppColors.white,
@@ -127,9 +127,9 @@ class JobDetailsMainInfo extends StatelessWidget {
                   itemBuilder: (context, index) {
                    List<String> jobDetailsData = [
                     job.location,
-                    job.location,
+                    job.workNature.displayName,
                     '${job.salary} SP',
-                    job.jobType,
+                    job.jobType.displayName,
                     job.deadTime.toString()
                   ];
                     return SizedBox(
@@ -211,16 +211,7 @@ class JobDetailsMainInfo extends StatelessWidget {
                     yAxisOffset: 4,
                     shadowColor: AppColors.boxShadowColor2,
                     fontSize: 8.73,
-                    icon: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.exit_to_app_outlined,
-                          color: AppColors.white,
-                          size: 12,
-                        ),
-                      ],
-                    ),
+                    icon: aboutIcon,
                     onTap: onApplyTap),
                 const SizedBox(
                   width: 10,

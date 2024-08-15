@@ -1,8 +1,7 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-part of 'jobs_cubit.dart';
+part of '../jobs_cubit.dart';
 
 @immutable
-sealed class JobsState {}
+abstract class JobsState extends GeneralJobsState {}
 
 final class JobsInitial extends JobsState {}
 

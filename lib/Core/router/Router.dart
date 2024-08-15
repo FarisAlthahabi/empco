@@ -7,13 +7,16 @@ import 'package:empco/Features/Auth/View/Select_Role/select_role_page.dart';
 import 'package:empco/Features/Auth/View/Verify_Email/verify_email_page.dart';
 import 'package:empco/Features/Intro/View/intro_pages/Info_Screens.dart';
 import 'package:empco/Features/Intro/View/intro_pages/Spalsh_Screen.dart';
+import 'package:empco/Features/Roles/Company/jop_post/view/job_post_view.dart';
+import 'package:empco/Features/Roles/Company/my_app/my_appliction.dart';
 import 'package:empco/Features/Roles/Company/navigation_bar/navigation_bar.dart';
 import 'package:empco/Features/Roles/Freelancer/Job_details/View/job_details.dart';
+import 'package:empco/Features/Roles/Freelancer/Jobs/Model/job_model/job_model.dart';
 import 'package:empco/Features/Roles/Freelancer/Navigation_Bar/navigation_bar.dart';
-import 'package:empco/Features/Roles/Freelancer/Verification/upload_licence_view.dart';
-import 'package:empco/Features/Roles/Freelancer/Verification/verification_status_view.dart';
-import 'package:empco/Features/Roles/Freelancer/profile_company/edit_profile.dart';
-import 'package:empco/Features/Roles/Freelancer/profile_company/profile.dart';
+import 'package:empco/Features/Roles/common_pages/Verification/upload_licence_view.dart';
+import 'package:empco/Features/Roles/common_pages/Verification/verification_status_view.dart';
+import 'package:empco/Features/Roles/Company/edit_profile/edit_profile.dart';
+import 'package:empco/Features/Roles/Company/profile/profile.dart';
 import 'package:go_router/go_router.dart';
 
 const mainRoute = '/';
@@ -27,10 +30,13 @@ const freelancerHomePageRoute = 'freelancerHomePage';
 const companyHomePageRoute = 'companyHomePage';
 const customerHomePageRoute = 'customerHomePage';
 const jobDetailsRoute = 'JobDetails/:jobId';
-const profileRoute = 'profile';
-const accountVerificationRoute = 'accountVerification/:verificationStatus';
-const uploadLicenceRoute = 'uploadLicence';
-const editProfileRoute = 'editProfile/:title';
+const companyProfileRoute = 'companyProfile';
+const accountVerificationRoute =
+    'accountVerification/:verificationStatus/:userType';
+const uploadLicenceRoute = 'uploadLicence/:userType';
+const editCompanyProfileRoute = 'editCompanyProfile/:title';
+const jobPostRoute = 'jobPost';
+const myApplicationsRoute = 'myApplications';
 
 GoRouter router = GoRouter(
   routes: [
@@ -72,25 +78,17 @@ GoRouter router = GoRouter(
           builder: (context, state) => const FreelancerNavigationBarView(),
           routes: [
             GoRoute(
-                path: profileRoute,
-                builder: (context, state) => const ProfileView(),
-                routes: [
-                  GoRoute(
-                    path: editProfileRoute,
-                    builder: (context, state) => EditProfileView(
-                      title: state.pathParameters['title'] ?? 'profile',
-                    ),
-                  ),
-                ]),
-            GoRoute(
               path: uploadLicenceRoute,
-              builder: (context, state) => const UploadLicenceView(),
+              builder: (context, state) => UploadLicenceView(
+                userType: state.pathParameters['userType']!,
+              ),
             ),
             GoRoute(
               path: accountVerificationRoute,
+              name: 'freelancerAccountVerification',
               builder: (context, state) => VerificationStatusView(
-                verificationStatus:
-                    int.parse(state.pathParameters['verificationStatus']!),
+                verificationStatus: state.pathParameters['verificationStatus']!,
+                userType: state.pathParameters['userType']!,
               ),
             ),
             GoRoute(
@@ -99,11 +97,50 @@ GoRouter router = GoRouter(
                 jobId: int.parse(state.pathParameters['jobId']!),
               ),
             ),
+            GoRoute(
+              path: myApplicationsRoute,
+              builder: (context, state) => const MyApplictionsView(),
+            ),
           ],
         ),
         GoRoute(
           path: companyHomePageRoute,
           builder: (context, state) => const CompanyNavigationBar(),
+          routes: [
+            GoRoute(
+              path: jobPostRoute,
+              name: 'jobPostView',
+              builder: (context, state) {
+                JobModel? jobModel = state.extra as JobModel?;
+                return JobPostView(job: jobModel);
+              },
+            ),
+            GoRoute(
+              path: uploadLicenceRoute,
+              builder: (context, state) => UploadLicenceView(
+                  userType: state.pathParameters['userType']!),
+            ),
+            GoRoute(
+              path: accountVerificationRoute,
+              name: 'companyAccountVerification',
+              builder: (context, state) => VerificationStatusView(
+                verificationStatus: state.pathParameters['verificationStatus']!,
+                userType: state.pathParameters['userType']!,
+              ),
+            ),
+            GoRoute(
+              path: companyProfileRoute,
+              builder: (context, state) => const CompanyProfileView(),
+              routes: [
+                GoRoute(
+                  path: editCompanyProfileRoute,
+                  builder: (context, state) => EditProfileView(
+                    title: state.pathParameters['title'] ?? 'profile',
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
         // GoRoute(
         //   path: customerHomePageRoute,

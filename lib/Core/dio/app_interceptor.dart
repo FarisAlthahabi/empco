@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:empco/Core/di/di.dart';
 import 'package:empco/Core/dio/exceptions.dart';
-import 'package:empco/Core/repos/user_repo.dart';
+import 'package:empco/Core/repos/user_repo/user_repo.dart';
 import 'package:empco/Core/utils/logger.dart';
 import 'package:empco/Features/auth_manager/bloc/auth_manager_bloc.dart';
 import 'package:flutter/cupertino.dart';

@@ -1,7 +1,7 @@
 import 'package:empco/Core/Theme/components/colors.dart';
-import 'package:empco/Core/Widgets/Loading_Page.dart';
 import 'package:empco/Core/Widgets/empco_app_bar.dart';
 import 'package:empco/Core/Widgets/filter_bottom_sheet.dart';
+import 'package:empco/Core/Widgets/loading_indicator.dart';
 import 'package:empco/Core/Widgets/main_show_bottom_sheet.dart';
 import 'package:empco/Core/di/di.dart';
 import 'package:empco/Core/router/Router.dart';
@@ -125,21 +125,19 @@ class _JobsPageState extends State<JobsPage> implements JobsCallBacks {
   }
 
   @override
-  void onSearchChaged(String input) {
-  }
+  void onSearchChaged(String input) {}
 
   @override
-  void onSearchSubmitted(String input) {
-  }
+  void onSearchSubmitted(String input) {}
 
   @override
   void onApplyFiltersTap() {
-    // TODO: implement onApplyFiltersTap
+    Navigator.pop(context);
   }
 
   @override
   void onCancelTap() {
-    // TODO: implement onCancelTap
+    Navigator.pop(context);
   }
 
   @override
@@ -208,10 +206,10 @@ class _JobsPageState extends State<JobsPage> implements JobsCallBacks {
             ),
           ],
         ),
-        body: BlocBuilder<JobsCubit, JobsState>(
+        body: BlocBuilder<JobsCubit, GeneralJobsState>(
           builder: (context, state) {
             if (state is JobsLoading) {
-              return const LoadingPage();
+              return const LoadingIndicator();
             } else if (state is JobsSuccess) {
               return Padding(
                 padding: const EdgeInsets.all(16),
@@ -240,26 +238,27 @@ class _JobsPageState extends State<JobsPage> implements JobsCallBacks {
                         child: ListView.builder(
                           itemCount: state.jobs.length,
                           itemBuilder: (context, index) {
+                            final item = state.jobs[index];
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 JobPostDate(
                                   jobPostDate:
-                                      '${state.jobs[index].deadTime.hour.toString()} hours',
+                                      '${item.deadTime.hour.toString()} hours',
                                   screenWidth: screenWidth,
                                 ),
                                 const SizedBox(
                                   height: 10,
                                 ),
                                 JobMainInfo(
-                                  job: state.jobs[index],
+                                  job: item,
                                   screenWidth: screenWidth,
                                   onApplyTap: () {
                                     onApplyTap();
                                   },
                                   onExpandJopTap: () {
                                     onExpandJopTap(
-                                        context, state.jobs[index].id);
+                                        context, item.id);
                                   },
                                   onFavoriteTap: () {
                                     onFavoriteTap();

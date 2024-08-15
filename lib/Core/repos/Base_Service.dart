@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:empco/Core/repos/user_repo.dart';
+import 'package:empco/Core/repos/user_repo/user_repo.dart';
 
 final roles = ['freelancer', 'owner', 'seeker'];
 

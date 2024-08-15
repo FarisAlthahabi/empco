@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:empco/Core/dio/dio_client.dart';
 import 'package:empco/Core/models/token_model/token_model.dart';
 import 'package:empco/Core/repos/Base_Service.dart';
-import 'package:empco/Core/repos/user_repo.dart';
+import 'package:empco/Core/repos/user_repo/user_repo.dart';
 import 'package:empco/Features/Auth/Models/User_model/User_Model.dart';
 import 'package:empco/Features/Auth/Models/user_check_code_model.dart/User_Chaeck_Code_model.dart';
 import 'package:empco/Features/Auth/Models/user_forget_password_model/User_Forget_Password_model.dart';

@@ -6,7 +6,7 @@ import 'package:empco/Core/Widgets/buttons.dart';
 import 'package:empco/Core/Widgets/empcoIcon_and_empcoText.dart';
 import 'package:empco/Core/Widgets/text_widgets.dart';
 import 'package:empco/Core/di/di.dart';
-import 'package:empco/Core/repos/user_repo.dart';
+import 'package:empco/Core/repos/user_repo/user_repo.dart';
 import 'package:empco/Core/router/Router.dart';
 import 'package:empco/Features/Auth/View/Verify_Email/Widgets/code_textfields.dart';
 import 'package:empco/Features/Auth/View/Verify_Email/Widgets/is_wrong_widget.dart';

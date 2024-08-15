@@ -61,30 +61,32 @@ class TextFormFieldToProfile extends StatelessWidget {
           const SizedBox(
             height: 6,
           ),
-          SizedBox(
-            height: height,
-            child: TextFormField(
-              focusNode: focusNode,
-              onFieldSubmitted: onSubmitted,
-              onChanged: onChanged,
-              textAlign: TextAlign.start,
-              maxLines: null,
-              expands: true,
-              keyboardType: TextInputType.multiline,
-              decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: const BorderSide(
-                      color: Color(0xff898181),
+          Expanded(
+            child: SizedBox(
+              height: height,
+              child: TextFormField(
+                focusNode: focusNode,
+                onFieldSubmitted: onSubmitted,
+                onChanged: onChanged,
+                textAlign: TextAlign.start,
+                maxLines: null,
+                expands: true,
+                keyboardType: TextInputType.multiline,
+                decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: const BorderSide(
+                        color: Color(0xff898181),
+                      ),
                     ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: const BorderSide(
-                      color: Color(0xFF152B4B),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: const BorderSide(
+                        color: Color(0xFF152B4B),
+                      ),
                     ),
-                  ),
-                  hintText: hintText),
+                    hintText: hintText),
+              ),
             ),
           ),
         ],

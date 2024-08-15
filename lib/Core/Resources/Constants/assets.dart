@@ -96,3 +96,9 @@ const String partTimeIcon = 'lib/Core/Resources/assets/SVG/part_time_icon.svg';
 const String remoteIcon = 'lib/Core/Resources/assets/SVG/remote_icon.svg';
 const String hybridIcon = 'lib/Core/Resources/assets/SVG/hybrid_icon.svg';
 const String aiIcon = 'lib/Core/Resources/assets/PNG/icon_ai.png';
+
+// Applications Icons 
+
+const String processingIcon = 'lib/Core/Resources/assets/SVG/processing.svg';
+const String approvedIcon = 'lib/Core/Resources/assets/SVG/approve.svg';
+const String rejectedIcon = 'lib/Core/Resources/assets/SVG/reject.svg';

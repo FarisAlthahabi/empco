@@ -10,7 +10,7 @@ import 'package:empco/Core/Widgets/empcoIcon_and_empcoText.dart';
 import 'package:empco/Core/Widgets/auth_text_field.dart';
 import 'package:empco/Core/Widgets/show_snack_bar_method.dart';
 import 'package:empco/Core/Widgets/text_widgets.dart';
-import 'package:empco/Core/repos/user_repo.dart';
+import 'package:empco/Core/repos/user_repo/user_repo.dart';
 import 'package:empco/Features/Auth/View/Register/widgets/Texts.dart';
 import 'package:empco/Features/Auth/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';

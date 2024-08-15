@@ -29,11 +29,30 @@ class AuthenticationRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [CompanyProfileView]
+class CompanyProfileRoute extends PageRouteInfo<void> {
+  const CompanyProfileRoute({List<PageRouteInfo>? children})
+      : super(
+          CompanyProfileRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CompanyProfileRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CompanyProfileView();
+    },
+  );
+}
+
+/// generated route for
 /// [EditProfileView]
 class EditProfileRoute extends PageRouteInfo<EditProfileRouteArgs> {
   EditProfileRoute({
     Key? key,
-    required String title,
+    String? title,
     List<PageRouteInfo>? children,
   }) : super(
           EditProfileRoute.name,
@@ -49,7 +68,8 @@ class EditProfileRoute extends PageRouteInfo<EditProfileRouteArgs> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<EditProfileRouteArgs>();
+      final args = data.argsAs<EditProfileRouteArgs>(
+          orElse: () => const EditProfileRouteArgs());
       return EditProfileView(
         key: args.key,
         title: args.title,
@@ -61,16 +81,63 @@ class EditProfileRoute extends PageRouteInfo<EditProfileRouteArgs> {
 class EditProfileRouteArgs {
   const EditProfileRouteArgs({
     this.key,
-    required this.title,
+    this.title,
   });
 
   final Key? key;
 
-  final String title;
+  final String? title;
 
   @override
   String toString() {
     return 'EditProfileRouteArgs{key: $key, title: $title}';
+  }
+}
+
+/// generated route for
+/// [EmpcoNavigationBarView]
+class EmpcoNavigationBarRoute
+    extends PageRouteInfo<EmpcoNavigationBarRouteArgs> {
+  EmpcoNavigationBarRoute({
+    Key? key,
+    required List<Widget> pages,
+    List<PageRouteInfo>? children,
+  }) : super(
+          EmpcoNavigationBarRoute.name,
+          args: EmpcoNavigationBarRouteArgs(
+            key: key,
+            pages: pages,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'EmpcoNavigationBarRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<EmpcoNavigationBarRouteArgs>();
+      return EmpcoNavigationBarView(
+        key: args.key,
+        pages: args.pages,
+      );
+    },
+  );
+}
+
+class EmpcoNavigationBarRouteArgs {
+  const EmpcoNavigationBarRouteArgs({
+    this.key,
+    required this.pages,
+  });
+
+  final Key? key;
+
+  final List<Widget> pages;
+
+  @override
+  String toString() {
+    return 'EmpcoNavigationBarRouteArgs{key: $key, pages: $pages}';
   }
 }
 
@@ -189,20 +256,20 @@ class MainNavigationRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [ProfileView]
-class ProfileRoute extends PageRouteInfo<void> {
-  const ProfileRoute({List<PageRouteInfo>? children})
+/// [MyApplictionView]
+class MyApplictionRoute extends PageRouteInfo<void> {
+  const MyApplictionRoute({List<PageRouteInfo>? children})
       : super(
-          ProfileRoute.name,
+          MyApplictionRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'ProfileRoute';
+  static const String name = 'MyApplictionRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const ProfileView();
+      return const MyApplictionsView();
     },
   );
 }
@@ -266,10 +333,17 @@ class SplashRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [UploadLicenceView]
-class UploadLicenceRoute extends PageRouteInfo<void> {
-  const UploadLicenceRoute({List<PageRouteInfo>? children})
-      : super(
+class UploadLicenceRoute extends PageRouteInfo<UploadLicenceRouteArgs> {
+  UploadLicenceRoute({
+    Key? key,
+    required String userType,
+    List<PageRouteInfo>? children,
+  }) : super(
           UploadLicenceRoute.name,
+          args: UploadLicenceRouteArgs(
+            key: key,
+            userType: userType,
+          ),
           initialChildren: children,
         );
 
@@ -278,9 +352,29 @@ class UploadLicenceRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const UploadLicenceView();
+      final args = data.argsAs<UploadLicenceRouteArgs>();
+      return UploadLicenceView(
+        key: args.key,
+        userType: args.userType,
+      );
     },
   );
+}
+
+class UploadLicenceRouteArgs {
+  const UploadLicenceRouteArgs({
+    this.key,
+    required this.userType,
+  });
+
+  final Key? key;
+
+  final String userType;
+
+  @override
+  String toString() {
+    return 'UploadLicenceRouteArgs{key: $key, userType: $userType}';
+  }
 }
 
 /// generated route for
@@ -289,13 +383,15 @@ class VerificationStatusRoute
     extends PageRouteInfo<VerificationStatusRouteArgs> {
   VerificationStatusRoute({
     Key? key,
-    required int verificationStatus,
+    required String verificationStatus,
+    required String userType,
     List<PageRouteInfo>? children,
   }) : super(
           VerificationStatusRoute.name,
           args: VerificationStatusRouteArgs(
             key: key,
             verificationStatus: verificationStatus,
+            userType: userType,
           ),
           initialChildren: children,
         );
@@ -309,6 +405,7 @@ class VerificationStatusRoute
       return VerificationStatusView(
         key: args.key,
         verificationStatus: args.verificationStatus,
+        userType: args.userType,
       );
     },
   );
@@ -318,14 +415,17 @@ class VerificationStatusRouteArgs {
   const VerificationStatusRouteArgs({
     this.key,
     required this.verificationStatus,
+    required this.userType,
   });
 
   final Key? key;
 
-  final int verificationStatus;
+  final String verificationStatus;
+
+  final String userType;
 
   @override
   String toString() {
-    return 'VerificationStatusRouteArgs{key: $key, verificationStatus: $verificationStatus}';
+    return 'VerificationStatusRouteArgs{key: $key, verificationStatus: $verificationStatus, userType: $userType}';
   }
 }

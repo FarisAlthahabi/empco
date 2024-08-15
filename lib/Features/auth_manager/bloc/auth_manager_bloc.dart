@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:empco/Core/models/token_model/token_model.dart';
-import 'package:empco/Core/repos/user_repo.dart';
+import 'package:empco/Core/repos/user_repo/user_repo.dart';
 import 'package:empco/Features/Auth/Models/user_verify_model/User_Verify_Model.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';

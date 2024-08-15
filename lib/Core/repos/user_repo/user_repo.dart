@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 const isRegistered = 'isRegistered';
 const isLogin = 'isLogin';
 const isFirstTime = 'isFirstTime';
+const isLicenceUploaded = 'isLicenceUploaded';
 const role = 'role';
 const userRole = ['freelancer', 'owner', 'seeker'];
 const freelancer = 'freelancer';

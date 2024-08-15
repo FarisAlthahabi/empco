@@ -4,7 +4,7 @@ import 'package:empco/Core/Resources/Constants/Texts.dart';
 import 'package:empco/Core/Resources/Constants/assets.dart';
 import 'package:empco/Core/Widgets/empcoIcon_and_empcoText.dart';
 import 'package:empco/Core/Widgets/text_widgets.dart';
-import 'package:empco/Core/repos/user_repo.dart';
+import 'package:empco/Core/repos/user_repo/user_repo.dart';
 import 'package:empco/Features/Auth/View/Select_Role/Widgets/buttons.dart';
 import 'package:empco/Features/Auth/View/Select_Role/Widgets/texts.dart';
 import 'package:empco/Features/auth_manager/bloc/auth_manager_bloc.dart';

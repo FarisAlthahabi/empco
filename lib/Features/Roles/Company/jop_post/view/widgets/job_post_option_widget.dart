@@ -3,22 +3,26 @@ import 'package:empco/Features/Roles/Company/jop_post/view/widgets/text_widgets.
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class JobPostOptionWidget extends StatelessWidget {
+abstract class JobPostOptionWidgetItemModel {
+  String get displayName;
+
+  String get icon;
+}
+
+class JobPostOptionWidget<T extends JobPostOptionWidgetItemModel> extends StatelessWidget {
   const JobPostOptionWidget({
     super.key,
-    required this.text,
-    required this.icon,
+    required this.model,
     required this.onTap,
   });
 
-  final String text;
-  final String icon;
-  final VoidCallback onTap;
+  final T model;
+  final ValueSetter<T> onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: () => onTap(model),
       child: Container(
         constraints: const BoxConstraints(minHeight: 25),
         padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -28,7 +32,7 @@ class JobPostOptionWidget extends StatelessWidget {
         child: Row(
           children: [
             SvgPicture.asset(
-              icon,
+              model.icon,
               // ignore: deprecated_member_use
               color: AppColors.black,
             ),
@@ -36,7 +40,7 @@ class JobPostOptionWidget extends StatelessWidget {
               width: 5,
             ),
             JobPostOptionTitle(
-              text: text,
+              text: model.displayName,
             ),
           ],
         ),

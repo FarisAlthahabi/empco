@@ -6,7 +6,7 @@ import 'package:empco/Core/Widgets/buttons.dart';
 import 'package:empco/Core/Widgets/empco_app_bar.dart';
 import 'package:empco/Core/Widgets/job_details_contact.dart';
 
-import 'package:empco/Features/Roles/Freelancer/profile_company/widgets/icon_and_text.dart';
+import 'package:empco/Features/Roles/Company/profile/widgets/icon_and_text.dart';
 import 'package:flutter/material.dart';
 
 class NavigatorProfileView extends StatelessWidget {
@@ -52,11 +52,7 @@ class NavigatorProfileView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         MainActionButton(
-                          icon: const Icon(
-                            Icons.messenger_outline,
-                            color: Color(0xff002245),
-                            size: 20,
-                          ),
+                          icon: workIcon,
                           fontSize: 10,
                           textColor: const Color(0xff002245),
                           text: 'Message',
@@ -71,11 +67,7 @@ class NavigatorProfileView extends StatelessWidget {
                           width: 15,
                         ),
                         MainActionButton(
-                          icon: const Icon(
-                            Icons.library_add_rounded,
-                            color: AppColors.white,
-                            size: 20,
-                          ),
+                          icon: workIcon,
                           textColor: AppColors.white,
                           text: 'Follow',
                           width: 100,

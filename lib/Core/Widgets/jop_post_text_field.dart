@@ -10,6 +10,8 @@ class MainTextField extends StatefulWidget {
     required this.onSubmitted,
     this.height,
     this.width,
+    this.maxLines,
+    this.initialValue,
   });
 
   final String hintText;
@@ -18,6 +20,8 @@ class MainTextField extends StatefulWidget {
   final ValueChanged<String> onSubmitted;
   final double? height;
   final double? width;
+  final int? maxLines;
+  final String? initialValue;
 
   @override
   State<MainTextField> createState() => _MainTextFieldState();
@@ -33,10 +37,11 @@ class _MainTextFieldState extends State<MainTextField> {
               strokeAlign: BorderSide.strokeAlignInside,
               color: const Color.fromRGBO(137, 129, 129, 1),
               width: 0.35)),
-      child: TextField(
-
+      child: TextFormField(
+        initialValue: widget.initialValue,
+        maxLines: widget.maxLines,
         onChanged: widget.onChanged,
-        onSubmitted: widget.onSubmitted,
+        onFieldSubmitted: widget.onSubmitted,
         focusNode: widget.focusNode,
         decoration: InputDecoration(
             hintText: '      ${widget.hintText}',

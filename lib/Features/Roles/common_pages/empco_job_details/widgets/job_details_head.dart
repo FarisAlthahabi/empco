@@ -1,4 +1,5 @@
 import 'package:empco/Core/Theme/components/colors.dart';
+import 'package:empco/Features/Roles/Freelancer/Jobs/Model/job_model/job_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -8,22 +9,26 @@ class JobDetailsHead extends StatelessWidget {
     this.onAddToFavoriteTap,
     this.onEdit,
     this.onDelete,
-    required this.title,
+    required this.job,
   });
 
   final VoidCallback? onAddToFavoriteTap;
   final VoidCallback? onEdit;
-  final VoidCallback? onDelete;
-  final String title;
+  final ValueSetter<int>? onDelete;
+  final JobModel job;
 
   @override
   Widget build(BuildContext context) {
+    final onAddToFavoriteTap = this.onAddToFavoriteTap;
+    final onEdit = this.onEdit;
+    final onDelete = this.onDelete;
+
     return ListTile(
         leading: const SizedBox(
           width: 45,
         ),
         title: Text(
-          title,
+          job.title,
           style: GoogleFonts.poppins(
             textStyle: const TextStyle(
                 color: Color.fromRGBO(29, 91, 164, 1),
@@ -39,17 +44,23 @@ class JobDetailsHead extends StatelessWidget {
                   Icons.bookmark_outline,
                   size: 40,
                   color: AppColors.black,
-                ))
+                ),
+              )
             : SizedBox(
                 width: 50,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    InkWell(
-                        onTap: onEdit, child: const Icon(Icons.edit_outlined)),
-                    InkWell(
-                        onTap: onDelete,
-                        child: const Icon(Icons.delete_outline_outlined)),
+                    if (onEdit != null)
+                      InkWell(
+                        onTap: onEdit,
+                        child: const Icon(Icons.edit_outlined),
+                      ),
+                    if (onDelete != null)
+                      InkWell(
+                        onTap: () => onDelete(job.id),
+                        child: const Icon(Icons.delete_outline_outlined),
+                      ),
                   ],
                 ),
               ));

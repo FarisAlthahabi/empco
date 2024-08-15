@@ -23,7 +23,7 @@ class JobDetailsView extends StatefulWidget {
   final VoidCallback? onApplyTap;
   final VoidCallback? onMessageTap;
   final VoidCallback? onEdit;
-  final VoidCallback? onDelete;
+  final ValueSetter<int>? onDelete;
   final double screenWidth;
   final int jobId;
 
@@ -57,7 +57,7 @@ class _JobDetailsViewState extends State<JobDetailsView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   JobDetailsHead(
-                    title: state.job.title,
+                    job: state.job,
                     onDelete: widget.onDelete,
                     onEdit: widget.onEdit,
                     onAddToFavoriteTap: widget.onAddToFavoriteTap,

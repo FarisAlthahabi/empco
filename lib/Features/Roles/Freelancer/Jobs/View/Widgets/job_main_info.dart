@@ -198,7 +198,7 @@ class JobMainInfo extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        width: 130,
+                        width: 150,
                         child: Row(
                           children: [
                             const SizedBox(
@@ -211,7 +211,7 @@ class JobMainInfo extends StatelessWidget {
                               width: 5,
                             ),
                             Text(
-                              job.location,
+                              job.workNature.displayName,
                               style: GoogleFonts.poppins(
                                   textStyle: const TextStyle(
                                       color: Color(0xFF373737),
@@ -229,7 +229,7 @@ class JobMainInfo extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(5)
                                 ),
                               child: Text(
-                                job.jobType,
+                                job.jobType.displayName,
                                 style: GoogleFonts.poppins(
                                   textStyle: const TextStyle(
                                     color: Color(0xFF373737),

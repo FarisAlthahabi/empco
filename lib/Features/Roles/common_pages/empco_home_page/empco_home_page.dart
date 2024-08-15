@@ -13,18 +13,24 @@ import 'package:empco/Core/Widgets/main_show_bottom_sheet.dart';
 import 'package:empco/Core/Widgets/notification_icon.dart';
 import 'package:empco/Core/Widgets/search_text_field.dart';
 import 'package:empco/Core/Widgets/job_details_contact.dart';
+import 'package:empco/Core/Widgets/show_dialog.dart';
 import 'package:empco/Core/Widgets/show_snack_bar_method.dart';
+import 'package:empco/Core/bloc/licence_cubit/cubit/licence_cubit.dart';
 import 'package:empco/Core/extensions/date_time_x.dart';
-import 'package:empco/Core/repos/user_repo.dart';
+import 'package:empco/Core/models/licence_status_model/licence_status_model.dart';
+import 'package:empco/Core/repos/user_repo/user_repo.dart';
 import 'package:empco/Core/router/Router.dart';
-import 'package:empco/Features/Auth/View/Login/login_page.dart';
 import 'package:empco/Features/Auth/bloc/auth_bloc.dart';
+import 'package:empco/Features/Roles/Company/jop_post/models/job_category_enum/job_category_enum.dart';
+import 'package:empco/Features/Roles/Company/jop_post/view/job_post_view.dart';
+import 'package:empco/Features/Roles/Freelancer/Jobs/Model/job_model/job_model.dart';
 import 'package:empco/Features/Roles/Freelancer/Jobs/cubit/jobs_cubit.dart';
+import 'package:empco/Features/Roles/common_pages/empco_home_page/main_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 abstract class EmpcoHomePageCallBacks {
   void onAccountVerifyTap();
@@ -74,6 +80,14 @@ abstract class EmpcoHomePageCallBacks {
   void onFollowingsTap();
 
   void onOrderedServicesTap();
+
+  void onDeleteTap(int id);
+
+  void onAcceptDeleteTap(int jobPostId);
+
+  void onCancelDeleteTap();
+
+  void onEditTap(JobModel job);
 }
 
 class EmpcoHomePageView extends StatelessWidget {
@@ -81,31 +95,34 @@ class EmpcoHomePageView extends StatelessWidget {
     super.key,
     required this.searchJobController,
     required this.onNotificationTap,
-    this.onDeleteTap,
-    this.onEditTap,
     required this.haveNewNotification,
     required this.screenWidth,
-    required this.intSideBar,
+    required this.userType,
   });
 
   final TextEditingController searchJobController;
   final VoidCallback onNotificationTap;
-  final VoidCallback? onDeleteTap;
-  final VoidCallback? onEditTap;
   final bool haveNewNotification;
   final double screenWidth;
-  final int intSideBar; // 1 (COMPANY) 2 (FREELANCER) ELSE (CUSTOMER)
+  final String userType;
 
   @override
   Widget build(BuildContext context) {
-    return EmpcoHomePage(
-      haveNewNotification: haveNewNotification,
-      intSideBar: intSideBar,
-      onNotificationTap: onNotificationTap,
-      screenWidth: screenWidth,
-      searchJobController: searchJobController,
-      onDeleteTap: onDeleteTap,
-      onEditTap: onEditTap,
+    return BlocBuilder<LicenceCubit, GeneralLicenceState>(
+      builder: (context, state) {
+        LicenceStatusModel? licenceStatusModel;
+        if (state is LicenceSuccess) {
+          licenceStatusModel = state.licence;
+        }
+        return EmpcoHomePage(
+          haveNewNotification: haveNewNotification,
+          userType: userType,
+          onNotificationTap: onNotificationTap,
+          screenWidth: screenWidth,
+          searchJobController: searchJobController,
+          licenceStatusModel: licenceStatusModel,
+        );
+      },
     );
   }
 }
@@ -113,22 +130,20 @@ class EmpcoHomePageView extends StatelessWidget {
 class EmpcoHomePage extends StatefulWidget {
   const EmpcoHomePage({
     super.key,
-    required this.intSideBar,
+    required this.userType,
     required this.onNotificationTap,
     required this.searchJobController,
     required this.haveNewNotification,
     required this.screenWidth,
-    this.onDeleteTap,
-    this.onEditTap,
+    this.licenceStatusModel,
   });
 
   final TextEditingController searchJobController;
   final VoidCallback onNotificationTap;
-  final VoidCallback? onDeleteTap;
-  final VoidCallback? onEditTap;
   final bool haveNewNotification;
   final double screenWidth;
-  final int intSideBar; // 1 (COMPANY) 2 (FREELANCER) ELSE (CUSTOMER)
+  final String userType;
+  final LicenceStatusModel? licenceStatusModel;
 
   @override
   State<EmpcoHomePage> createState() => _EmpcoHomePageState();
@@ -142,19 +157,22 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
 
   late final UserRepo userRepo = context.read();
 
+  late final LicenceCubit licenceCubit = context.read();
+
   final locationFocusNode = FocusNode();
 
   final minimumSalaryFocusNode = FocusNode();
 
   @override
   void initState() {
+    licenceCubit.getLicenceStatus();
     jobsCubit.getJobs();
     super.initState();
   }
 
   @override
   void onApplyFiltersTap() {
-    // TODO: implement onApplyFiltersTap
+    Navigator.pop(context);
   }
 
   @override
@@ -204,22 +222,23 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
 
   @override
   void onLocationSubmitted(String location) {
-    // TODO: implement onLocationSubmitted
+    minimumSalaryFocusNode.requestFocus();
   }
 
   @override
   void onMinimumSalaryChanged(String minimumSalary) {
-    // TODO: implement onMinimumSalaryChanged
+    // TODO ..............................
+    //jobsCubit.setMinimumSalary(minimumSalary);
   }
 
   @override
   void onMinimumSalarySubmitted(String minimumSalary) {
-    // TODO: implement onMinimumSalarySubmitted
+    minimumSalaryFocusNode.unfocus();
   }
 
   @override
   void onMyApplicationsTap() {
-    // TODO: implement onMyApplicationsTap
+    context.go('$loginRoute/$freelancerHomePageRoute/$myApplicationsRoute');
   }
 
   @override
@@ -229,7 +248,15 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
 
   @override
   void onPostAJobsTap() {
-    // TODO: implement onPostAJobsTap
+    if (widget.licenceStatusModel?.status != 'approved') {
+      showSnackBarMethod(
+        context,
+        "You don't have licence yet to post a job",
+        AppColors.red,
+      );
+    } else {
+      context.go('$loginRoute/$companyHomePageRoute/$jobPostRoute');
+    }
   }
 
   @override
@@ -262,89 +289,95 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
     // TODO: implement onWorkNatureSelected
   }
 
-  List<String> companytitles = [
-    'Post a job',
-    'Account Verification',
-    'Jobs Applications',
-    'Profile',
-    'Settings',
-    'Log out'
-  ];
-  List<String> freelancertitles = [
-    'Account Verification',
-    'My applications',
-    'Freelance projects',
-    'Saved posts ',
-    'Followings',
-    'Profile',
-    'Settings',
-    'Log out'
-  ];
-  List<String> customertitles = [
-    'Ordered services',
-    'Profile',
-    'Settings',
-    'Log out'
-  ];
-  List<String> freelancericons = [
-    verifiedIcon,
-    applyIcon,
-    freelancerProjectIcon,
-    savedIcon,
-    followingsIcon,
-    profileIcon,
-    settingsIcon,
-    logoutIcon
-  ];
-  List<String> companyicons = [
-    addPostIcon,
-    verifiedIcon,
-    applyIcon,
-    profileIcon,
-    settingsIcon,
-    logoutIcon
-  ];
-  List<String> customericons = [
-    orderedServicesIcon,
-    profileIcon,
-    settingsIcon,
-    logoutIcon
-  ];
-  late List<VoidCallback> freelancerCallBacks = [
-    onAccountVerifyTap,
-    onMyApplicationsTap,
-    onFreelanceProjectsTap,
-    onSavedPostsTap,
-    onFollowingsTap,
-    onProfileTap,
-    onSettingsTap,
-    onLogoutTap,
-  ];
-
-  late List<VoidCallback> companyCallBacks = [
-    onPostAJobsTap,
-    onAccountVerifyTap,
-    onJobApplicationsTap,
-    onProfileTap,
-    onSettingsTap,
-    onLogoutTap,
-  ];
-
-  late List<VoidCallback> customerCallBacks = [
-    onOrderedServicesTap,
-    onProfileTap,
-    onSettingsTap,
-    onLogoutTap,
-  ];
-
   @override
-  void onAccountVerifyTap() {
-    context.go(
-        '$loginRoute/$freelancerHomePageRoute/${accountVerificationRoute.replaceFirst(':verificationStatus', '3')}');
+  void onDeleteTap(int id) {
+    empcoShowDialog(
+      context,
+      onAcceptDeleteTap,
+      onCancelDeleteTap,
+      id,
+    );
   }
 
   @override
-  void onJobApplicationsTap() {}
+  void onAcceptDeleteTap(int jobPostId) {
+    jobsCubit.deleteJobPost(jobPostId);
+  }
+
+  @override
+  void onCancelDeleteTap() {
+    Navigator.pop(context);
+  }
+
+  @override
+  void onEditTap(JobModel job) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => JobPostView(
+          job: job,
+        ),
+      ),
+    );
+
+    context.goNamed("jobPostView", extra: job);
+  }
+
+  @override
+  void onAccountVerifyTap() async {
+    print(await userRepo.getKey(isLicenceUploaded, defaultValue: false));
+
+    final licenceStatusModel = widget.licenceStatusModel;
+
+    print(licenceStatusModel);
+
+    if (await userRepo.getKey(isLicenceUploaded, defaultValue: false) == true &&
+        licenceStatusModel != null) {
+      if (widget.userType == 'freelancer') {
+        context.goNamed(
+          "freelancerAccountVerification",
+          pathParameters: {
+            'verificationStatus': licenceStatusModel.status,
+            'userType': widget.userType
+          },
+        );
+      } else if (widget.userType == 'owner') {
+        context.goNamed(
+          "companyAccountVerification",
+          pathParameters: {
+            'verificationStatus': licenceStatusModel.status,
+            'userType': widget.userType
+          },
+        );
+      }
+    } else {
+      if (widget.userType == 'freelancer') {
+        context.go(
+          '$loginRoute/$freelancerHomePageRoute/${uploadLicenceRoute.replaceFirst(
+            ':userType',
+            widget.userType,
+          )}',
+        );
+      } else if (widget.userType == 'owner') {
+        context.go(
+          '$loginRoute/$companyHomePageRoute/${uploadLicenceRoute.replaceFirst(
+            ':userType',
+            widget.userType,
+          )}',
+        );
+      }
+    }
+  }
+
+  @override
+  void onJobApplicationsTap() {
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => const MyApplictionView(),
+    //   ),
+    // );
+  }
 
   @override
   void onLogoutTap() {
@@ -353,7 +386,13 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
 
   @override
   void onProfileTap() {
-    context.go('$mainRoute/$loginRoute/$freelancerHomePageRoute/$profileRoute');
+    if (widget.userType == 'freelancer') {
+      //context.go('$loginRoute/$freelancerHomePageRoute/$freelancerProfileRoute');
+    } else if (widget.userType == 'owner') {
+      context.go('$loginRoute/$companyHomePageRoute/$companyProfileRoute');
+    } else {
+      //context.go('$loginRoute/$customerHomePageRoute/$customerProfileRoute');
+    }
   }
 
   @override
@@ -361,8 +400,75 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
     jobsCubit.getJobs();
   }
 
+  final List<String> companyTitles = [
+    'Post a job',
+    'Account Verification',
+    'Jobs Applications',
+    'Profile',
+    'Settings',
+  ];
+  final List<String> freelancerTitles = [
+    'Account Verification',
+    'My applications',
+    'Freelance projects',
+    'Saved posts ',
+    'Followings',
+    'Profile',
+    'Settings',
+  ];
+  final List<String> customerTitles = [
+    'Ordered services',
+    'Profile',
+    'Settings',
+  ];
+  final List<String> freelancerIcons = [
+    verifiedIcon,
+    applyIcon,
+    freelancerProjectIcon,
+    savedIcon,
+    followingsIcon,
+    profileIcon,
+    settingsIcon,
+  ];
+  final List<String> companyIcons = [
+    addPostIcon,
+    verifiedIcon,
+    applyIcon,
+    profileIcon,
+    settingsIcon,
+  ];
+  final List<String> customerIcons = [
+    orderedServicesIcon,
+    profileIcon,
+    settingsIcon,
+  ];
+
+  late final List<VoidCallback> freelancerCallBacks = [
+    onAccountVerifyTap,
+    onMyApplicationsTap,
+    onFreelanceProjectsTap,
+    onSavedPostsTap,
+    onFollowingsTap,
+    onProfileTap,
+    onSettingsTap,
+  ];
+
+  late final List<VoidCallback> companyCallBacks = [
+    onPostAJobsTap,
+    onAccountVerifyTap,
+    onJobApplicationsTap,
+    onProfileTap,
+    onSettingsTap,
+  ];
+
+  late final List<VoidCallback> customerCallBacks = [
+    onOrderedServicesTap,
+    onProfileTap,
+    onSettingsTap,
+  ];
+
   List<bool> isCategorySelected = List.generate(
-    5,
+    JobCategoryEnum.values.length,
     (index) => false,
   );
 
@@ -370,137 +476,23 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        drawer: Drawer(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(30),
-              bottomRight: Radius.circular(30),
-            ),
-          ),
-          child: ListView(
-            children: [
-              DrawerHeader(
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                  image: AssetImage(
-                    drawerBackgroundImage,
-                  ),
-                  fit: BoxFit.cover,
-                )),
-                child: Center(
-                  child: ListTile(
-                    leading: const CircleAvatar(
-                      backgroundImage: AssetImage(notionImage),
-                    ),
-                    title: Text(
-                      'Notion',
-                      style: GoogleFonts.poppins(
-                        textStyle: const TextStyle(
-                          color: AppColors.white,
-                          fontSize: 20,
-                          fontWeight: weightlevel7,
-                          height: 1.30,
-                        ),
-                      ),
-                    ),
-                    subtitle: Text(
-                      'Technology and Software',
-                      style: GoogleFonts.poppins(
-                        textStyle: const TextStyle(
-                          color: Color(0xFFDDDDDD),
-                          fontSize: 13,
-                          fontWeight: weightlevel7,
-                          height: 1.20,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    List<String> icons = [
-                      verifiedIcon,
-                      applyIcon,
-                      profileIcon,
-                      settingsIcon,
-                      logoutIcon
-                    ];
-                    List<String> titles = [
-                      'Account Verification',
-                      'Jobs Applications',
-                      'Profile',
-                      'Settings',
-                      'Log out'
-                    ];
-                    List<VoidCallback> callBacks = [
-                      onAccountVerifyTap,
-                      onJobApplicationsTap,
-                      onProfileTap,
-                      onSettingsTap,
-                      onLogoutTap,
-                    ];
-                    return ListTile(
-                      leading: BlocConsumer<AuthBloc, AuthState>(
-                        listener: (context, state) {
-                          if (state is SuccessToLogoutState) {
-                            userRepo.setKey(isLogin, false);
-                            if (index == 4) {
-                              showSnackBarMethod(context,
-                                  'Logout out Successfully', AppColors.green);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const LoginView(),
-                                  ));
-                            }
-                          } else if (state is FailedToLogoutState) {
-                            if (index == 4) {
-                              showSnackBarMethod(
-                                  context, state.error, AppColors.red);
-                            }
-                          }
-                        },
-                        builder: (context, state) {
-                          if (state is LoadingState) {
-                            if (index != 4) {
-                              return SvgPicture.asset(icons[index]);
-                            } else {
-                              return const SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: CircularProgressIndicator(
-                                  color: AppColors.red,
-                                ),
-                              );
-                            }
-                          }
-                          return SvgPicture.asset(icons[index]);
-                        },
-                      ),
-                      onTap: index == 4
-                          ? () {
-                              BlocProvider.of<AuthBloc>(context)
-                                  .add(LogoutEvent());
-                            }
-                          : callBacks[index],
-                      title: Text(
-                        titles[index],
-                        style: GoogleFonts.poppins(
-                          textStyle: const TextStyle(
-                            color: Color(0xFF393939),
-                            fontSize: 14.5,
-                            fontWeight: weightlevel6,
-                            height: 1.21,
-                          ),
-                        ),
-                      ),
-                    );
-                  })
-            ],
-          ),
+        drawer: MainDrawer(
+          logout: onLogoutTap,
+          callBacks: widget.userType == 'freelancer'
+              ? freelancerCallBacks
+              : widget.userType == 'owner'
+                  ? companyCallBacks
+                  : customerCallBacks,
+          icons: widget.userType == 'freelancer'
+              ? freelancerIcons
+              : widget.userType == 'owner'
+                  ? companyIcons
+                  : customerIcons,
+          titles: widget.userType == 'freelancer'
+              ? freelancerTitles
+              : widget.userType == 'owner'
+                  ? companyTitles
+                  : customerTitles,
         ),
         appBar: EmpcoAppBar(
           centerTitle: true,
@@ -571,18 +563,19 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
-                  itemCount: 5,
+                  itemCount: JobCategoryEnum.values.length,
                   itemBuilder: (context, index) {
+                    final item = JobCategoryEnum.values[index];
                     return MainActionButton(
+                      icon: item.icon,
                       onTap: () => onCategorySelected(index),
-                      text: 'hello',
+                      text: item.name,
                       textColor: isCategorySelected[index]
                           ? const Color(0xFF0B2244)
                           : const Color(0xFFF6F6F6),
                       buttonColor: isCategorySelected[index]
                           ? const Color(0xFFF6F6F6)
                           : const Color(0xFF0B2244),
-                      width: 100,
                     );
                   },
                   separatorBuilder: (context, index) {
@@ -592,7 +585,33 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
                   },
                 ),
               ),
-              BlocBuilder<JobsCubit, JobsState>(
+              BlocConsumer<JobsCubit, GeneralJobsState>(
+                listener: (context, state) {
+                  if (state is DeleteJobSuccess) {
+                    context.loaderOverlay.hide();
+                    showSnackBarMethod(
+                      context,
+                      'JobPost is deleted successfully',
+                      AppColors.green,
+                    );
+                  } else if (state is JobsFail) {
+                    context.loaderOverlay.hide();
+                    showSnackBarMethod(
+                      context,
+                      state.error,
+                      AppColors.red,
+                    );
+                  } else if (state is DeleteJobLoading) {
+                    context.loaderOverlay.show();
+                  } else if (state is DeleteJobFail) {
+                    context.loaderOverlay.hide();
+                    showSnackBarMethod(
+                      context,
+                      state.message,
+                      AppColors.red,
+                    );
+                  }
+                },
                 builder: (context, state) {
                   if (state is JobsLoading) {
                     return const Column(
@@ -691,27 +710,30 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
                                                                   FontWeight
                                                                       .w700),
                                                     )),
-                                                if (widget.onEditTap != null)
+                                                const Spacer(),
+                                                if (widget.userType == 'owner')
                                                   Padding(
                                                     padding:
                                                         const EdgeInsets.only(
-                                                            left: 85),
+                                                            right: 10),
                                                     child: SizedBox(
-                                                      width: 50,
                                                       child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
                                                         children: [
                                                           InkWell(
-                                                            onTap: widget
-                                                                .onEditTap,
+                                                            onTap: () =>
+                                                                onEditTap(item),
                                                             child: const Icon(Icons
                                                                 .edit_outlined),
                                                           ),
+                                                          const SizedBox(
+                                                            width: 5,
+                                                          ),
                                                           InkWell(
-                                                            onTap: widget
-                                                                .onDeleteTap,
+                                                            onTap: () =>
+                                                                onDeleteTap(
+                                                                    item.id),
                                                             child: const Icon(Icons
                                                                 .delete_outline_outlined),
                                                           ),
@@ -735,9 +757,9 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
                                                   List<String> jobDetailsData =
                                                       [
                                                     item.location,
-                                                    item.location,
+                                                    item.workNature.displayName,
                                                     '${item.salary} SP',
-                                                    item.jobType,
+                                                    item.jobType.displayName,
                                                     item.createdAt
                                                         .formatMMddYYYY
                                                   ];

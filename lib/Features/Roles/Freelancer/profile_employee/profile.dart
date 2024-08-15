@@ -3,7 +3,7 @@ import 'package:empco/Core/Resources/Constants/texts.dart';
 import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:empco/Core/Widgets/empco_app_bar.dart';
 import 'package:empco/Core/Widgets/job_details_contact.dart';
-import 'package:empco/Features/Roles/Freelancer/profile_company/widgets/icon_and_text.dart';
+import 'package:empco/Features/Roles/Company/profile/widgets/icon_and_text.dart';
 import 'package:empco/Features/Roles/Freelancer/profile_employee/edit_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
