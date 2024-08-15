@@ -24,14 +24,15 @@ class GlobalTextButton extends StatelessWidget {
       child: Text.rich(
         textAlign: TextAlign.center,
         TextSpan(
-            style:
-                const TextStyle(color: AppColors.blue, fontSize: 12, fontWeight: weightlevel8),
+            style: const TextStyle(
+                color: AppColors.blue, fontSize: 12, fontWeight: weightlevel8),
             text: text1,
             children: [
               if (text2 != null)
                 TextSpan(
                     text: text2,
-                    style: const TextStyle(color: AppColors.bottomAuthPageTextColor2)),
+                    style: const TextStyle(
+                        color: AppColors.bottomAuthPageTextColor2)),
             ]),
       ),
     );
@@ -88,8 +89,10 @@ class MainActionButton extends StatelessWidget {
   final double? borderRadius;
   final TextStyle? textStyle;
   final List<BoxShadow>? shadow;
+  final String? SvgImage;
 
   const MainActionButton({
+    this.SvgImage,
     super.key,
     required this.text,
     this.fontSize,
@@ -105,7 +108,7 @@ class MainActionButton extends StatelessWidget {
     this.shadowColor,
     this.borderRadius,
     this.textStyle,
-    this.shadow, 
+    this.shadow,
   });
 
   @override
@@ -144,6 +147,7 @@ class MainActionButton extends StatelessWidget {
                     ),
                 textAlign: TextAlign.center,
               ),
+              // SvgPicture.asset(SvgImage),
               if (icon != null) icon!
             ],
           ),

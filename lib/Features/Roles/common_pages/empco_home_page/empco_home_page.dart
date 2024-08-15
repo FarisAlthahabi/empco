@@ -20,8 +20,8 @@ import 'package:empco/Core/router/Router.dart';
 import 'package:empco/Features/Auth/View/Login/login_page.dart';
 import 'package:empco/Features/Auth/bloc/auth_bloc.dart';
 import 'package:empco/Features/Roles/Company/my_app/my_appliction.dart';
+import 'package:empco/Features/Roles/Company/service_post/post_service.dart';
 import 'package:empco/Features/Roles/Freelancer/Jobs/cubit/jobs_cubit.dart';
-import 'package:empco/Features/Roles/Freelancer/freelance%20Projects/Freelance_Projects.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -191,12 +191,10 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
   }
 
   @override
-  void onFollowingsTap() {
-  }
+  void onFollowingsTap() {}
 
   @override
-  void onFreelanceProjectsTap() {
-  }
+  void onFreelanceProjectsTap() {}
 
   @override
   void onLocationChanged(String location) {
@@ -204,16 +202,13 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
   }
 
   @override
-  void onLocationSubmitted(String location) {
-  }
+  void onLocationSubmitted(String location) {}
 
   @override
-  void onMinimumSalaryChanged(String minimumSalary) {
-  }
+  void onMinimumSalaryChanged(String minimumSalary) {}
 
   @override
-  void onMinimumSalarySubmitted(String minimumSalary) {
-  }
+  void onMinimumSalarySubmitted(String minimumSalary) {}
 
   @override
   void onMyApplicationsTap() {
@@ -222,16 +217,13 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
   }
 
   @override
-  void onOrderedServicesTap() {
-  }
+  void onOrderedServicesTap() {}
 
   @override
-  void onPostAJobsTap() {
-  }
+  void onPostAJobsTap() {}
 
   @override
-  void onSavedPostsTap() {
-  }
+  void onSavedPostsTap() {}
 
   @override
   void onSearchChaged(String title) {
@@ -244,16 +236,13 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
   }
 
   @override
-  void onSettingsTap() {
-  }
+  void onSettingsTap() {}
 
   @override
-  void onTypeSelected() {
-  }
+  void onTypeSelected() {}
 
   @override
-  void onWorkNatureSelected() {
-  }
+  void onWorkNatureSelected() {}
 
   List<String> companytitles = [
     'Post a job',
@@ -338,8 +327,8 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
 
   @override
   void onJobApplicationsTap() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => FreelanceProjects()));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const ServicePostView()));
   }
 
   @override

@@ -34,7 +34,6 @@ class _MainTextFieldState extends State<MainTextField> {
               color: const Color.fromRGBO(137, 129, 129, 1),
               width: 0.35)),
       child: TextField(
-
         onChanged: widget.onChanged,
         onSubmitted: widget.onSubmitted,
         focusNode: widget.focusNode,
