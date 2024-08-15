@@ -90,6 +90,8 @@ const List<String> jobDetailsTitle = [
   'Type',
   'Deadline:'
 ];
+List<String> serviceDetailsTitle = ['Cost', 'Esitmated time'];
+List<String> serviceDetailsData = ['100,000', '2 days'];
 
 const filterText = 'Filters';
 const typeText = 'Type';
@@ -106,7 +108,6 @@ const minimumSalaryExampleText = '20,000';
 const cancelText = 'Cancel';
 const applyFiltersText = 'Apply Filters';
 
-//! profile view 
-  const String profile = 'profile';
-  const String editprofile = 'edit profile';
-
+//! profile view
+const String profile = 'profile';
+const String editprofile = 'edit profile';

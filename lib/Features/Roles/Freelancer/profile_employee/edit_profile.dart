@@ -1,8 +1,8 @@
 import 'package:empco/Core/Resources/Constants/assets.dart';
 import 'package:empco/Core/Widgets/buttons.dart';
 import 'package:empco/Core/Widgets/empco_app_bar.dart';
-import 'package:empco/Features/Roles/Freelancer/profile_company/widgets/TextFormFieldToProfile.dart';
-import 'package:empco/Features/Roles/Freelancer/profile_company/widgets/icon_and_text.dart';
+import 'package:empco/Features/Roles/Company/profile_company/widgets/TextFormFieldToProfile.dart';
+import 'package:empco/Features/Roles/Company/profile_company/widgets/icon_and_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';

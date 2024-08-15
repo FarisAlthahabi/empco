@@ -12,8 +12,8 @@ import 'package:empco/Features/Roles/Freelancer/Job_details/View/job_details.dar
 import 'package:empco/Features/Roles/Freelancer/Navigation_Bar/navigation_bar.dart';
 import 'package:empco/Features/Roles/Freelancer/Verification/upload_licence_view.dart';
 import 'package:empco/Features/Roles/Freelancer/Verification/verification_status_view.dart';
-import 'package:empco/Features/Roles/Freelancer/profile_company/edit_profile.dart';
-import 'package:empco/Features/Roles/Freelancer/profile_company/profile.dart';
+import 'package:empco/Features/Roles/Company/profile_company/edit_profile.dart';
+import 'package:empco/Features/Roles/Company/profile_company/profile.dart';
 import 'package:go_router/go_router.dart';
 
 const mainRoute = '/';

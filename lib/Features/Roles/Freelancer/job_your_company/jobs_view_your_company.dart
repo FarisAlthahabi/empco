@@ -5,11 +5,14 @@ import 'package:empco/Core/Widgets/filter_bottom_sheet.dart';
 import 'package:empco/Core/Widgets/main_show_bottom_sheet.dart';
 import 'package:empco/Core/di/di.dart';
 import 'package:empco/Core/router/Router.dart';
+import 'package:empco/Features/Roles/Freelancer/Jobs/Model/job_model/job_model.dart';
 import 'package:empco/Features/Roles/Freelancer/Jobs/View/Widgets/widgets.dart';
 import 'package:empco/Features/Roles/Freelancer/Jobs/cubit/jobs_cubit.dart';
+import 'package:empco/Features/Roles/Freelancer/job_your_company/job_main_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 abstract class JobsCallBacks {
   void onNotificationTap();
@@ -45,8 +48,8 @@ abstract class JobsCallBacks {
   void onApplyFiltersTap();
 }
 
-class JobsView extends StatelessWidget {
-  const JobsView({super.key});
+class JobYourCompany extends StatelessWidget {
+  const JobYourCompany({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -125,12 +128,10 @@ class _JobsPageState extends State<JobsPage> implements JobsCallBacks {
   }
 
   @override
-  void onSearchChaged(String input) {
-  }
+  void onSearchChaged(String input) {}
 
   @override
-  void onSearchSubmitted(String input) {
-  }
+  void onSearchSubmitted(String input) {}
 
   @override
   void onApplyFiltersTap() {
@@ -177,19 +178,66 @@ class _JobsPageState extends State<JobsPage> implements JobsCallBacks {
     var deviceData = MediaQuery.of(context);
     var screenSize = deviceData.size;
     double screenWidth = screenSize.width;
-
+    List<JobModel> jobs = [
+      JobModel(
+        id: 1,
+        title: 'Software Engineer',
+        body:
+            'We are seeking an experienced Software Engineer to join our team.',
+        requiredSkills: 'Spring',
+        salary: 80000,
+        jobType: 'Full-Time',
+        location: 'New York, NY',
+        deadTime: DateTime(2023, 12, 31),
+        categoryId: 1,
+        ownerId: 1,
+        createdAt: DateTime(2023, 8, 1),
+        updatedAt: DateTime(2023, 8, 10),
+      ),
+      JobModel(
+        id: 1,
+        title: 'Software Engineer',
+        body:
+            'We are seeking an experienced Software Engineer to join our team.',
+        requiredSkills: 'Spring',
+        salary: 80000,
+        jobType: 'Full-Time',
+        location: 'New , NY',
+        deadTime: DateTime(2023, 12, 31),
+        categoryId: 1,
+        ownerId: 1,
+        createdAt: DateTime(2023, 8, 1),
+        updatedAt: DateTime(2023, 8, 10),
+      ),
+      JobModel(
+        id: 1,
+        title: 'Software Engineer',
+        body: 'We .',
+        requiredSkills: 'Spring',
+        salary: 80000,
+        jobType: 'Full-Time',
+        location: 'Ne NY',
+        deadTime: DateTime(2023, 12, 31),
+        categoryId: 1,
+        ownerId: 1,
+        createdAt: DateTime(2023, 8, 1),
+        updatedAt: DateTime(2023, 8, 10),
+      ),
+    ];
     return SafeArea(
       child: Scaffold(
         drawer: const Drawer(),
         appBar: EmpcoAppBar(
           automaticallyImplyLeading: false,
           centerTitle: true,
-          title: SearchTextField(
-            onChanged: onSearchChaged,
-            onSubmitted: onSearchSubmitted,
-            searchJobController: searchJobController,
-            screenWidth: screenWidth,
-          ), // Search TextField
+          title: SizedBox()
+          //  SearchTextField(
+          //   onChanged: onSearchChaged,
+          //   onSubmitted: onSearchSubmitted,
+          //   searchJobController: searchJobController,
+          //   screenWidth: screenWidth,
+          // ), // Search TextField
+          ,
           actions: [
             const SizedBox(
               width: 25,
@@ -222,33 +270,47 @@ class _JobsPageState extends State<JobsPage> implements JobsCallBacks {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Column(
+                          Column(
                             children: [
-                              Text1(), // contains : Jobs For You
-                              Text2(), // contains : based on your career
+                              Text(
+                                'Company posts',
+                                style: GoogleFonts.poppins(
+                                  textStyle: const TextStyle(
+                                      color: Color.fromRGBO(0, 0, 0, 1),
+                                      fontSize: 20.64,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                textAlign: TextAlign.center,
+                              ), // contains : Jobs For You
+                              Text(
+                                'you can edit or add new services',
+                                style: GoogleFonts.poppins(
+                                  textStyle: const TextStyle(
+                                      color: Color.fromRGBO(110, 109, 109, 1),
+                                      fontSize: 9.64,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              // contains : based on your career
                             ],
                           ),
-                          FilterIconButton(
-                            // Filter Button
-                            onTap: onFilterTap,
-                          )
                         ],
                       ),
                     ),
                     Expanded(
                       child: SizedBox(
                         child: ListView.builder(
-                          itemCount: state.jobs.length,
+                          itemCount: jobs.length,
                           itemBuilder: (context, index) {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                               
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                JobMainInfo(
-                                  job: state.jobs[index],
+                                JobMainInfoCompany(
+                                  job: jobs[index],
                                   screenWidth: screenWidth,
                                   onApplyTap: () {
                                     onApplyTap();
@@ -257,10 +319,10 @@ class _JobsPageState extends State<JobsPage> implements JobsCallBacks {
                                     onExpandJopTap(
                                         context, state.jobs[index].id);
                                   },
-                                  onFavoriteTap: () {
+                                  onEditTap: () {
                                     onFavoriteTap();
                                   },
-                                  onMessageTap: () {
+                                  onDeleteTap: () {
                                     onMessageTap();
                                   },
                                 )

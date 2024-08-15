@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> with PostFrameMixin {
         context.go('$mainRoute/$introRoute');
         await userRepo.setKey(isFirstTime, false);
       } else {
-        if (await userRepo.getKey(isLogin)) {
+        if (await userRepo.getKey(isLogin, defaultValue: false)) {
           if (await userRepo.getKey(role) == 'freelancer') {
             context.go('$mainRoute/$loginRoute/$freelancerHomePageRoute');
           } else if (await userRepo.getKey(role) == 'company') {

@@ -96,3 +96,18 @@ const String partTimeIcon = 'lib/Core/Resources/assets/SVG/part_time_icon.svg';
 const String remoteIcon = 'lib/Core/Resources/assets/SVG/remote_icon.svg';
 const String hybridIcon = 'lib/Core/Resources/assets/SVG/hybrid_icon.svg';
 const String aiIcon = 'lib/Core/Resources/assets/PNG/icon_ai.png';
+
+// service 
+const String serviceDetailsImage = 'lib/Core/Resources/assets/PNG/service_details.png';
+
+// icon My app AND Ordered services 
+const String inProgressIcon = 'lib/Core/Resources/assets/SVG/Inprogress_icon.svg';
+const String ordredIcon = 'lib/Core/Resources/assets/SVG/ordred_icon.svg';
+const String rejectedIcon = 'lib/Core/Resources/assets/SVG/Rejected_icon.svg';
+const String completedIcon = 'lib/Core/Resources/assets/SVG/Completed_icon.svg';
+const String prossingIcon = 'lib/Core/Resources/assets/SVG/prossing_icon.svg';
+
+//service employee
+
+const String personServiceIcon = 'lib/Core/Resources/assets/SVG/person_service_icon.svg';
+const String laptopIcon = 'lib/Core/Resources/assets/SVG/laptop_icon.svg';

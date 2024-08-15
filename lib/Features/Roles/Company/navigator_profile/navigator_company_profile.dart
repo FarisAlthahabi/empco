@@ -1,14 +1,51 @@
-
 import 'package:empco/Core/Resources/Constants/assets.dart';
+
+import 'package:empco/Core/Resources/Constants/texts.dart';
+import 'package:empco/Core/Theme/components/colors.dart';
+import 'package:empco/Core/Widgets/buttons.dart';
 import 'package:empco/Core/Widgets/empco_app_bar.dart';
 import 'package:empco/Core/Widgets/job_details_contact.dart';
-import 'package:empco/Features/Roles/Freelancer/profile_company/edit_profile.dart';
-import 'package:empco/Features/Roles/Freelancer/profile_company/widgets/icon_and_text.dart';
+
+import 'package:empco/Features/Roles/Company/profile_company/widgets/icon_and_text.dart';
 import 'package:flutter/material.dart';
 
-class ProfileView extends StatelessWidget {
-  const ProfileView({super.key});
+abstract class NavigatorProfileCompanyViewCallBacks {
+  void onMessageTap();
+  void onFollowTap();
+     void onShowTap();
+}
+class NavigatorProfileCompanyView extends StatelessWidget {
+  const NavigatorProfileCompanyView({super.key});
 
+  @override
+  Widget build(BuildContext context) {
+    return NavigatorProfileCompanyPage();
+  }
+}
+
+class NavigatorProfileCompanyPage extends StatefulWidget {
+  const NavigatorProfileCompanyPage({super.key});
+
+  @override
+  State<NavigatorProfileCompanyPage> createState() =>
+      _NavigatorProfileCompanyPageState();
+}
+
+class _NavigatorProfileCompanyPageState
+    extends State<NavigatorProfileCompanyPage> implements NavigatorProfileCompanyViewCallBacks {
+      @override
+  void onMessageTap() {
+    // TODO: implement onMessageTap
+  }
+  
+  @override
+  void onFollowTap() {
+    // TODO: implement onOrderTap
+  }
+  @override
+  void onShowTap() {
+    // TODO: implement onOrderTap
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -16,7 +53,7 @@ class ProfileView extends StatelessWidget {
             appBar: const EmpcoAppBar(
               automaticallyImplyLeading: true,
               title: Text(
-                'profile',
+                profile,
                 style: TextStyle(
                     fontWeight: FontWeight.bold, color: Color(0xff1D5BA4)),
               ),
@@ -43,21 +80,50 @@ class ProfileView extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 350, top: 140),
-                  child: IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const EditProfileView(
-                                title: 'Edit Profile',
-                              ),
-                            ));
-                      },
-                      icon: const Icon(Icons.edit)),
-                ),
+                    padding:
+                        const EdgeInsets.only(left: 30, top: 150, right: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        MainActionButton(
+                          onTap: onMessageTap,
+                          icon: const Icon(
+                            Icons.messenger_outline,
+                            color: Color(0xff002245),
+                            size: 18,
+                          ),
+                          fontSize: 12,
+                          textColor: const Color(0xff002245),
+                          text: 'Message',
+                          buttonColor: const Color(0xffEFF2F5),
+                          width: 100,
+                          height: 30,
+                          blurRadius: 3.71,
+                          yAxisOffset: 3.71,
+                          shadowColor: Colors.black.withOpacity(0.25),
+                        ),
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        MainActionButton(
+                          onTap: onFollowTap,
+                          icon: Icon(
+                            Icons.library_add_rounded,
+                            color: AppColors.white,
+                            size: 20,
+                          ),
+                          textColor: AppColors.white,
+                          text: 'Follow',
+                          width: 100,
+                          height: 30,
+                          blurRadius: 3.71,
+                          yAxisOffset: 3.71,
+                          shadowColor: Colors.black.withOpacity(0.25),
+                        )
+                      ],
+                    )),
                 const Padding(
-                  padding: EdgeInsets.only(left: 35),
+                  padding: EdgeInsets.only(left: 35, top: 10),
                   child: Column(
                     children: [
                       SizedBox(
@@ -74,7 +140,7 @@ class ProfileView extends StatelessWidget {
                             width: 20,
                           ),
                           Text(
-                            '200 ',
+                            '200',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 15),
                           ),
@@ -166,4 +232,6 @@ class ProfileView extends StatelessWidget {
               ],
             )));
   }
+  
+  
 }

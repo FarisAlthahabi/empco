@@ -1,4 +1,5 @@
 import 'package:empco/Core/Resources/Constants/Font_Weights.dart';
+import 'package:empco/Core/Resources/Constants/assets.dart';
 import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:empco/Core/Widgets/buttons.dart';
 import 'package:empco/Features/Roles/Freelancer/Jobs/Model/job_model/job_model.dart';
@@ -6,14 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class JobMainInfo extends StatelessWidget {
-  const JobMainInfo({
+class ServiceMainInfoCustomer extends StatelessWidget {
+  const ServiceMainInfoCustomer({
     super.key,
     required this.screenWidth,
     required this.onExpandJopTap,
     required this.onFavoriteTap,
     required this.onMessageTap,
-    required this.onApplyTap,
+    required this.onOrderTap,
     required this.job,
   });
 
@@ -21,23 +22,22 @@ class JobMainInfo extends StatelessWidget {
   final VoidCallback onExpandJopTap;
   final VoidCallback onFavoriteTap;
   final VoidCallback onMessageTap;
-  final VoidCallback onApplyTap;
+  final VoidCallback onOrderTap;
   final JobModel job;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(
-          Icons.favorite,
-          size: 0.14 * screenWidth,
-        ),
         Container(
           padding: const EdgeInsets.symmetric(vertical: 10),
-          width: 0.73 * screenWidth,
+          width: 0.90 * screenWidth,
           decoration: BoxDecoration(
-            color: const Color(0xFFF8F8F8),
-            borderRadius: BorderRadius.circular(11.42),
+            borderRadius: BorderRadius.circular(12),
+            gradient: const LinearGradient(colors: [
+              Color(0xFF202840),
+              Color(0xFF58308B),
+            ]),
           ),
           child: Padding(
             padding: const EdgeInsets.only(left: 15),
@@ -46,7 +46,7 @@ class JobMainInfo extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: 0.73 * screenWidth,
+                  width: 0.83 * screenWidth,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -56,17 +56,22 @@ class JobMainInfo extends StatelessWidget {
                           job.title,
                           style: GoogleFonts.poppins(
                             textStyle: const TextStyle(
-                              color: AppColors.blue,
+                              color: AppColors.white,
                               fontSize: 20,
                               fontWeight: weightlevel7,
                             ),
                           ),
-                          textAlign: TextAlign.center,
                         ),
+                      ),
+                      const SizedBox(
+                        width: 100,
                       ),
                       InkWell(
                         onTap: onExpandJopTap,
                         child: SvgPicture.asset(
+                          width: 20,
+                          // ignore: deprecated_member_use
+                          color: AppColors.white,
                           'lib/Core/Resources/assets/SVG/expand.svg',
                         ),
                       ),
@@ -89,7 +94,7 @@ class JobMainInfo extends StatelessWidget {
                               width: 15,
                             ),
                             SvgPicture.asset(
-                              'lib/Core/Resources/assets/SVG/company.svg',
+                              personServiceIcon,
                             ),
                             const SizedBox(
                               width: 8,
@@ -98,7 +103,7 @@ class JobMainInfo extends StatelessWidget {
                               job.title,
                               style: GoogleFonts.poppins(
                                 textStyle: const TextStyle(
-                                    color: Color.fromRGBO(15, 50, 91, 1),
+                                    color: AppColors.white,
                                     fontSize: 12,
                                     fontWeight: weightlevel7),
                               ),
@@ -112,7 +117,9 @@ class JobMainInfo extends StatelessWidget {
                         child: InkWell(
                           onTap: onFavoriteTap,
                           child: SvgPicture.asset(
-                            width: 15,
+                            // ignore: deprecated_member_use
+                            color: AppColors.white,
+                            width: 20,
                             'lib/Core/Resources/assets/SVG/favorite-list.svg',
                             semanticsLabel: 'My SVG Image',
                           ),
@@ -122,7 +129,7 @@ class JobMainInfo extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 6,
+                  height: 4,
                 ),
                 SizedBox(
                   width: 0.73 * screenWidth,
@@ -136,38 +143,41 @@ class JobMainInfo extends StatelessWidget {
                             const SizedBox(
                               width: 10,
                             ),
-                            const Icon(
-                              Icons.location_on,
-                              size: 15,
-                              color: Color.fromRGBO(155, 155, 155, 1),
-                            ),
+                            // const Icon(
+                            //   Icons.location_on,
+                            //   size: 15,
+                            //   color: AppColors.white,
+                            // ),
+                            // const SizedBox(
+                            //   width: 5,
+                            // ),
+                            // Text(
+                            //   job.location,
+                            //   style: GoogleFonts.poppins(
+                            //     textStyle: const TextStyle(
+                            //         color: AppColors.white,
+                            //         fontSize: 10,
+                            //         fontWeight: weightlevel7),
+                            //   ),
+                            //   textAlign: TextAlign.center,
+                            // ),
                             const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              job.location,
-                              style: GoogleFonts.poppins(
-                                textStyle: const TextStyle(
-                                    color: Color(0xFF373737),
-                                    fontSize: 10,
-                                    fontWeight: weightlevel7),
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(
-                              width: 10,
+                              width: 8,
                             ),
                             SvgPicture.asset(
+                              width: 15,
+                              // ignore: deprecated_member_use
+                              color: AppColors.white,
                               'lib/Core/Resources/assets/SVG/salary.svg',
                             ),
                             const SizedBox(
-                              width: 5,
+                              width: 8,
                             ),
                             Text(
                               job.salary.toString(),
                               style: GoogleFonts.poppins(
                                 textStyle: const TextStyle(
-                                    color: Color(0xFF373737),
+                                    color: AppColors.white,
                                     fontSize: 10,
                                     fontWeight: weightlevel7),
                               ),
@@ -179,18 +189,18 @@ class JobMainInfo extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(right: 27),
                         child: InkWell(
-                          onTap: onMessageTap,
-                          child: SvgPicture.asset(
-                            width: 15,
-                            'lib/Core/Resources/assets/SVG/chat.svg',
-                          ),
-                        ),
+                            onTap: onMessageTap,
+                            child: SvgPicture.asset(
+                                // ignore: deprecated_member_use
+                                color: AppColors.white,
+                                width: 20,
+                                'lib/Core/Resources/assets/SVG/chat.svg')),
                       ),
                     ],
                   ),
                 ),
                 const SizedBox(
-                  height: 6,
+                  height: 4,
                 ),
                 SizedBox(
                   width: 0.73 * screenWidth,
@@ -205,7 +215,9 @@ class JobMainInfo extends StatelessWidget {
                               width: 15,
                             ),
                             SvgPicture.asset(
-                              'lib/Core/Resources/assets/SVG/work-site.svg',
+                              // ignore: deprecated_member_use
+                              color: AppColors.white,
+                              timeIcon,
                             ),
                             const SizedBox(
                               width: 5,
@@ -214,7 +226,7 @@ class JobMainInfo extends StatelessWidget {
                               job.location,
                               style: GoogleFonts.poppins(
                                   textStyle: const TextStyle(
-                                      color: Color(0xFF373737),
+                                      color: AppColors.white,
                                       fontSize: 10,
                                       fontWeight: weightlevel7)),
                               textAlign: TextAlign.center,
@@ -222,23 +234,23 @@ class JobMainInfo extends StatelessWidget {
                             const SizedBox(
                               width: 15,
                             ),
-                            Container(
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                  color: const Color(0x0F325B12),
-                                  borderRadius: BorderRadius.circular(5)),
-                              child: Text(
-                                job.jobType,
-                                style: GoogleFonts.poppins(
-                                  textStyle: const TextStyle(
-                                    color: Color(0xFF373737),
-                                    fontSize: 10,
-                                    fontWeight: weightlevel7,
-                                  ),
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
+                            // Container(
+                            //   padding: const EdgeInsets.all(5),
+                            //   decoration: BoxDecoration(
+                            //       color: AppColors.white,
+                            //       borderRadius: BorderRadius.circular(5)),
+                            //   child: Text(
+                            //     job.jobType,
+                            //     style: GoogleFonts.poppins(
+                            //       textStyle: const TextStyle(
+                            //         color: AppColors.white,
+                            //         fontSize: 10,
+                            //         fontWeight: weightlevel7,
+                            //       ),
+                            //     ),
+                            //     textAlign: TextAlign.center,
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
@@ -246,14 +258,20 @@ class JobMainInfo extends StatelessWidget {
                         // Apply Button
                         padding: const EdgeInsets.only(right: 5),
                         child: MainActionButton(
-                            width: 57.85,
-                            height: 18.02,
-                            text: 'Apply',
+                            icon: const Icon(
+                              Icons.add_shopping_cart,
+                              size: 14,
+                            ),
+                            textColor: AppColors.black,
+                            buttonColor: AppColors.white,
+                            width: 65.85,
+                            height: 25.02,
+                            text: 'Order',
                             blurRadius: 1.36,
                             yAxisOffset: 1.36,
                             shadowColor: AppColors.boxShadowColor2,
-                            fontSize: 6.81,
-                            onTap: onApplyTap),
+                            fontSize: 8.81,
+                            onTap: onOrderTap),
                       ),
                     ],
                   ),

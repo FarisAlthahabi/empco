@@ -9,11 +9,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // ignore: must_be_immutable
-class MyApplictionView extends StatelessWidget {
-  MyApplictionView({super.key});
+class OrdredService extends StatelessWidget {
+  OrdredService({super.key});
   List<String> list = ["Ui Ux Designer", "SofwareEn", "Ui Ux Designer"];
-  List<String> listicon = [prossingIcon, completedIcon, rejectedIcon];
-  List<String> listTitle = ["Pending", "Approved", "Rejected"];
+  List<String> listicon = [ordredIcon, completedIcon, inProgressIcon];
+  List<String> listTitle = ["ordred", "completed", "InProgress"];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -21,7 +21,7 @@ class MyApplictionView extends StatelessWidget {
             appBar: const EmpcoAppBar(
               automaticallyImplyLeading: true,
               title: Text(
-                'My applications',
+                'Ordered services ',
                 style: TextStyle(
                     fontWeight: FontWeight.bold, color: Color(0xff1D5BA4)),
               ),
@@ -52,7 +52,10 @@ class MyApplictionView extends StatelessWidget {
                                   children: [
                                     Row(
                                       children: [
-                                        SvgPicture.asset(JobSearchIcon),
+                                        SvgPicture.asset(
+                                          laptopIcon,
+                                          width: 25,
+                                        ),
                                         const SizedBox(
                                           width: 12.5,
                                         ),
@@ -72,15 +75,24 @@ class MyApplictionView extends StatelessWidget {
                                     ),
                                     Row(
                                       children: [
-                                        SvgPicture.asset(
-                                          empcoIcon,
-                                          width: 20,
+                                        Container(
+                                          width: 25,
+                                          height: 25,
+                                          decoration: const BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(50)),
+                                              color: AppColors.black),
+                                          child: const CircleAvatar(
+                                            radius: 30,
+                                            backgroundImage: AssetImage(
+                                                backgroundEditProfile),
+                                          ),
                                         ),
                                         const SizedBox(
                                           width: 12.5,
                                         ),
                                         Text(
-                                          'name company',
+                                          'name person',
                                           style: GoogleFonts.poppins(
                                             textStyle: const TextStyle(
                                                 fontWeight: FontWeight.w500,
@@ -91,19 +103,20 @@ class MyApplictionView extends StatelessWidget {
                                       ],
                                     ),
                                     const SizedBox(
-                                      height: 7,
+                                      height: 9,
                                     ),
                                     Row(
                                       children: [
                                         SvgPicture.asset(
-                                          loctionIcon,
+                                          color: Color(0xffACACAC),
+                                          salaryIcon,
                                           width: 15,
                                         ),
                                         const SizedBox(
                                           width: 6,
                                         ),
                                         Text(
-                                          'Damascus, Syria',
+                                          '100,000 SYP',
                                           style: GoogleFonts.poppins(
                                             textStyle: const TextStyle(
                                                 color: Color(0xff808080),
@@ -114,22 +127,6 @@ class MyApplictionView extends StatelessWidget {
                                         const SizedBox(
                                           width: 6,
                                         ),
-                                        SvgPicture.asset(
-                                          onstieIcon,
-                                          width: 15,
-                                        ),
-                                        const SizedBox(
-                                          width: 6,
-                                        ),
-                                        Text(
-                                          'On-Site',
-                                          style: GoogleFonts.poppins(
-                                            textStyle: const TextStyle(
-                                                color: Color(0xff808080),
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 10),
-                                          ),
-                                        )
                                       ],
                                     )
                                   ],
@@ -144,21 +141,14 @@ class MyApplictionView extends StatelessWidget {
                                 ),
                                 child: Column(
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 70),
-                                      child: IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                            Icons.cancel_outlined,
-                                            size: 27.5,
-                                            color: AppColors.black,
-                                          )),
+                                    SizedBox(
+                                      height: 50,
                                     ),
                                     Row(
                                       children: [
                                         SvgPicture.asset(listicon[index]),
                                         SizedBox(
-                                          width: 5,
+                                          width: 7,
                                         ),
                                         Text(
                                           listTitle[index],

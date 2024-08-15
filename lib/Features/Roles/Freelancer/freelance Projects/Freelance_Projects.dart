@@ -9,19 +9,29 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // ignore: must_be_immutable
-class MyApplictionView extends StatelessWidget {
-  MyApplictionView({super.key});
+class FreelanceProjects extends StatefulWidget {
+  FreelanceProjects({super.key});
+
+  @override
+  State<FreelanceProjects> createState() => _FreelanceProjectsState();
+}
+
+class _FreelanceProjectsState extends State<FreelanceProjects> {
   List<String> list = ["Ui Ux Designer", "SofwareEn", "Ui Ux Designer"];
-  List<String> listicon = [prossingIcon, completedIcon, rejectedIcon];
-  List<String> listTitle = ["Pending", "Approved", "Rejected"];
+
+  List<String> listicon = [ordredIcon, completedIcon, inProgressIcon];
+
+  List<String> listTitle = ["ordred", "completed", "InProgress"];
+
   @override
   Widget build(BuildContext context) {
+    int? selectRadio;
     return SafeArea(
         child: Scaffold(
             appBar: const EmpcoAppBar(
               automaticallyImplyLeading: true,
               title: Text(
-                'My applications',
+                'Freelance Projects',
                 style: TextStyle(
                     fontWeight: FontWeight.bold, color: Color(0xff1D5BA4)),
               ),
@@ -52,7 +62,10 @@ class MyApplictionView extends StatelessWidget {
                                   children: [
                                     Row(
                                       children: [
-                                        SvgPicture.asset(JobSearchIcon),
+                                        SvgPicture.asset(
+                                          laptopIcon,
+                                          width: 20,
+                                        ),
                                         const SizedBox(
                                           width: 12.5,
                                         ),
@@ -62,25 +75,26 @@ class MyApplictionView extends StatelessWidget {
                                             textStyle: const TextStyle(
                                                 color: Color(0xff3F5772),
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 20),
+                                                fontSize: 17),
                                           ),
                                         )
                                       ],
                                     ),
                                     const SizedBox(
-                                      height: 3,
+                                      height: 12,
                                     ),
                                     Row(
                                       children: [
                                         SvgPicture.asset(
-                                          empcoIcon,
+                                          personServiceIcon,
                                           width: 20,
+                                          color: Color(0xffDD5A5A),
                                         ),
                                         const SizedBox(
-                                          width: 12.5,
+                                          width: 15.5,
                                         ),
                                         Text(
-                                          'name company',
+                                          'name person',
                                           style: GoogleFonts.poppins(
                                             textStyle: const TextStyle(
                                                 fontWeight: FontWeight.w500,
@@ -91,47 +105,8 @@ class MyApplictionView extends StatelessWidget {
                                       ],
                                     ),
                                     const SizedBox(
-                                      height: 7,
+                                      height: 9,
                                     ),
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          loctionIcon,
-                                          width: 15,
-                                        ),
-                                        const SizedBox(
-                                          width: 6,
-                                        ),
-                                        Text(
-                                          'Damascus, Syria',
-                                          style: GoogleFonts.poppins(
-                                            textStyle: const TextStyle(
-                                                color: Color(0xff808080),
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 10),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 6,
-                                        ),
-                                        SvgPicture.asset(
-                                          onstieIcon,
-                                          width: 15,
-                                        ),
-                                        const SizedBox(
-                                          width: 6,
-                                        ),
-                                        Text(
-                                          'On-Site',
-                                          style: GoogleFonts.poppins(
-                                            textStyle: const TextStyle(
-                                                color: Color(0xff808080),
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 10),
-                                          ),
-                                        )
-                                      ],
-                                    )
                                   ],
                                 ),
                               ),
@@ -142,36 +117,37 @@ class MyApplictionView extends StatelessWidget {
                                 padding: const EdgeInsets.only(
                                   top: 3.0,
                                 ),
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 70),
-                                      child: IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                            Icons.cancel_outlined,
-                                            size: 27.5,
-                                            color: AppColors.black,
-                                          )),
-                                    ),
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(listicon[index]),
-                                        SizedBox(
-                                          width: 5,
+                                child:  SizedBox(
+                                  width: 150,
+                                  height: 150,
+                                  child: Column(
+                                    children: <Widget>[
+                                      ListTile(
+                                        title: const Text('Dark'),
+                                        leading: Radio<int>(
+                                          value: 1,
+                                          groupValue: selectRadio,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              selectRadio = value;
+                                            });
+                                          },
                                         ),
-                                        Text(
-                                          listTitle[index],
-                                          style: GoogleFonts.poppins(
-                                            textStyle: const TextStyle(
-                                                color: Color(0xff808080),
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 12.5),
-                                          ),
-                                        )
-                                      ],
-                                    )
-                                  ],
+                                      ),
+                                      ListTile(
+                                        title: const Text('Light'),
+                                        leading: Radio<int>(
+                                          value: 2,
+                                          groupValue: selectRadio,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              selectRadio = value;
+                                            });
+                                          },
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               )
                             ],

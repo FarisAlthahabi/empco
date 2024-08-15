@@ -1,26 +1,25 @@
 import 'package:empco/Core/Resources/Constants/Font_Weights.dart';
 import 'package:empco/Core/Theme/components/colors.dart';
-import 'package:empco/Core/Widgets/buttons.dart';
 import 'package:empco/Features/Roles/Freelancer/Jobs/Model/job_model/job_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class JobMainInfo extends StatelessWidget {
-  const JobMainInfo({
+class JobMainInfoCompany extends StatelessWidget {
+  const JobMainInfoCompany({
     super.key,
     required this.screenWidth,
     required this.onExpandJopTap,
-    required this.onFavoriteTap,
-    required this.onMessageTap,
+    required this.onEditTap,
+    required this.onDeleteTap,
     required this.onApplyTap,
     required this.job,
   });
 
   final double screenWidth;
   final VoidCallback onExpandJopTap;
-  final VoidCallback onFavoriteTap;
-  final VoidCallback onMessageTap;
+  final VoidCallback onEditTap;
+  final VoidCallback onDeleteTap;
   final VoidCallback onApplyTap;
   final JobModel job;
 
@@ -110,13 +109,11 @@ class JobMainInfo extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(right: 28),
                         child: InkWell(
-                          onTap: onFavoriteTap,
-                          child: SvgPicture.asset(
-                            width: 15,
-                            'lib/Core/Resources/assets/SVG/favorite-list.svg',
-                            semanticsLabel: 'My SVG Image',
-                          ),
-                        ),
+                            onTap: onEditTap,
+                            child: const Icon(
+                              Icons.edit,
+                              color: Colors.green,
+                            )),
                       ),
                     ],
                   ),
@@ -179,12 +176,12 @@ class JobMainInfo extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(right: 27),
                         child: InkWell(
-                          onTap: onMessageTap,
-                          child: SvgPicture.asset(
-                            width: 15,
-                            'lib/Core/Resources/assets/SVG/chat.svg',
-                          ),
-                        ),
+                            onTap: onDeleteTap,
+                            child: const Icon(
+                              Icons.delete_outline_sharp,
+                              color: Color(0xffC61C1C),
+                              size: 25,
+                            )),
                       ),
                     ],
                   ),
@@ -242,19 +239,19 @@ class JobMainInfo extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Padding(
-                        // Apply Button
-                        padding: const EdgeInsets.only(right: 5),
-                        child: MainActionButton(
-                            width: 57.85,
-                            height: 18.02,
-                            text: 'Apply',
-                            blurRadius: 1.36,
-                            yAxisOffset: 1.36,
-                            shadowColor: AppColors.boxShadowColor2,
-                            fontSize: 6.81,
-                            onTap: onApplyTap),
-                      ),
+                      // Padding(
+                      //   // Apply Button
+                      //   padding: const EdgeInsets.only(right: 5),
+                      //   child: MainActionButton(
+                      //       width: 57.85,
+                      //       height: 18.02,
+                      //       text: 'Apply',
+                      //       blurRadius: 1.36,
+                      //       yAxisOffset: 1.36,
+                      //       shadowColor: AppColors.boxShadowColor2,
+                      //       fontSize: 6.81,
+                      //       onTap: onApplyTap),
+                      // ),
                     ],
                   ),
                 ),

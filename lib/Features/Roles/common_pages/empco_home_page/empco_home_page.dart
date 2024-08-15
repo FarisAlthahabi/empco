@@ -19,7 +19,10 @@ import 'package:empco/Core/repos/user_repo.dart';
 import 'package:empco/Core/router/Router.dart';
 import 'package:empco/Features/Auth/View/Login/login_page.dart';
 import 'package:empco/Features/Auth/bloc/auth_bloc.dart';
+import 'package:empco/Features/Roles/Company/my_app/my_appliction.dart';
 import 'package:empco/Features/Roles/Freelancer/Jobs/cubit/jobs_cubit.dart';
+import 'package:empco/Features/Roles/Freelancer/freelance%20Projects/Freelance_Projects.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -189,12 +192,10 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
 
   @override
   void onFollowingsTap() {
-    // TODO: implement onFollowingsTap
   }
 
   @override
   void onFreelanceProjectsTap() {
-    // TODO: implement onFreelanceProjectsTap
   }
 
   @override
@@ -204,37 +205,32 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
 
   @override
   void onLocationSubmitted(String location) {
-    // TODO: implement onLocationSubmitted
   }
 
   @override
   void onMinimumSalaryChanged(String minimumSalary) {
-    // TODO: implement onMinimumSalaryChanged
   }
 
   @override
   void onMinimumSalarySubmitted(String minimumSalary) {
-    // TODO: implement onMinimumSalarySubmitted
   }
 
   @override
   void onMyApplicationsTap() {
-    // TODO: implement onMyApplicationsTap
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => MyApplictionView()));
   }
 
   @override
   void onOrderedServicesTap() {
-    // TODO: implement onOrderedServicesTap
   }
 
   @override
   void onPostAJobsTap() {
-    // TODO: implement onPostAJobsTap
   }
 
   @override
   void onSavedPostsTap() {
-    // TODO: implement onSavedPostsTap
   }
 
   @override
@@ -249,17 +245,14 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
 
   @override
   void onSettingsTap() {
-    // TODO: implement onSettingsTap
   }
 
   @override
   void onTypeSelected() {
-    // TODO: implement onTypeSelected
   }
 
   @override
   void onWorkNatureSelected() {
-    // TODO: implement onWorkNatureSelected
   }
 
   List<String> companytitles = [
@@ -344,7 +337,10 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
   }
 
   @override
-  void onJobApplicationsTap() {}
+  void onJobApplicationsTap() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => FreelanceProjects()));
+  }
 
   @override
   void onLogoutTap() {

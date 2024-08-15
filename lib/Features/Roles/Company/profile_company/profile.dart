@@ -1,16 +1,13 @@
-import 'package:empco/Core/Resources/Constants/assets.dart';
 
-import 'package:empco/Core/Resources/Constants/texts.dart';
-import 'package:empco/Core/Theme/components/colors.dart';
-import 'package:empco/Core/Widgets/buttons.dart';
+import 'package:empco/Core/Resources/Constants/assets.dart';
 import 'package:empco/Core/Widgets/empco_app_bar.dart';
 import 'package:empco/Core/Widgets/job_details_contact.dart';
-
-import 'package:empco/Features/Roles/Freelancer/profile_company/widgets/icon_and_text.dart';
+import 'package:empco/Features/Roles/Company/profile_company/edit_profile.dart';
+import 'package:empco/Features/Roles/Company/profile_company/widgets/icon_and_text.dart';
 import 'package:flutter/material.dart';
 
-class NavigatorProfileView extends StatelessWidget {
-  const NavigatorProfileView({super.key});
+class ProfileView extends StatelessWidget {
+  const ProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +16,7 @@ class NavigatorProfileView extends StatelessWidget {
             appBar: const EmpcoAppBar(
               automaticallyImplyLeading: true,
               title: Text(
-                profile,
+                'profile',
                 style: TextStyle(
                     fontWeight: FontWeight.bold, color: Color(0xff1D5BA4)),
               ),
@@ -46,46 +43,19 @@ class NavigatorProfileView extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                    padding:
-                        const EdgeInsets.only(left: 30, top: 150, right: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        MainActionButton(
-                          icon: const Icon(
-                            Icons.messenger_outline,
-                            color: Color(0xff002245),
-                            size: 20,
-                          ),
-                          fontSize: 10,
-                          textColor: const Color(0xff002245),
-                          text: 'Message',
-                          buttonColor: const Color(0xffEFF2F5),
-                          width: 100,
-                          height: 30,
-                          blurRadius: 3.71,
-                          yAxisOffset: 3.71,
-                          shadowColor: Colors.black.withOpacity(0.25),
-                        ),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        MainActionButton(
-                          icon: const Icon(
-                            Icons.library_add_rounded,
-                            color: AppColors.white,
-                            size: 20,
-                          ),
-                          textColor: AppColors.white,
-                          text: 'Follow',
-                          width: 100,
-                          height: 30,
-                          blurRadius: 3.71,
-                          yAxisOffset: 3.71,
-                          shadowColor: Colors.black.withOpacity(0.25),
-                        )
-                      ],
-                    )),
+                  padding: const EdgeInsets.only(left: 350, top: 140),
+                  child: IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const EditProfileView(
+                                title: 'Edit Profile',
+                              ),
+                            ));
+                      },
+                      icon: const Icon(Icons.edit)),
+                ),
                 const Padding(
                   padding: EdgeInsets.only(left: 35),
                   child: Column(

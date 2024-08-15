@@ -1,16 +1,54 @@
 import 'package:empco/Core/Resources/Constants/assets.dart';
+
 import 'package:empco/Core/Resources/Constants/texts.dart';
 import 'package:empco/Core/Theme/components/colors.dart';
+import 'package:empco/Core/Widgets/buttons.dart';
 import 'package:empco/Core/Widgets/empco_app_bar.dart';
 import 'package:empco/Core/Widgets/job_details_contact.dart';
+
 import 'package:empco/Features/Roles/Company/profile_company/widgets/icon_and_text.dart';
-import 'package:empco/Features/Roles/Freelancer/profile_employee/edit_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ProfileEmployeeView extends StatelessWidget {
-  const ProfileEmployeeView({super.key});
+abstract class NavigatorProfileEmployeeViewCallBacks {
+  void onMessageTap();
+  void onFollowTap();
+  void onShowTap();
+}
 
+class NavigatorProfileEmployeeView extends StatelessWidget {
+  const NavigatorProfileEmployeeView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const NavigatorProfileEmployeePage();
+  }
+}
+
+class NavigatorProfileEmployeePage extends StatefulWidget {
+  const NavigatorProfileEmployeePage({super.key});
+
+  @override
+  State<NavigatorProfileEmployeePage> createState() =>
+      _NavigatorProfileEmployeePageState();
+}
+
+class _NavigatorProfileEmployeePageState
+    extends State<NavigatorProfileEmployeePage>
+    implements NavigatorProfileEmployeeViewCallBacks {
+  @override
+  void onMessageTap() {
+    // TODO: implement onMessageTap
+  }
+
+  @override
+  void onFollowTap() {
+    // TODO: implement onOrderTap
+  }
+  @override
+  void onShowTap() {
+    // TODO: implement onOrderTap
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -37,7 +75,7 @@ class ProfileEmployeeView extends StatelessWidget {
                     height: 100,
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(50)),
-                        color: AppColors.black),
+                        color: Colors.black),
                     child: const CircleAvatar(
                       radius: 30,
                       backgroundImage: AssetImage(backgroungProfile),
@@ -45,22 +83,50 @@ class ProfileEmployeeView extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 350, top: 140),
-                  child: IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  const EditProfileEmployeeView(
-                                title: 'Edit Profile',
-                              ),
-                            ));
-                      },
-                      icon: const Icon(Icons.edit)),
-                ),
+                    padding:
+                        const EdgeInsets.only(left: 30, top: 150, right: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        MainActionButton(
+                          onTap: onMessageTap,
+                          icon: const Icon(
+                            Icons.messenger_outline,
+                            color: Color(0xff002245),
+                            size: 20,
+                          ),
+                          fontSize: 10,
+                          textColor: const Color(0xff002245),
+                          text: 'Message',
+                          buttonColor: const Color(0xffEFF2F5),
+                          width: 100,
+                          height: 30,
+                          blurRadius: 3.71,
+                          yAxisOffset: 3.71,
+                          shadowColor: Colors.black.withOpacity(0.25),
+                        ),
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        MainActionButton(
+                          onTap: onFollowTap,
+                          icon: Icon(
+                            Icons.library_add_rounded,
+                            color: AppColors.white,
+                            size: 20,
+                          ),
+                          textColor: AppColors.white,
+                          text: 'Follow',
+                          width: 100,
+                          height: 30,
+                          blurRadius: 3.71,
+                          yAxisOffset: 3.71,
+                          shadowColor: Colors.black.withOpacity(0.25),
+                        )
+                      ],
+                    )),
                 Padding(
-                  padding: const EdgeInsets.only(left: 35),
+                  padding: const EdgeInsets.only(left: 35, top: 10),
                   child: Column(
                     children: [
                       const SizedBox(
@@ -71,7 +137,7 @@ class ProfileEmployeeView extends StatelessWidget {
                           Text(
                             'Elon Mask',
                             style: GoogleFonts.poppins(
-                              textStyle: const TextStyle(
+                              textStyle: TextStyle(
                                   color: AppColors.black,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 30),
@@ -83,7 +149,7 @@ class ProfileEmployeeView extends StatelessWidget {
                           Text(
                             '200',
                             style: GoogleFonts.poppins(
-                              textStyle: const TextStyle(
+                              textStyle: TextStyle(
                                   color: AppColors.black,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15),
@@ -95,7 +161,7 @@ class ProfileEmployeeView extends StatelessWidget {
                           Text(
                             'followers',
                             style: GoogleFonts.poppins(
-                              textStyle: const TextStyle(
+                              textStyle: TextStyle(
                                   color: AppColors.black,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15),
@@ -103,8 +169,29 @@ class ProfileEmployeeView extends StatelessWidget {
                           ),
                         ],
                       ),
+                      SizedBox(
+                        height: 7,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            'show services',
+                            style: GoogleFonts.poppins(
+                              textStyle: TextStyle(
+                                  color: Color(0xff1D5BA4),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13),
+                            ),
+                          ),
+                          Icon(
+                            Icons.open_in_new_outlined,
+                            color: Color(0xff1D5BA4),
+                            size: 13,
+                          ),
+                        ],
+                      ),
                       const SizedBox(
-                        height: 5,
+                        height: 10,
                       ),
                       const IconWithText(
                         iconColor: Color(0xff15416F),
