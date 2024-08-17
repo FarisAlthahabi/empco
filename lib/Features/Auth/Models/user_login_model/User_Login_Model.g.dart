@@ -10,10 +10,12 @@ UserLoginModel _$UserLoginModelFromJson(Map<String, dynamic> json) =>
     UserLoginModel(
       email: json['email'] as String,
       password: json['password'] as String,
+      fcmToken: json['fcmToken'] as String,
     );
 
 Map<String, dynamic> _$UserLoginModelToJson(UserLoginModel instance) =>
     <String, dynamic>{
       'email': instance.email,
       'password': instance.password,
+      'fcmToken': instance.fcmToken,
     };

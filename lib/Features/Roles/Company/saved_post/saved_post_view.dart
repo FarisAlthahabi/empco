@@ -57,7 +57,7 @@ class _SavedPostViewState extends State<SavedPostView> {
                               children: [
                                 Row(
                                   children: [
-                                    SvgPicture.asset(JobSearchIcon),
+                                    SvgPicture.asset(jobSearchIcon),
                                     const SizedBox(
                                       width: 12.5,
                                     ),

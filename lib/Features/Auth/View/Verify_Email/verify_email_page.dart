@@ -143,7 +143,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage>
     double screenHeight = screenSize.height;
     double screenWidth = screenSize.width;
     
-    return BlocConsumer<AuthBloc, AuthState>(
+    return BlocConsumer<AuthBloc, GeneralAuthState>(
       listener: (context, state) {
         if (state is SuccessToVerifyState) {
           onSuccessToVerifyStateListened(context);

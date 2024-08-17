@@ -46,7 +46,7 @@ class JobMainInfo extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: 0.63 * screenWidth,
+                  width: 0.73 * screenWidth,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -56,7 +56,7 @@ class JobMainInfo extends StatelessWidget {
                           job.title,
                           style: GoogleFonts.poppins(
                             textStyle: const TextStyle(
-                              color:AppColors. blue,
+                              color: AppColors.blue,
                               fontSize: 20,
                               fontWeight: weightlevel7,
                             ),
@@ -77,12 +77,12 @@ class JobMainInfo extends StatelessWidget {
                   height: 6,
                 ),
                 SizedBox(
-                  width: 0.63 * screenWidth,
+                  width: 0.73 * screenWidth,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        width: 80,
+                        width: 200,
                         child: Row(
                           children: [
                             const SizedBox(
@@ -112,6 +112,7 @@ class JobMainInfo extends StatelessWidget {
                         child: InkWell(
                           onTap: onFavoriteTap,
                           child: SvgPicture.asset(
+                            width: 15,
                             'lib/Core/Resources/assets/SVG/favorite-list.svg',
                             semanticsLabel: 'My SVG Image',
                           ),
@@ -124,16 +125,16 @@ class JobMainInfo extends StatelessWidget {
                   height: 6,
                 ),
                 SizedBox(
-                  width: 0.63 * screenWidth,
+                  width: 0.73 * screenWidth,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        width: 150,
+                        width: 200,
                         child: Row(
                           children: [
                             const SizedBox(
-                              width: 15,
+                              width: 10,
                             ),
                             const Icon(
                               Icons.location_on,
@@ -147,8 +148,7 @@ class JobMainInfo extends StatelessWidget {
                               job.location,
                               style: GoogleFonts.poppins(
                                 textStyle: const TextStyle(
-                                    color:
-                                        Color(0xFF373737),
+                                    color: Color(0xFF373737),
                                     fontSize: 10,
                                     fontWeight: weightlevel7),
                               ),
@@ -167,8 +167,7 @@ class JobMainInfo extends StatelessWidget {
                               job.salary.toString(),
                               style: GoogleFonts.poppins(
                                 textStyle: const TextStyle(
-                                    color:
-                                        Color(0xFF373737),
+                                    color: Color(0xFF373737),
                                     fontSize: 10,
                                     fontWeight: weightlevel7),
                               ),
@@ -182,6 +181,7 @@ class JobMainInfo extends StatelessWidget {
                         child: InkWell(
                           onTap: onMessageTap,
                           child: SvgPicture.asset(
+                            width: 15,
                             'lib/Core/Resources/assets/SVG/chat.svg',
                           ),
                         ),
@@ -193,69 +193,60 @@ class JobMainInfo extends StatelessWidget {
                   height: 6,
                 ),
                 SizedBox(
-                  width: 0.63 * screenWidth,
+                  width: 0.73 * screenWidth,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
-                        width: 150,
-                        child: Row(
-                          children: [
-                            const SizedBox(
-                              width: 15,
-                            ),
-                            SvgPicture.asset(
-                              'lib/Core/Resources/assets/SVG/work-site.svg',
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              job.workNature.displayName,
-                              style: GoogleFonts.poppins(
-                                  textStyle: const TextStyle(
-                                      color: Color(0xFF373737),
-                                      fontSize: 10,
-                                      fontWeight: weightlevel7)),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(
-                              width: 15,
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                color: const Color(0x0F325B12),
-                                borderRadius: BorderRadius.circular(5)
-                                ),
-                              child: Text(
-                                job.jobType.displayName,
-                                style: GoogleFonts.poppins(
-                                  textStyle: const TextStyle(
+                      Row(
+                        children: [
+                          const SizedBox(
+                            width: 15,
+                          ),
+                          SvgPicture.asset(
+                            'lib/Core/Resources/assets/SVG/work-site.svg',
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            job.workNature.displayName,
+                            style: GoogleFonts.poppins(
+                                textStyle: const TextStyle(
                                     color: Color(0xFF373737),
                                     fontSize: 10,
-                                    fontWeight: weightlevel7,
-                                  ),
+                                    fontWeight: weightlevel7)),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(
+                            width: 15,
+                          ),
+                          Container(
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                                color: const Color(0x0F325B12),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: Text(
+                              job.jobType.displayName,
+                              style: GoogleFonts.poppins(
+                                textStyle: const TextStyle(
+                                  color: Color(0xFF373737),
+                                  fontSize: 10,
+                                  fontWeight: weightlevel7,
                                 ),
-                                textAlign: TextAlign.center,
                               ),
+                              textAlign: TextAlign.center,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        // Apply Button
-                        padding: const EdgeInsets.only(right: 5),
-                        child: MainActionButton(
-                            width: 57.85,
-                            height: 18.02,
-                            text: 'Apply',
-                            blurRadius: 1.36,
-                            yAxisOffset: 1.36,
-                            shadowColor: AppColors.boxShadowColor2,
-                            fontSize: 6.81,
-                            onTap: onApplyTap),
-                      ),
+                      MainActionButton(
+                          height: 18.02,
+                          text: 'Apply',
+                          blurRadius: 1.36,
+                          yAxisOffset: 1.36,
+                          shadowColor: AppColors.boxShadowColor2,
+                          fontSize: 6.81,
+                          onTap: onApplyTap),
                     ],
                   ),
                 ),

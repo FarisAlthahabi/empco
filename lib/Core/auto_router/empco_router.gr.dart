@@ -53,12 +53,14 @@ class EditProfileRoute extends PageRouteInfo<EditProfileRouteArgs> {
   EditProfileRoute({
     Key? key,
     String? title,
+    ProfileModel? profileModel,
     List<PageRouteInfo>? children,
   }) : super(
           EditProfileRoute.name,
           args: EditProfileRouteArgs(
             key: key,
             title: title,
+            profileModel: profileModel,
           ),
           initialChildren: children,
         );
@@ -73,6 +75,7 @@ class EditProfileRoute extends PageRouteInfo<EditProfileRouteArgs> {
       return EditProfileView(
         key: args.key,
         title: args.title,
+        profileModel: args.profileModel,
       );
     },
   );
@@ -82,15 +85,18 @@ class EditProfileRouteArgs {
   const EditProfileRouteArgs({
     this.key,
     this.title,
+    this.profileModel,
   });
 
   final Key? key;
 
   final String? title;
 
+  final ProfileModel? profileModel;
+
   @override
   String toString() {
-    return 'EditProfileRouteArgs{key: $key, title: $title}';
+    return 'EditProfileRouteArgs{key: $key, title: $title, profileModel: $profileModel}';
   }
 }
 
@@ -139,6 +145,25 @@ class EmpcoNavigationBarRouteArgs {
   String toString() {
     return 'EmpcoNavigationBarRouteArgs{key: $key, pages: $pages}';
   }
+}
+
+/// generated route for
+/// [FollowingView]
+class FollowingRoute extends PageRouteInfo<void> {
+  const FollowingRoute({List<PageRouteInfo>? children})
+      : super(
+          FollowingRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'FollowingRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const FollowingView();
+    },
+  );
 }
 
 /// generated route for
@@ -218,6 +243,25 @@ class IntroRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [JobAppView]
+class JobAppRoute extends PageRouteInfo<void> {
+  const JobAppRoute({List<PageRouteInfo>? children})
+      : super(
+          JobAppRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'JobAppRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const JobAppView();
+    },
+  );
+}
+
+/// generated route for
 /// [LoginView]
 class LoginRoute extends PageRouteInfo<void> {
   const LoginRoute({List<PageRouteInfo>? children})
@@ -256,15 +300,15 @@ class MainNavigationRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [MyApplictionView]
-class MyApplictionRoute extends PageRouteInfo<void> {
-  const MyApplictionRoute({List<PageRouteInfo>? children})
+/// [MyApplictionsView]
+class MyApplictionsRoute extends PageRouteInfo<void> {
+  const MyApplictionsRoute({List<PageRouteInfo>? children})
       : super(
-          MyApplictionRoute.name,
+          MyApplictionsRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'MyApplictionRoute';
+  static const String name = 'MyApplictionsRoute';
 
   static PageInfo page = PageInfo(
     name,
@@ -308,6 +352,25 @@ class SelectRoleRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const SelectRoleView();
+    },
+  );
+}
+
+/// generated route for
+/// [SettingsView]
+class SettingsRoute extends PageRouteInfo<void> {
+  const SettingsRoute({List<PageRouteInfo>? children})
+      : super(
+          SettingsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SettingsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const SettingsView();
     },
   );
 }

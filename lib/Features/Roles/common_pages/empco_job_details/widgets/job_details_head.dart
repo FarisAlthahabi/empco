@@ -13,7 +13,7 @@ class JobDetailsHead extends StatelessWidget {
   });
 
   final VoidCallback? onAddToFavoriteTap;
-  final VoidCallback? onEdit;
+  final ValueSetter<JobModel>? onEdit;
   final ValueSetter<int>? onDelete;
   final JobModel job;
 
@@ -53,7 +53,7 @@ class JobDetailsHead extends StatelessWidget {
                   children: [
                     if (onEdit != null)
                       InkWell(
-                        onTap: onEdit,
+                        onTap: () => onEdit(job),
                         child: const Icon(Icons.edit_outlined),
                       ),
                     if (onDelete != null)

@@ -3,6 +3,7 @@ import 'package:empco/Core/Widgets/job_details_contact.dart';
 import 'package:empco/Core/Widgets/loading_indicator.dart';
 import 'package:empco/Core/Widgets/main_error_widget.dart';
 import 'package:empco/Features/Roles/Freelancer/Job_details/cubit/job_details_cubit.dart';
+import 'package:empco/Features/Roles/Freelancer/Jobs/Model/job_model/job_model.dart';
 import 'package:empco/Features/Roles/common_pages/empco_job_details/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,16 +14,16 @@ class JobDetailsView extends StatefulWidget {
     this.onAddToFavoriteTap,
     this.onApplyTap,
     this.onMessageTap,
-    required this.screenWidth,
     this.onEdit,
     this.onDelete,
+    required this.screenWidth,
     required this.jobId,
   });
 
   final VoidCallback? onAddToFavoriteTap;
   final VoidCallback? onApplyTap;
   final VoidCallback? onMessageTap;
-  final VoidCallback? onEdit;
+  final ValueSetter<JobModel>? onEdit;
   final ValueSetter<int>? onDelete;
   final double screenWidth;
   final int jobId;
@@ -93,7 +94,10 @@ class _JobDetailsViewState extends State<JobDetailsView> {
                   ),
                   const Padding(
                     padding: EdgeInsets.only(left: 25),
-                    child: JobContactDetails(),
+                    child: JobContactDetails(
+                      email: 'faris@gmail.com',
+                      phoneNumber: '+963768466036',
+                    ),
                   ),
                   const SizedBox(
                     height: 20,

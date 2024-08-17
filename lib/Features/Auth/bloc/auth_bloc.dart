@@ -1,11 +1,12 @@
 import 'package:bloc/bloc.dart';
+import 'package:empco/Core/Widgets/show_snack_bar_method.dart';
 import 'package:empco/Core/models/token_model/token_model.dart';
 import 'package:empco/Core/repos/user_repo/user_repo.dart';
-import 'package:empco/Features/Auth/Models/User_model/User_Model.dart';
 
 import 'package:empco/Features/Auth/Models/user_check_code_model.dart/User_Chaeck_Code_model.dart';
 import 'package:empco/Features/Auth/Models/user_forget_password_model/User_Forget_Password_model.dart';
 import 'package:empco/Features/Auth/Models/user_login_model/User_Login_Model.dart';
+import 'package:empco/Features/Auth/Models/User_model/User_Model.dart';
 import 'package:empco/Features/Auth/Models/user_reset_password_model/User_Reset_Password_model.dart';
 import 'package:empco/Features/Auth/Models/user_verify_model/User_Verify_Model.dart';
 import 'package:empco/Features/Auth/Service/http_auth_Service.dart';
@@ -15,9 +16,11 @@ import 'package:injectable/injectable.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
+part 'register_state.dart';
+part 'general_auth_state.dart';
 
 @injectable
-class AuthBloc extends Bloc<AuthEvent, AuthState> {
+class AuthBloc extends Bloc<AuthEvent, GeneralAuthState> {
   AuthBloc() : super(AuthInitial()) {
     final UserRepo userRepo = UserRepo();
 
@@ -26,24 +29,25 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final AuthenticationBloc authenticationBloc = AuthenticationBloc(userRepo);
 
     on<RegisterEvent>((event, emit) async {
-      emit(LoadingState());
+      emit(RegisterLoading());
 
       try {
-        UserModel user = UserModel(
+        final UserModel user = UserModel(
             firstName: event.firstName,
             lastName: event.lastName,
             email: event.email,
-            password: event.password);
+            password: event.password,
+            fcmToken: await userRepo.getKey(fcmTokenRepo));
 
-        dynamic data = await authService.register(user);
-        emit(SuccessToRegisterState(token: data));
+        final data = await authService.register(user);
+        emit(RegisterSuccess(token: data));
         authenticationBloc.add(
           SignInRequested(
             data,
           ),
         );
       } catch (e) {
-        emit(FailedToRegisterState(error: e.toString()));
+        emit(RegisterFail(e.toString()));
       }
     });
     on<VerifyEvent>((event, emit) async {
@@ -86,6 +90,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       UserLoginModel userLogin = UserLoginModel(
         email: event.email,
         password: event.password,
+        fcmToken: await userRepo.getKey(fcmTokenRepo),
       );
       try {
         final data = await authService.login(userLogin);

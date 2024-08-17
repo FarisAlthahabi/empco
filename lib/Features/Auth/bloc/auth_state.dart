@@ -1,26 +1,11 @@
 part of 'auth_bloc.dart';
 
 @immutable
-sealed class AuthState {}
+class AuthState extends GeneralAuthState {}
 
 final class AuthInitial extends AuthState {}
 
 class LoadingState extends AuthState {}
-
-// register.......................................
-class SuccessToRegisterState extends AuthState {
-  final TokenModel token;
-  SuccessToRegisterState({
-    required this.token,
-  });
-}
-
-class FailedToRegisterState extends AuthState {
-  final String error;
-  FailedToRegisterState({
-    required this.error,
-  });
-}
 
 // Verify.......................................
 class SuccessToVerifyState extends AuthState {}

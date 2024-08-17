@@ -123,7 +123,7 @@ class _LoginPageState extends State<LoginPage> implements LoginViewCallbacks {
     var screenSize = deviceData.size;
     double screenHeight = screenSize.height;
     double screenWidth = screenSize.width;
-    return BlocConsumer<AuthBloc, AuthState>(
+    return BlocConsumer<AuthBloc, GeneralAuthState>(
       listener: (context, state) async {
         if (state is SuccessToLoginState) {
           userRepo.setKey(isLogin, true);

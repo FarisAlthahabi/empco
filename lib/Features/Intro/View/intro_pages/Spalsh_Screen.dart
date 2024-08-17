@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_route/auto_route.dart';
 import 'package:empco/Core/Mixins/post_frame_mixin.dart';
 import 'package:empco/Core/Theme/components/colors.dart';
@@ -37,10 +36,8 @@ class _SplashScreenState extends State<SplashScreen> with PostFrameMixin {
   @override
   void onPostFrame() {
     Future.delayed(const Duration(seconds: 3), () async {
-      print(await userRepo.getKey(role));
       if (await userRepo.getKey(isFirstTime, defaultValue: true)) {
         context.go('$mainRoute/$introRoute');
-        await userRepo.setKey(isFirstTime, false);
       } else {
         if (await userRepo.getKey(isLogin ,defaultValue: false)) {
           if (await userRepo.getKey(role) == 'freelancer') {

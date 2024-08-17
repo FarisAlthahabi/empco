@@ -27,6 +27,9 @@ class JobDetailsMainInfo extends StatelessWidget {
   final JobModel job;
   @override
   Widget build(BuildContext context) {
+    final onApplyTap = this.onApplyTap;
+    final onMessageTap = this.onMessageTap;
+
     return Container(
       width: 0.9 * screenWidth,
       height: 225,
@@ -125,13 +128,13 @@ class JobDetailsMainInfo extends StatelessWidget {
                 child: ListView.separated(
                   itemCount: 4,
                   itemBuilder: (context, index) {
-                   List<String> jobDetailsData = [
-                    job.location,
-                    job.workNature.displayName,
-                    '${job.salary} SP',
-                    job.jobType.displayName,
-                    job.deadTime.toString()
-                  ];
+                    List<String> jobDetailsData = [
+                      job.location,
+                      job.workNature.displayName,
+                      '${job.salary} SP',
+                      job.jobType.displayName,
+                      job.deadTime.toString()
+                    ];
                     return SizedBox(
                       child: Row(
                         children: [
@@ -185,11 +188,11 @@ class JobDetailsMainInfo extends StatelessWidget {
                 ),
               ),
             ),
+            if(onApplyTap != null && onMessageTap != null)
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 MainActionButton(
-                  width: 80,
                   height: 23,
                   text: 'Message',
                   blurRadius: 4,
@@ -204,7 +207,6 @@ class JobDetailsMainInfo extends StatelessWidget {
                   width: 10,
                 ),
                 MainActionButton(
-                    width: 80,
                     height: 23,
                     text: 'Apply',
                     blurRadius: 4,

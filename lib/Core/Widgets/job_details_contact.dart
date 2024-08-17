@@ -10,12 +10,16 @@ class JobContactDetails extends StatelessWidget {
     this.title,
     this.fontSize,
     this.iconSize,
+    required this.email,
+    required this.phoneNumber,
   });
 
   final double? width;
   final String? title;
   final double? fontSize;
   final double? iconSize;
+  final String email;
+  final String phoneNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -44,16 +48,19 @@ class JobContactDetails extends StatelessWidget {
           height: 10,
         ),
         SizedBox(
-          width: 180,
+         // width: 180,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Icon(
                 Icons.mail_outline_outlined,
                 size: iconSize,
               ),
-              const SizedBox(width: 5,),
+              const SizedBox(
+                width: 5,
+              ),
               Text(
-                'uzonehr@gmail.com',
+                email,
                 style: GoogleFonts.poppins(
                   textStyle: TextStyle(
                       color: AppColors.black,
@@ -69,16 +76,19 @@ class JobContactDetails extends StatelessWidget {
           height: 5,
         ),
         SizedBox(
-          width: 150,
+         // width: 150,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Icon(
                 Icons.call_outlined,
                 size: iconSize,
               ),
-                const SizedBox(width: 5,),
+              const SizedBox(
+                width: 5,
+              ),
               Text(
-                '+9639123456789',
+                phoneNumber,
                 style: GoogleFonts.poppins(
                   textStyle: TextStyle(
                       color: AppColors.black,

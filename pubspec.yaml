@@ -30,6 +30,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  
+  flutter_localizations:
+    sdk: flutter
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -67,6 +70,11 @@ dependencies:
   dropdown_button2: ^2.3.9
   loader_overlay: ^4.0.1
   syncfusion_flutter_pdfviewer: ^26.2.9
+  permission_handler: ^11.3.1
+  equatable: ^2.0.5
+  i18n_extension: ^12.0.1
+  gettext_parser: ^0.2.0
+  url_launcher: ^6.3.0
 
 dev_dependencies:
   flutter_test:
@@ -99,6 +107,7 @@ flutter:
   assets:
     - lib/Core/Resources/assets/SVG/
     - lib/Core/Resources/assets/PNG/
+    - lib/Core/Resources/locales/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

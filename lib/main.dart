@@ -1,3 +1,4 @@
+import 'package:empco/Core/bloc/permissions_cubit/permissions_cubit.dart';
 import 'package:empco/Core/di/di.dart';
 import 'package:empco/Core/repos/user_repo/user_repo.dart';
 import 'package:empco/Core/router/Router.dart';
@@ -24,20 +25,25 @@ class EmpcoApp extends StatelessWidget {
         //     debugShowCheckedModeBanner: false,
         //     home: const CompanyNavigationBar());
         MultiRepositoryProvider(
-          providers: [
-            RepositoryProvider(
+      providers: [
+        RepositoryProvider(
           create: (_) => config<UserRepo>(),
         ),
-          ],
-          child: MultiBlocProvider(
-            providers: [
-              BlocProvider(create: (_) => config<AuthenticationBloc>(),)
-            ],
-            child: MaterialApp.router(
-                  routerConfig: router,
-                  debugShowCheckedModeBanner: false,
-                ),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (_) => config<AuthenticationBloc>(),
           ),
-        );
+          BlocProvider(
+            create: (_) => config<PermissionsCubit>(),
+          ),
+        ],
+        child: MaterialApp.router(
+          routerConfig: router,
+          debugShowCheckedModeBanner: false,
+        ),
+      ),
+    );
   }
 }

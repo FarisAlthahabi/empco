@@ -14,7 +14,7 @@ List<String> introImage = List.generate(
     3, (index) => 'lib/Core/Resources/assets/SVG/IntroImage${index + 1}.svg');
 List<String> iconIntro = List.generate(
     3, (index) => 'lib/Core/Resources/assets/SVG/IconIntro${index + 1}.svg');
-const String drawerBackgroundImage =
+const String freelancerBackgroundImage =
     'lib/Core/Resources/assets/PNG/drawerbackground.png';
 const String notionImage = 'lib/Core/Resources/assets/PNG/notion_image.png';
 const String applyIcon = 'lib/Core/Resources/assets/SVG/apply.svg';
@@ -69,7 +69,7 @@ const String freelancerBackround =
 const String customerBackground =
     'lib/Core/Resources/assets/PNG/customer_background.png';
 // my application
-const String JobSearchIcon =
+const String jobSearchIcon =
     'lib/Core/Resources/assets/SVG/jpb_search_icon.svg';
 const String onstieIcon = 'lib/Core/Resources/assets/SVG/icon_onsite.svg';
 
@@ -95,10 +95,29 @@ const String fullTimeIcon = 'lib/Core/Resources/assets/SVG/full_time_icon.svg';
 const String partTimeIcon = 'lib/Core/Resources/assets/SVG/part_time_icon.svg';
 const String remoteIcon = 'lib/Core/Resources/assets/SVG/remote_icon.svg';
 const String hybridIcon = 'lib/Core/Resources/assets/SVG/hybrid_icon.svg';
-const String aiIcon = 'lib/Core/Resources/assets/PNG/icon_ai.png';
+const String aiIcon = 'lib/Core/Resources/assets/SVG/aiIcon.svg';
 
 // Applications Icons 
 
 const String processingIcon = 'lib/Core/Resources/assets/SVG/processing.svg';
 const String approvedIcon = 'lib/Core/Resources/assets/SVG/approve.svg';
 const String rejectedIcon = 'lib/Core/Resources/assets/SVG/reject.svg';
+// service 
+const String serviceDetailsImage = 'lib/Core/Resources/assets/PNG/service_details.png';
+
+// icon My app AND Ordered services 
+const String ordredIcon = 'lib/Core/Resources/assets/SVG/ordred_icon.svg';
+
+//service employee
+
+const String personServiceIcon = 'lib/Core/Resources/assets/SVG/person_service_icon.svg';
+const String laptopIcon = 'lib/Core/Resources/assets/SVG/laptop_icon.svg';
+
+const String unfollowIcon = 'lib/Core/Resources/assets/SVG/unfollow.svg';
+const String sendMessageIcon = 'lib/Core/Resources/assets/SVG/sendMessage.svg';
+const String followIcon = 'lib/Core/Resources/assets/SVG/follow.svg';
+const String completedIcon = 'lib/Core/Resources/assets/SVG/completed.svg';
+const String inProgressIcon = 'lib/Core/Resources/assets/SVG/inProgress.svg';
+const String orderIcon = 'lib/Core/Resources/assets/SVG/order.svg';
+const String smallEmailIcon = 'lib/Core/Resources/assets/SVG/smallEmail.svg';
+const String smallPhoneIcon = 'lib/Core/Resources/assets/SVG/smallPhone.svg';

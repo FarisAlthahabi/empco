@@ -11,9 +11,14 @@ class HttpLicenceRepo implements LicenceRepo {
       final response = await _dioClient.get(
         '/api/${await userRepo.getKey(role)}/check-license',
       );
-
-      final body = (response.data as Map<String, dynamic>)['data'] as List;
+      if(await userRepo.getKey(role) == 'owner'){
+        final body = (response.data as Map<String, dynamic>)['data'] as List;
       return LicenceStatusModel.fromJson(body[0]);
+      }else{
+        final body = (response.data as Map<String, dynamic>)['data'];
+      return LicenceStatusModel.fromJson(body);
+      }
+      
     } catch (e) {
       if (e is NotFoundException) {
         throw e.message ?? 'something_went_wrong';

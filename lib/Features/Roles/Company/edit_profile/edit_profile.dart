@@ -3,10 +3,20 @@ import 'package:empco/Core/Resources/Constants/assets.dart';
 import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:empco/Core/Widgets/buttons.dart';
 import 'package:empco/Core/Widgets/empco_app_bar.dart';
+import 'package:empco/Core/Widgets/loading_indicator.dart';
+import 'package:empco/Core/Widgets/show_snack_bar_method.dart';
+import 'package:empco/Core/bloc/edit_profile/cubit/edit_profile_cubit.dart';
+import 'package:empco/Core/bloc/profile/cubit/profile_cubit.dart';
+import 'package:empco/Core/di/di.dart';
+import 'package:empco/Core/extensions/date_time_x.dart';
+import 'package:empco/Core/models/profile_model/profile_model.dart';
+import 'package:empco/Core/repos/user_repo/user_repo.dart';
 import 'package:empco/Features/Roles/Company/edit_profile/widgets/TextFormFieldToProfile.dart';
-import 'package:empco/Features/Roles/Company/profile/widgets/icon_and_text.dart';
+import 'package:empco/Features/Roles/Company/profile/view/widgets/icon_and_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 abstract class EditProfileViewCallBacks {
@@ -54,14 +64,23 @@ class EditProfileView extends StatelessWidget {
   const EditProfileView({
     super.key,
     this.title,
+    this.profileModel,
   });
 
   final String? title;
-
+  final ProfileModel? profileModel;
   @override
   Widget build(BuildContext context) {
-    return EditProfilePage(
-      title: title,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => config<EditProfileCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => config<ProfileCubit>(),
+        ),
+      ],
+      child: EditProfilePage(title: title, profileModel: profileModel),
     );
   }
 }
@@ -70,9 +89,11 @@ class EditProfilePage extends StatefulWidget {
   const EditProfilePage({
     super.key,
     this.title,
+    this.profileModel,
   });
 
   final String? title;
+  final ProfileModel? profileModel;
 
   @override
   State<EditProfilePage> createState() => _EditProfilePageState();
@@ -80,6 +101,11 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage>
     implements EditProfileViewCallBacks {
+  late final EditProfileCubit editProfileCubit = context.read();
+
+  late final ProfileCubit profileCubit = context.read();
+
+  late final UserRepo userRepo = context.read();
 
   final nameFocusNode = FocusNode();
   final locationFocusNode = FocusNode();
@@ -91,8 +117,26 @@ class _EditProfilePageState extends State<EditProfilePage>
   final phoneNumberFocusNode = FocusNode();
 
   @override
+  void initState() {
+    final profile = widget.profileModel;
+    if (profile != null) {
+      // editProfileCubit.setName(profile.name);
+      editProfileCubit
+          .setBirthday(profile.birthday ?? DateTime.now().formatMMddYYYY);
+      editProfileCubit.setBrief(profile.brief ?? 'brief');
+      editProfileCubit.setLocation(profile.homePlace ?? 'damas');
+      editProfileCubit.setPhoneNumber(profile.phoneNo ?? '+963768977687');
+      editProfileCubit.setEmail(profile.email ?? 'wael@gmail.com');
+      editProfileCubit.setCeo(profile.ceo ?? 'ceo');
+      editProfileCubit.setOverview(profile.overview ?? 'overview');
+      editProfileCubit.setProjects(profile.projects ?? 'empco');
+    }
+    super.initState();
+  }
+
+  @override
   void onCancel() {
-    // TODO: implement onCancel
+    context.pop();
   }
 
   @override
@@ -102,87 +146,87 @@ class _EditProfilePageState extends State<EditProfilePage>
 
   @override
   void onCeoChanged(String ceo) {
-    // TODO: implement onCeoChanged
+    editProfileCubit.setCeo(ceo);
   }
 
   @override
   void onCeoSubmitted(String ceo) {
-    // TODO: implement onCeoSubmitted
+    overviewFocusNode.requestFocus();
   }
 
   @override
   void onEmailChanged(String email) {
-    // TODO: implement onEmailChanged
+    editProfileCubit.setEmail(email);
   }
 
   @override
   void onEmailSubmitted(String email) {
-    // TODO: implement onEmailSubmitted
+    phoneNumberFocusNode.requestFocus();
   }
 
   @override
   void onEstablishmentYearChanged(String establishmentYear) {
-    // TODO: implement onEstablishmentYearChanged
+    editProfileCubit.setBirthday(establishmentYear);
   }
 
   @override
   void onEstablishmentYearSubmitted(String establishmentYear) {
-    // TODO: implement onEstablishmentYearSubmitted
+    ceoFocusNode.requestFocus();
   }
 
   @override
   void onLocationChanged(String location) {
-    // TODO: implement onLocationChanged
+    editProfileCubit.setLocation(location);
   }
 
   @override
   void onLocationSubmitted(String location) {
-    // TODO: implement onLocationSubmitted
+    establishmentYearFocusNode.requestFocus();
   }
 
   @override
   void onNameChanged(String name) {
-    // TODO: implement onNameChanged
+    editProfileCubit.setName(name);
   }
 
   @override
   void onNameSubmitted(String name) {
-    // TODO: implement onNameSubmitted
+    locationFocusNode.requestFocus();
   }
 
   @override
   void onOverviewChanged(String overview) {
-    // TODO: implement onOverviewChanged
+    editProfileCubit.setOverview(overview);
   }
 
   @override
   void onOverviewSubmitted(String overview) {
-    // TODO: implement onOverviewSubmitted
+    projectsFocusNode.requestFocus();
   }
 
   @override
   void onPhoneNumberChanged(String phoneNumber) {
-    // TODO: implement onPhoneNumberChanged
+    editProfileCubit.setPhoneNumber(phoneNumber);
   }
 
   @override
   void onPhoneNumberSubmitted(String phoneNumber) {
-    // TODO: implement onPhoneNumberSubmitted
+    phoneNumberFocusNode.unfocus();
   }
 
   @override
   void onProjectsChanged(String projects) {
-    // TODO: implement onProjectsChanged
+    editProfileCubit.setProjects(projects);
   }
 
   @override
   void onProjectsSubmitted(String projects) {
-    // TODO: implement onProjectsSubmitted
+    emailFocusNode.requestFocus();
   }
 
   @override
   void onSaveTap() {
-    // TODO: implement onSaveTap
+    editProfileCubit.editProfile();
   }
 
   @override
@@ -197,249 +241,287 @@ class _EditProfilePageState extends State<EditProfilePage>
                 fontWeight: FontWeight.bold, color: Color(0xff1D5BA4)),
           ),
         ),
-        body: ListView(
+        body: Stack(
           children: [
-            Stack(
-              children: [
-                const Image(
-                  image: AssetImage(backgroundEditProfile),
-                  fit: BoxFit.cover,
-                  width: 1200,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 75, left: 160),
-                  child: Container(
-                    width: 100,
-                    height: 100,
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        color: Color(0xffE0E0E0)),
-                    child: const Center(
-                      child: Icon(
-                        Icons.person_outline,
-                        size: 80,
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 185, top: 180, right: 150),
-                  child: InkWell(
-                    onTap: () {},
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(
-                          editImageIcon,
-                          width: 20,
-                        ),
-                        Text(
-                          'edit',
-                          style: GoogleFonts.poppins(
-                            textStyle: const TextStyle(
-                                color: Color(0xff1D5BA4),
-                                fontWeight: FontWeight.bold),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 25, right: 25),
-                  child: Column(
+            SingleChildScrollView(
+              child: Stack(
+                children: [
+                  Column(
                     children: [
-                      const SizedBox(
-                        height: 200,
+                      const Image(
+                        image: AssetImage(backgroundEditProfile),
+                        fit: BoxFit.cover,
+                        width: double.maxFinite,
                       ),
-                      const IconWithText(
-                        iconColor: Colors.black,
-                        icon: personIcon,
-                        text: ' Name',
-                        textSize: 15,
-                        iconSize: 20,
+                      Padding(
+                        padding: const EdgeInsets.all(24),
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 100,
+                            ),
+                            const IconWithText(
+                              iconColor: Colors.black,
+                              icon: personIcon,
+                              text: ' Name',
+                              textSize: 15,
+                              iconSize: 20,
+                            ),
+                            const SizedBox(
+                              height: 3,
+                            ),
+                            TextFormFieldToProfile(
+                              initialValue: widget.profileModel?.bio,
+                              focusNode: nameFocusNode,
+                              onChanged: onNameChanged,
+                              onSubmitted: onNameSubmitted,
+                              height: 45,
+                            ),
+                            const SizedBox(
+                              height: 12,
+                            ),
+                            const IconWithText(
+                              iconColor: Colors.black,
+                              icon: loctionIcon,
+                              text: 'Location',
+                              textSize: 15,
+                              iconSize: 25,
+                            ),
+                            const SizedBox(
+                              height: 3,
+                            ),
+                            TextFormFieldToProfile(
+                              initialValue: widget.profileModel?.homePlace,
+                              focusNode: locationFocusNode,
+                              onChanged: onLocationChanged,
+                              onSubmitted: onLocationSubmitted,
+                              height: 45,
+                            ),
+                            const SizedBox(
+                              height: 12,
+                            ),
+                            const IconWithText(
+                              iconColor: Colors.black,
+                              icon: connectionIcon,
+                              text: 'Establish Year',
+                              textSize: 15,
+                              iconSize: 25,
+                            ),
+                            const SizedBox(
+                              height: 3,
+                            ),
+                            TextFormFieldToProfile(
+                              initialValue: widget.profileModel?.birthday,
+                              focusNode: establishmentYearFocusNode,
+                              onChanged: onEstablishmentYearChanged,
+                              onSubmitted: onEstablishmentYearSubmitted,
+                              height: 45,
+                            ),
+                            const SizedBox(
+                              height: 12,
+                            ),
+                            const IconWithText(
+                              iconColor: Colors.black,
+                              icon: ceoIcon,
+                              text: 'Ceo',
+                              textSize: 15,
+                              iconSize: 25,
+                            ),
+                            const SizedBox(
+                              height: 3,
+                            ),
+                            TextFormFieldToProfile(
+                              initialValue: widget.profileModel?.ceo,
+                              focusNode: ceoFocusNode,
+                              onChanged: onCeoChanged,
+                              onSubmitted: onCeoSubmitted,
+                              height: 45,
+                            ),
+                            const SizedBox(
+                              height: 25,
+                            ),
+                            const IconWithText(
+                              iconColor: Colors.black,
+                              icon: aboutIcon,
+                              text: 'Overview',
+                              textSize: 20,
+                              iconSize: 25,
+                            ),
+                            TextFormFieldToProfile(
+                              initialValue: widget.profileModel?.overview,
+                              focusNode: overviewFocusNode,
+                              onChanged: onOverviewChanged,
+                              onSubmitted: onOverviewSubmitted,
+                              height: 125,
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            const IconWithText(
+                              iconColor: Colors.black,
+                              icon: workIcon,
+                              text: 'Projects',
+                              textSize: 20,
+                              iconSize: 25,
+                            ),
+                            TextFormFieldToProfile(
+                              initialValue: widget.profileModel?.projects,
+                              focusNode: projectsFocusNode,
+                              onChanged: onProjectsChanged,
+                              onSubmitted: onProjectsSubmitted,
+                              height: 125,
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            const IconWithText(
+                              iconColor: AppColors.black,
+                              icon: contactIcon,
+                              text: 'Contact info',
+                              textSize: 20,
+                              iconSize: 25,
+                            ),
+                            const SizedBox(
+                              height: 7,
+                            ),
+                            TextFormFieldToProfile(
+                              initialValue: widget.profileModel?.email,
+                              height: 45,
+                              focusNode: emailFocusNode,
+                              onChanged: onEmailChanged,
+                              onSubmitted: onEmailSubmitted,
+                              prefixIcon: smallEmailIcon,
+                            ),
+                            const SizedBox(
+                              height: 7,
+                            ),
+                            TextFormFieldToProfile(
+                              initialValue: widget.profileModel?.phoneNo,
+                              height: 45,
+                              focusNode: phoneNumberFocusNode,
+                              onChanged: onPhoneNumberChanged,
+                              onSubmitted: onPhoneNumberSubmitted,
+                              prefixIcon: smallPhoneIcon,
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            const SizedBox(
+                              height: 40,
+                            ),
+                          ],
+                        ),
                       ),
-                      const SizedBox(
-                        height: 3,
-                      ),
-                      TextFormFieldToProfile(
-                        focusNode: nameFocusNode,
-                        onChanged: onNameChanged,
-                        onSubmitted: onNameSubmitted,
-                        height: 45,
-                      ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      const IconWithText(
-                        iconColor: Colors.black,
-                        icon: loctionIcon,
-                        text: 'Location',
-                        textSize: 15,
-                        iconSize: 25,
-                      ),
-                      const SizedBox(
-                        height: 3,
-                      ),
-                      TextFormFieldToProfile(
-                        focusNode: locationFocusNode,
-                        onChanged: onLocationChanged,
-                        onSubmitted: onLocationSubmitted,
-                        height: 45,
-                      ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      const IconWithText(
-                        iconColor: Colors.black,
-                        icon: connectionIcon,
-                        text: 'Establish Year',
-                        textSize: 15,
-                        iconSize: 25,
-                      ),
-                      const SizedBox(
-                        height: 3,
-                      ),
-                      TextFormFieldToProfile(
-                        focusNode: establishmentYearFocusNode,
-                        onChanged: onEstablishmentYearChanged,
-                        onSubmitted: onEstablishmentYearSubmitted,
-                        height: 45,
-                      ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      const IconWithText(
-                        iconColor: Colors.black,
-                        icon: ceoIcon,
-                        text: 'Ceo',
-                        textSize: 15,
-                        iconSize: 25,
-                      ),
-                      const SizedBox(
-                        height: 3,
-                      ),
-                      TextFormFieldToProfile(
-                        focusNode: ceoFocusNode,
-                        onChanged: onCeoChanged,
-                        onSubmitted: onCeoSubmitted,
-                        height: 45,
-                      ),
-                      const SizedBox(
-                        height: 3,
-                      ),
-                      const SizedBox(
-                        height: 25,
-                      ),
-                      const IconWithText(
-                        iconColor: Colors.black,
-                        icon: aboutIcon,
-                        text: 'Overview',
-                        textSize: 20,
-                        iconSize: 25,
-                      ),
-                      TextFormFieldToProfile(
-                        focusNode: overviewFocusNode,
-                        onChanged: onOverviewChanged,
-                        onSubmitted: onOverviewSubmitted,
-                        height: 125,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const IconWithText(
-                        iconColor: Colors.black,
-                        icon: workIcon,
-                        text: 'Projects',
-                        textSize: 20,
-                        iconSize: 25,
-                      ),
-                      TextFormFieldToProfile(
-                        focusNode: projectsFocusNode,
-                        onChanged: onPhoneNumberChanged,
-                        onSubmitted: onPhoneNumberSubmitted,
-                        height: 125,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const IconWithText(
-                        iconColor: AppColors.black,
-                        icon: contactIcon,
-                        text: 'Contact info',
-                        textSize: 20,
-                        iconSize: 25,
-                      ),
-                      const SizedBox(
-                        height: 7,
-                      ),
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.email,
-                            size: 30,
-                          ),
-                          TextFormFieldToProfile(
-                            height: 45,
-                            focusNode: emailFocusNode,
-                            onChanged: onEmailChanged,
-                            onSubmitted: onEmailSubmitted,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 7,
-                      ),
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.phone,
-                            size: 30,
-                          ),
-                          TextFormFieldToProfile(
-                            height: 45,
-                            focusNode: phoneNumberFocusNode,
-                            onChanged: onPhoneNumberChanged,
-                            onSubmitted: onPhoneNumberSubmitted,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          MainActionButton(
-                            textColor: AppColors.black,
-                            text: 'Cancel',
-                            buttonColor: const Color(0xffEFF2F5),
-                            width: 104,
-                            height: 32,
-                            blurRadius: 3.71,
-                            yAxisOffset: 3.71,
-                            shadowColor: Colors.black.withOpacity(0.25),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          MainActionButton(
-                            text: 'Save',
-                            width: 104,
-                            height: 32,
-                            blurRadius: 3.71,
-                            yAxisOffset: 3.71,
-                            shadowColor: Colors.black.withOpacity(0.25),
-                          )
-                        ],
-                      )
                     ],
                   ),
-                )
-              ],
+                  Padding(
+                    padding: const EdgeInsets.only(top: 75, left: 160),
+                    child: Container(
+                      width: 100,
+                      height: 100,
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(50)),
+                          color: Color(0xffE0E0E0)),
+                      child: const Center(
+                        child: Icon(
+                          Icons.person_outline,
+                          size: 80,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 185, top: 180, right: 150),
+                    child: InkWell(
+                      onTap: onCancel,
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(
+                            editImageIcon,
+                            width: 20,
+                          ),
+                          Text(
+                            'edit',
+                            style: GoogleFonts.poppins(
+                              textStyle: const TextStyle(
+                                  color: Color(0xff1D5BA4),
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(
-              height: 50,
+            Padding(
+              padding: const EdgeInsets.only(right: 16, bottom: 30),
+              child: Align(
+                alignment: AlignmentDirectional.bottomEnd,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    MainActionButton(
+                      textColor: AppColors.black,
+                      text: 'Cancel',
+                      buttonColor: const Color(0xffEFF2F5),
+                      height: 32,
+                      blurRadius: 3.71,
+                      yAxisOffset: 3.71,
+                      shadowColor: Colors.black.withOpacity(0.25),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    BlocConsumer<EditProfileCubit, GeneralEditProfileState>(
+                      listener: (context, state) async {
+                        if (state is EditProfileSuccess) {
+                          await userRepo.setKey(isProfileCreated, true);
+                          showSnackBarMethod(
+                            context,
+                            await userRepo.getKey(isProfileCreated)
+                                ? 'profile is updated successfully'
+                                : 'profile is created successfully',
+                            AppColors.green,
+                          );
+                          // profileCubit.getProfile();
+                          context.pop();
+                        } else if (state is EditProfileFail) {
+                          showSnackBarMethod(
+                            context,
+                            state.error,
+                            AppColors.red,
+                          );
+                        }
+                      },
+                      builder: (context, state) {
+                        Widget? child;
+                        var onTap = onSaveTap;
+                        if (state is EditProfileLoading) {
+                          child = const LoadingIndicator(
+                            color: AppColors.white,
+                          );
+                          onTap = () {};
+                        }
+                        return MainActionButton(
+                          onTap: onTap,
+                          text: widget.profileModel == null
+                              ? 'Save'
+                              : 'Apply Changes',
+                          height: 32,
+                          blurRadius: 3.71,
+                          yAxisOffset: 3.71,
+                          shadowColor: Colors.black.withOpacity(0.25),
+                          child: child,
+                        );
+                      },
+                    )
+                  ],
+                ),
+              ),
             ),
           ],
         ),

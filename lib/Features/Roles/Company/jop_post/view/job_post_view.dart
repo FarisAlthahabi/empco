@@ -17,6 +17,7 @@ import 'package:empco/Features/Roles/Company/jop_post/view/widgets/text_widgets.
 import 'package:empco/Features/Roles/Freelancer/Jobs/Model/job_model/job_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 bool haveNewNotification = true;
@@ -97,6 +98,8 @@ class _JobPostPageState extends State<JobPostPage>
   JobCategoryEnum? selectedJobCategory;
   DateTime selectedDate = DateTime.now();
 
+  bool isReset = false;
+
   @override
   void onNotificationTap() {
     setState(() {
@@ -175,7 +178,11 @@ class _JobPostPageState extends State<JobPostPage>
   }
 
   @override
-  void onResetTap() {}
+  void onResetTap() {
+    setState(() {
+      isReset = true;
+    });
+  }
 
   @override
   void onSalaryChanged(String salary) {
@@ -263,7 +270,7 @@ class _JobPostPageState extends State<JobPostPage>
                         text: 'Use a title that describes one position only'),
                     const SizedBox(height: 8),
                     MainTextField(
-                      initialValue: widget.job?.title,
+                      initialValue: isReset ? null : widget.job?.title,
                       focusNode: titleFocusNode,
                       onChanged: onTitleChanged,
                       onSubmitted: onTitleSubmitted,
@@ -295,7 +302,7 @@ class _JobPostPageState extends State<JobPostPage>
                             initialValue = state.aiDescriptionModel.description;
                           }
                           return MainTextField(
-                            initialValue: initialValue,
+                            initialValue: isReset ? null : initialValue,
                             focusNode: descriptionFocusNode,
                             onChanged: onDescriptionChanged,
                             onSubmitted: onDescriptionSubmitted,
@@ -313,7 +320,7 @@ class _JobPostPageState extends State<JobPostPage>
                             borderRadius: BorderRadius.circular(5)),
                         child: Row(
                           children: [
-                            Image.asset(
+                            SvgPicture.asset(
                               aiIcon,
                               width: 25,
                             ),
@@ -338,7 +345,7 @@ class _JobPostPageState extends State<JobPostPage>
                     const SubTitleWidget(text: 'Provide required skills'),
                     const SizedBox(height: 8),
                     MainTextField(
-                      initialValue: widget.job?.requiredSkills,
+                      initialValue: isReset ? null : widget.job?.requiredSkills,
                       focusNode: requiredSkillsFocusNode,
                       onChanged: onRequiredSkillsChanged,
                       onSubmitted: onRequiredSkillsSubmitted,
@@ -433,7 +440,7 @@ class _JobPostPageState extends State<JobPostPage>
                         text: 'Select the Location of the Job'),
                     const SizedBox(height: 8),
                     MainTextField(
-                      initialValue: widget.job?.location,
+                      initialValue: isReset ? null : widget.job?.location,
                       focusNode: locationFocusNode,
                       onChanged: onLocationChanged,
                       onSubmitted: onLocationSubmitted,
@@ -446,7 +453,8 @@ class _JobPostPageState extends State<JobPostPage>
                         text: 'What will the Salary for this job be?'),
                     const SizedBox(height: 8),
                     MainTextField(
-                      initialValue: widget.job?.salary.toString(),
+                      initialValue:
+                          isReset ? null : widget.job?.salary.toString(),
                       focusNode: salaryFocusNode,
                       onChanged: onSalaryChanged,
                       onSubmitted: onSalarySubmitted,

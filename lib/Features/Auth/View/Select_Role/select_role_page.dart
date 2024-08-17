@@ -14,7 +14,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 abstract class SelectRoleViewCallBacks {
-  onRoleSelected(int index, BuildContext context);
+  onRoleSelected(int index);
 }
 
 @RoutePage()
@@ -41,7 +41,8 @@ class _SelectRolePageState extends State<SelectRolePage>
   late final UserRepo userRepo = context.read();
   
   @override
-  onRoleSelected(int index, BuildContext context) {
+  onRoleSelected(int index) async {
+    await userRepo.setKey(isFirstTime, false);
     authenticationBloc.add(IsAuthenticatedOrFirstTime());
     userRepo.setKey(role, userRole[index]);
     userRepo.setKey(isFirstTime, false);
@@ -88,7 +89,7 @@ class _SelectRolePageState extends State<SelectRolePage>
                                 screenWidth: screenWidth,
                                 index: index,
                                 onTap: () {
-                                  onRoleSelected(index, context);
+                                  onRoleSelected(index);
                                 },
                               )
                             ],

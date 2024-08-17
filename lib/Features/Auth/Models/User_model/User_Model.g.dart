@@ -11,6 +11,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       lastName: json['last_name'] as String,
       email: json['email'] as String,
       password: json['password'] as String,
+      fcmToken: json['fcm_token'] as String,
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
@@ -18,4 +19,5 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'last_name': instance.lastName,
       'email': instance.email,
       'password': instance.password,
+      'fcm_token': instance.fcmToken,
     };

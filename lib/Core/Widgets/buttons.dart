@@ -95,7 +95,7 @@ class MainActionButton extends StatelessWidget {
   final double? iconWidth;
 
   const MainActionButton({
-    super.key,
+  super.key,
     required this.text,
     this.fontSize,
     this.border,
@@ -127,23 +127,27 @@ class MainActionButton extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-            color: buttonColor ?? AppColors.blue,
-            borderRadius: BorderRadius.circular(borderRadius ?? 327.16),
-            boxShadow: shadow ??
-                [
-                  BoxShadow(
-                      offset: Offset(0, yAxisOffset ?? 0),
-                      spreadRadius: 0,
-                      blurRadius: blurRadius ?? 0,
-                      color: shadowColor ?? AppColors.white)
-                ]),
+          color: buttonColor ?? AppColors.blue,
+          borderRadius: BorderRadius.circular(borderRadius ?? 327.16),
+          boxShadow: shadow ??
+              [
+                BoxShadow(
+                  offset: Offset(0, yAxisOffset ?? 0),
+                  spreadRadius: 0,
+                  blurRadius: blurRadius ?? 0,
+                  color: shadowColor ?? AppColors.white,
+                ),
+              ],
+        ),
         child: child ??
             Center(
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(width: 25,),
+                children: [ 
+                  const SizedBox(
+                    width: 15,
+                  ),
                   if (icon != null)
                     Row(
                       mainAxisSize: MainAxisSize.min,
@@ -155,7 +159,6 @@ class MainActionButton extends StatelessWidget {
                           // ignore: deprecated_member_use
                           color: textColor,
                         ),
-                        const SizedBox(width: 8,),
                       ],
                     ),
                   Center(
@@ -164,14 +167,19 @@ class MainActionButton extends StatelessWidget {
                       style: textStyle ??
                           GoogleFonts.poppins(
                             textStyle: TextStyle(
-                                color: textColor ?? AppColors.white,
-                                fontSize: fontSize,
-                                fontWeight: weightlevel7),
+                              color: textColor ?? AppColors.white,
+                              fontSize: fontSize,
+                              fontWeight: weightlevel7,
+                            ),
                           ),
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  const SizedBox(width: 25,),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  if (icon != null)
+                  const SizedBox(width: 8,)
                 ],
               ),
             ),

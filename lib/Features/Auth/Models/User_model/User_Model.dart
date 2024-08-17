@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
@@ -13,6 +14,7 @@ class UserModel {
     required this.lastName,
     required this.email,
     required this.password,
+    required this.fcmToken,
   });
 
   factory UserModel.fromJsonStr(String str) =>
@@ -30,6 +32,9 @@ class UserModel {
   final String email;
 
   final String password;
+
+  @JsonKey(name: 'fcm_token')
+  final String fcmToken;
 
   String toJsonStr() => jsonEncode(toJson());
 

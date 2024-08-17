@@ -22,7 +22,6 @@ import 'package:empco/Core/repos/user_repo/user_repo.dart';
 import 'package:empco/Core/router/Router.dart';
 import 'package:empco/Features/Auth/bloc/auth_bloc.dart';
 import 'package:empco/Features/Roles/Company/jop_post/models/job_category_enum/job_category_enum.dart';
-import 'package:empco/Features/Roles/Company/jop_post/view/job_post_view.dart';
 import 'package:empco/Features/Roles/Freelancer/Jobs/Model/job_model/job_model.dart';
 import 'package:empco/Features/Roles/Freelancer/Jobs/cubit/jobs_cubit.dart';
 import 'package:empco/Features/Roles/common_pages/empco_home_page/main_drawer.dart';
@@ -207,12 +206,16 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
 
   @override
   void onFollowingsTap() {
-    // TODO: implement onFollowingsTap
+    context.go(
+      '$loginRoute/$companyHomePageRoute/$followingViewRoute',
+    );
   }
 
   @override
   void onFreelanceProjectsTap() {
-    // TODO: implement onFreelanceProjectsTap
+    context.go(
+      '$loginRoute/$freelancerHomePageRoute/$freelanceProjectsViewRoute',
+    );
   }
 
   @override
@@ -242,9 +245,7 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
   }
 
   @override
-  void onOrderedServicesTap() {
-    // TODO: implement onOrderedServicesTap
-  }
+  void onOrderedServicesTap() {}
 
   @override
   void onPostAJobsTap() {
@@ -260,9 +261,7 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
   }
 
   @override
-  void onSavedPostsTap() {
-    // TODO: implement onSavedPostsTap
-  }
+  void onSavedPostsTap() {}
 
   @override
   void onSearchChaged(String title) {
@@ -276,18 +275,14 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
 
   @override
   void onSettingsTap() {
-    // TODO: implement onSettingsTap
+    context.go('$loginRoute/$companyHomePageRoute/$settingsRoute');
   }
 
   @override
-  void onTypeSelected() {
-    // TODO: implement onTypeSelected
-  }
+  void onTypeSelected() {}
 
   @override
-  void onWorkNatureSelected() {
-    // TODO: implement onWorkNatureSelected
-  }
+  void onWorkNatureSelected() {}
 
   @override
   void onDeleteTap(int id) {
@@ -311,22 +306,11 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
 
   @override
   void onEditTap(JobModel job) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => JobPostView(
-          job: job,
-        ),
-      ),
-    );
-
     context.goNamed("jobPostView", extra: job);
   }
 
   @override
   void onAccountVerifyTap() async {
-    print(await userRepo.getKey(isLicenceUploaded, defaultValue: false));
-
     final licenceStatusModel = widget.licenceStatusModel;
 
     print(licenceStatusModel);
@@ -371,12 +355,7 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
 
   @override
   void onJobApplicationsTap() {
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => const MyApplictionView(),
-    //   ),
-    // );
+    context.go('$loginRoute/$companyHomePageRoute/$jobAppViewRoute');
   }
 
   @override
@@ -385,13 +364,29 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
   }
 
   @override
-  void onProfileTap() {
+  void onProfileTap() async {
     if (widget.userType == 'freelancer') {
-      //context.go('$loginRoute/$freelancerHomePageRoute/$freelancerProfileRoute');
+      if (await userRepo.getKey(isProfileCreated, defaultValue: false)) {
+        //context.go('$loginRoute/$freelancerHomePageRoute/$freelancerProfileRoute');
+      } else {
+        //context.go('$loginRoute/$freelancerHomePageRoute/$freelancerProfileRoute')
+      }
     } else if (widget.userType == 'owner') {
-      context.go('$loginRoute/$companyHomePageRoute/$companyProfileRoute');
+      if (await userRepo.getKey(isProfileCreated, defaultValue: false)) {
+        context.go('$loginRoute/$companyHomePageRoute/$companyProfileRoute');
+      } else {
+        context.go(
+            '$mainRoute/$loginRoute/$companyHomePageRoute/$companyProfileRoute/${editCompanyProfileRoute.replaceFirst(
+          ':title',
+          'create Profile',
+        )}');
+      }
     } else {
-      //context.go('$loginRoute/$customerHomePageRoute/$customerProfileRoute');
+      if (await userRepo.getKey(isProfileCreated, defaultValue: false)) {
+        //context.go('$loginRoute/$customerHomePageRoute/$customerProfileRoute');
+      } else {
+        //context.go('$loginRoute/$customerHomePageRoute/$customerProfileRoute');
+      }
     }
   }
 
@@ -404,6 +399,7 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
     'Post a job',
     'Account Verification',
     'Jobs Applications',
+    'Followings',
     'Profile',
     'Settings',
   ];
@@ -421,6 +417,7 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
     'Profile',
     'Settings',
   ];
+
   final List<String> freelancerIcons = [
     verifiedIcon,
     applyIcon,
@@ -434,6 +431,7 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
     addPostIcon,
     verifiedIcon,
     applyIcon,
+    followingsIcon,
     profileIcon,
     settingsIcon,
   ];
@@ -457,6 +455,7 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
     onPostAJobsTap,
     onAccountVerifyTap,
     onJobApplicationsTap,
+    onFollowingsTap,
     onProfileTap,
     onSettingsTap,
   ];
@@ -477,6 +476,11 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
     return SafeArea(
       child: Scaffold(
         drawer: MainDrawer(
+          backgroundImage: widget.userType == 'freelancer'
+              ? freelancerBackgroundImage
+              : widget.userType == 'owner'
+                  ? companyBackground
+                  : customerBackground,
           logout: onLogoutTap,
           callBacks: widget.userType == 'freelancer'
               ? freelancerCallBacks
@@ -877,6 +881,8 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
                                               height: 10,
                                             ),
                                             const JobContactDetails(
+                                              email: 'faris@gmail.com',
+                                              phoneNumber: '+963768466036',
                                               title: 'Contact Info',
                                               width: 75,
                                               fontSize: 11,

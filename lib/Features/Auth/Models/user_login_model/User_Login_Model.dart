@@ -12,6 +12,7 @@ class UserLoginModel {
   const UserLoginModel({
     required this.email,
     required this.password,
+    required this.fcmToken,
   });
 
   factory UserLoginModel.fromJsonStr(String str) =>
@@ -23,6 +24,8 @@ class UserLoginModel {
   final String email;
 
   final String password;
+
+  final String fcmToken;
 
   String toJsonStr() => jsonEncode(toJson());
 

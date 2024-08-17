@@ -37,7 +37,7 @@ class ApplicationsCubit extends Cubit<GeneralApplicationsState> {
   }
 
   Future<void> approveApplications(int applicationId) async {
-    emit(AnswerApplicationLoading());
+    emit(ApproveApplicationLoading());
     try {
       final data = await _applicationsRepo.approveApplication(applicationId);
 
@@ -45,7 +45,7 @@ class ApplicationsCubit extends Cubit<GeneralApplicationsState> {
     } on Exception catch (e, s) {
       addError(e, s);
       emit(
-        AnswerApplicationFail(
+        ApproveApplicationFail(
           e.toString(),
         ),
       );
@@ -53,7 +53,7 @@ class ApplicationsCubit extends Cubit<GeneralApplicationsState> {
   }
 
   Future<void> rejectApplications(int applicationId) async {
-    emit(AnswerApplicationLoading());
+    emit(RejectApplicationLoading());
     try {
       final data = await _applicationsRepo.rejectApplication(applicationId);
       
@@ -61,7 +61,7 @@ class ApplicationsCubit extends Cubit<GeneralApplicationsState> {
     } on Exception catch (e, s) {
       addError(e, s);
       emit(
-        AnswerApplicationFail(
+        RejectApplicationFail(
           e.toString(),
         ),
       );

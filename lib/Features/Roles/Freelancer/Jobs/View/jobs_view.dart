@@ -1,3 +1,4 @@
+import 'package:empco/Core/Resources/Constants/assets.dart';
 import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:empco/Core/Widgets/empco_app_bar.dart';
 import 'package:empco/Core/Widgets/filter_bottom_sheet.dart';
@@ -5,8 +6,10 @@ import 'package:empco/Core/Widgets/loading_indicator.dart';
 import 'package:empco/Core/Widgets/main_show_bottom_sheet.dart';
 import 'package:empco/Core/di/di.dart';
 import 'package:empco/Core/router/Router.dart';
+import 'package:empco/Features/Auth/bloc/auth_bloc.dart';
 import 'package:empco/Features/Roles/Freelancer/Jobs/View/Widgets/widgets.dart';
 import 'package:empco/Features/Roles/Freelancer/Jobs/cubit/jobs_cubit.dart';
+import 'package:empco/Features/Roles/common_pages/empco_home_page/main_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -14,13 +17,13 @@ import 'package:go_router/go_router.dart';
 abstract class JobsCallBacks {
   void onNotificationTap();
 
-  void onExpandJopTap(BuildContext context, int jobId);
+  void onExpandJopTap(int jobId);
 
   void onFavoriteTap();
 
   void onMessageTap();
 
-  void onApplyTap();
+  void onApplyTap(int jobId);
 
   void onFilterTap();
 
@@ -43,17 +46,38 @@ abstract class JobsCallBacks {
   void onCancelTap();
 
   void onApplyFiltersTap();
+
+  void onAccountVerifyTap();
+
+  void onProfileTap();
+
+  void onSettingsTap();
+
+  void onLogoutTap();
+
+  void onMyApplicationsTap();
+
+  void onFreelanceProjectsTap();
+
+  void onSavedPostsTap();
+
+  void onFollowingsTap();
 }
 
 class JobsView extends StatelessWidget {
   const JobsView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
+  Widget build(BuildContext context) 
+   {
+    return MultiBlocProvider(providers: [
+      BlocProvider(
       create: (context) => config<JobsCubit>(),
-      child: const JobsPage(),
-    );
+    ),
+    BlocProvider(
+      create: (context) => config<AuthBloc>(),
+    ),
+    ], child: const JobsPage(),);
   }
 }
 
@@ -81,10 +105,58 @@ class _JobsPageState extends State<JobsPage> implements JobsCallBacks {
   }
 
   @override
-  onApplyTap() {}
+  void onAccountVerifyTap() {
+    // TODO: implement onAccountVerifyTap
+  }
 
   @override
-  onExpandJopTap(BuildContext context, int jobId) {
+  void onFollowingsTap() {
+    // TODO: implement onFollowingsTap
+  }
+
+  @override
+  void onFreelanceProjectsTap() {
+     context.go(
+      '$loginRoute/$freelancerHomePageRoute/$freelanceProjectsViewRoute',
+    );
+  }
+
+  @override
+  void onLogoutTap() {
+    // TODO: implement onLogoutTap
+  }
+
+  @override
+  void onMyApplicationsTap() {
+    // TODO: implement onMyApplicationsTap
+  }
+
+  @override
+  void onProfileTap() {
+    // TODO: implement onProfileTap
+  }
+
+  @override
+  void onSavedPostsTap() {
+    // TODO: implement onSavedPostsTap
+  }
+
+  @override
+  void onSettingsTap() {
+    // TODO: implement onSettingsTap
+  }
+
+  @override
+  onApplyTap(int jobId) {
+    context.go(
+        '$loginRoute/$freelancerHomePageRoute/${applyJobViewRoute.replaceFirst(
+      ':jobId',
+      jobId.toString(),
+    )}');
+  }
+
+  @override
+  onExpandJopTap(int jobId) {
     context.go(
       '$loginRoute/$freelancerHomePageRoute/${jobDetailsRoute.replaceFirst(
         ':jobId',
@@ -170,6 +242,34 @@ class _JobsPageState extends State<JobsPage> implements JobsCallBacks {
     // TODO: implement onWorkNatureSelected
   }
 
+  final List<String> freelancerTitles = [
+    'Account Verification',
+    'My applications',
+    'Freelance projects',
+    'Saved posts ',
+    'Followings',
+    'Profile',
+    'Settings',
+  ];
+  final List<String> freelancerIcons = [
+    verifiedIcon,
+    applyIcon,
+    freelancerProjectIcon,
+    savedIcon,
+    followingsIcon,
+    profileIcon,
+    settingsIcon,
+  ];
+  late final List<VoidCallback> freelancerCallBacks = [
+    onAccountVerifyTap,
+    onMyApplicationsTap,
+    onFreelanceProjectsTap,
+    onSavedPostsTap,
+    onFollowingsTap,
+    onProfileTap,
+    onSettingsTap,
+  ];
+
   @override
   Widget build(BuildContext context) {
     var deviceData = MediaQuery.of(context);
@@ -178,9 +278,15 @@ class _JobsPageState extends State<JobsPage> implements JobsCallBacks {
 
     return SafeArea(
       child: Scaffold(
-        drawer: const Drawer(),
+        drawer: MainDrawer(
+          callBacks: freelancerCallBacks,
+          titles: freelancerTitles,
+          icons: freelancerIcons,
+          logout: onLogoutTap,
+          backgroundImage: freelancerBackgroundImage,
+        ),
         appBar: EmpcoAppBar(
-          automaticallyImplyLeading: false,
+          automaticallyImplyLeading: true,
           centerTitle: true,
           title: SearchTextField(
             onChanged: onSearchChaged,
@@ -253,19 +359,10 @@ class _JobsPageState extends State<JobsPage> implements JobsCallBacks {
                                 JobMainInfo(
                                   job: item,
                                   screenWidth: screenWidth,
-                                  onApplyTap: () {
-                                    onApplyTap();
-                                  },
-                                  onExpandJopTap: () {
-                                    onExpandJopTap(
-                                        context, item.id);
-                                  },
-                                  onFavoriteTap: () {
-                                    onFavoriteTap();
-                                  },
-                                  onMessageTap: () {
-                                    onMessageTap();
-                                  },
+                                  onApplyTap: () => onApplyTap(item.id),
+                                  onExpandJopTap: () => onExpandJopTap(item.id),
+                                  onFavoriteTap: onFavoriteTap,
+                                  onMessageTap: onMessageTap,
                                 )
                               ],
                             );

@@ -17,12 +17,14 @@ class MainDrawer extends StatelessWidget {
     required this.titles,
     required this.icons,
     required this.logout,
+    required this.backgroundImage,
   });
 
   final List<VoidCallback> callBacks;
   final VoidCallback logout;
   final List<String> titles;
   final List<String> icons;
+  final String backgroundImage;
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +38,9 @@ class MainDrawer extends StatelessWidget {
       child: ListView(
         children: [
           DrawerHeader(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(drawerBackgroundImage),
+                image: AssetImage(backgroundImage),
                 fit: BoxFit.cover,
               ),
             ),
@@ -96,11 +98,8 @@ class MainDrawer extends StatelessWidget {
                   );
                 },
               ),
-              const SizedBox(
-                height: 100,
-              ),
               ListTile(
-                leading: BlocConsumer<AuthBloc, AuthState>(
+                leading: BlocConsumer<AuthBloc, GeneralAuthState>(
                   listener: (context, state) {
                     if (state is SuccessToLogoutState) {
                       showSnackBarMethod(

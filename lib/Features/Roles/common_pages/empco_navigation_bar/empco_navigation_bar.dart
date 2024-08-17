@@ -86,22 +86,19 @@ class _EmpcoNavigationBarState extends State<EmpcoNavigationBar>
               currentPageIndex = index;
             });
           },
-          destinations: const [
-            NavigationDestination(
+          destinations:  [
+            const NavigationDestination(
                 icon: Icon(
                   Icons.home_outlined,
                   color: Color.fromRGBO(29, 29, 29, 1),
                 ),
                 label: 'Home'),
-            NavigationDestination(
+            const NavigationDestination(
                 icon: Icon(Icons.shopping_bag_outlined,
                     color: Color.fromRGBO(29, 29, 29, 1)),
                 label: 'jobs'),
-            NavigationDestination(
-                icon: Icon(Icons.messenger_outline,
-                    color: Color.fromRGBO(29, 29, 29, 1)),
-                label: 'Messages'),
-            NavigationDestination(
+                if(user != 'owner')
+            const NavigationDestination(
                 icon:
                     Icon(Icons.computer, color: Color.fromRGBO(29, 29, 29, 1)),
                 label: 'Services')

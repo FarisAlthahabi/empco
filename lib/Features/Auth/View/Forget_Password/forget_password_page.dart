@@ -111,7 +111,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage>
     var screenSize = deviceData.size;
     double screenHeight = screenSize.height;
     double screenWidth = screenSize.width;
-    return BlocConsumer<AuthBloc, AuthState>(
+    return BlocConsumer<AuthBloc, GeneralAuthState>(
       listener: (context, state) {
         if (state is SuccessToForgetPasswordState) {
           onSuccessToForgetPasswordStateListened(context);

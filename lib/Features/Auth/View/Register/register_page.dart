@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:empco/Core/Theme/components/colors.dart';
+import 'package:empco/Core/Widgets/loading_indicator.dart';
 import 'package:empco/Core/di/di.dart';
 import 'package:empco/Core/router/Router.dart';
 import 'package:empco/Core/Resources/Constants/Texts.dart';
 import 'package:empco/Core/Resources/Constants/assets.dart';
 import 'package:empco/Core/Widgets/Buttons.dart';
-import 'package:empco/Core/Widgets/Loading_Page.dart';
 import 'package:empco/Core/Widgets/empcoIcon_and_empcoText.dart';
 import 'package:empco/Core/Widgets/auth_text_field.dart';
 import 'package:empco/Core/Widgets/show_snack_bar_method.dart';
@@ -19,11 +19,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 abstract class RegisterViewCallbacks {
-  void onSignUpTap(BuildContext context);
+  void onSignUpTap();
 
   void onContinueWithGoogleTap(BuildContext context);
 
-  void onLoginTap(BuildContext context);
+  void onLoginTap();
 
   void onFirstNameChanged(String firstName);
 
@@ -156,13 +156,13 @@ class _RegisterPageState extends State<RegisterPage>
   }
 
   @override
-  void onLoginTap(BuildContext context) {
+  void onLoginTap() {
     context.go('$mainRoute/$loginRoute');
     //dispose();
   }
 
   @override
-  void onSignUpTap(BuildContext context) {
+  void onSignUpTap() {
     authBloc.add(RegisterEvent(
         firstName: firstName,
         lastName: lastName,
@@ -178,148 +178,168 @@ class _RegisterPageState extends State<RegisterPage>
     double screenWidth = screenSize.width;
 
     return BlocProvider(
-      create: (context) => AuthBloc(),
-      child: BlocConsumer<AuthBloc, AuthState>(
-        listener: (context, state) async {
-          if (password == confirmPassword) {
-            if (state is SuccessToRegisterState) {
-              showSnackBarMethod(context, registerSuccess, AppColors.green);
-              context.goNamed("VerifyPage", pathParameters: {'email': email});
-            } else if (state is FailedToRegisterState) {
-              showSnackBarMethod(context, state.error, AppColors.red);
-            }
-          } else {
-            showSnackBarMethod(context, passwordAndConfirmSame, AppColors.red);
-          }
-          if (state is SuccessToLoginWithGoogleState) {
-            userRepo.setKey(isLogin, true);
-            userRepo.setKey(isFirstTime, false);
-            showSnackBarMethod(context, loginSuccess, AppColors.green);
-            if (await userRepo.getKey(role) == 'freelancer') {
-              context.go('$mainRoute/$loginRoute/$freelancerHomePageRoute');
-            } else if (await userRepo.getKey(role) == 'owner') {
-              context.go('$mainRoute/$loginRoute/$companyHomePageRoute');
-            } else {
-              context.go('$mainRoute/$loginRoute/$customerHomePageRoute');
-            }
-          } else if (state is FailedToLoginWithGoogleState) {
-            showSnackBarMethod(context, loginWithGoogleFail, AppColors.red);
+      create: (context) => config<AuthBloc>(),
+      child: BlocListener<AuthBloc, GeneralAuthState>(
+        listener: (context, state) {
+          if (state is RegisterSuccess) {
+            showSnackBarMethod(context, 'success', AppColors.green);
+          } else if (state is RegisterFail) {
+            showSnackBarMethod(context, state.error, AppColors.red);
           }
         },
-        builder: (context, state) {
-          if (state is LoadingState) {
-            return const LoadingPage();
-          } else if (state is AuthInitial ||
-              state is SuccessToRegisterState ||
-              state is FailedToRegisterState ||
-              state is SuccessToLoginWithGoogleState ||
-              state is FailedToLoginWithGoogleState) {
-            return SafeArea(
-              child: Scaffold(
-                body: Stack(
-                  children: [
-                    const EmpcoIcon(
-                      paddingTop: 10,
-                      paddingLeft: 10,
-                      iconHeight: 50,
-                      iconWidth: 50,
-                    ),
-                    Center(
-                        child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 0.045 * screenHeight,
-                            //height: 30,
-                          ),
-                          const TitleOfPage(text: registeringYou),
-                          SvgPicture.asset(
-                            signUpImage,
-                            height: 0.18 * screenHeight,
-                          ),
-                          const SignUpText(),
-                          SizedBox(
-                            height: 0.015 * screenHeight,
-                            // height: 10,
-                          ),
-                          Center(
-                            child: SizedBox(
-                              width: 0.94 * screenWidth,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SizedBox(
-                                    width: 0.45 * screenWidth,
-                                    child: AuthTextField(
-                                      onChanged: onFirstNameChanged,
-                                      onSubmitted: onFirstNameSubmitted,
-                                      focusNode: firstNameFocusNode,
-                                      prefixIcon: const Icon(Icons.person),
-                                      title: firstNameText,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  SizedBox(
-                                    width: 0.45 * screenWidth,
-                                    child: AuthTextField(
-                                        focusNode: lastNameFocusNode,
-                                        onChanged: onLastNameChanged,
-                                        onSubmitted: onLastNameSubmitted,
-                                        title: lastNameText,
-                                        prefixIcon: const Icon(Icons.person)),
-                                  ),
-                                ],
+        child: SafeArea(
+          child: Scaffold(
+            body: Stack(
+              children: [
+                const EmpcoIcon(
+                  paddingTop: 10,
+                  paddingLeft: 10,
+                  iconHeight: 50,
+                  iconWidth: 50,
+                ),
+                Center(
+                    child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 0.045 * screenHeight,
+                        //height: 30,
+                      ),
+                      const TitleOfPage(text: registeringYou),
+                      SvgPicture.asset(
+                        signUpImage,
+                        height: 0.18 * screenHeight,
+                      ),
+                      const SignUpText(),
+                      SizedBox(
+                        height: 0.015 * screenHeight,
+                        // height: 10,
+                      ),
+                      Center(
+                        child: SizedBox(
+                          width: 0.94 * screenWidth,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: 0.45 * screenWidth,
+                                child: AuthTextField(
+                                  onChanged: onFirstNameChanged,
+                                  onSubmitted: onFirstNameSubmitted,
+                                  focusNode: firstNameFocusNode,
+                                  prefixIcon: const Icon(Icons.person),
+                                  title: firstNameText,
+                                ),
                               ),
-                            ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              SizedBox(
+                                width: 0.45 * screenWidth,
+                                child: AuthTextField(
+                                    focusNode: lastNameFocusNode,
+                                    onChanged: onLastNameChanged,
+                                    onSubmitted: onLastNameSubmitted,
+                                    title: lastNameText,
+                                    prefixIcon: const Icon(Icons.person)),
+                              ),
+                            ],
                           ),
-                          const SizedBox(
-                            height: 7,
-                          ),
-                          SizedBox(
-                            width: 0.94 * screenWidth,
-                            child: AuthTextField(
-                                focusNode: emailFocusNode,
-                                onChanged: onEmailChanged,
-                                onSubmitted: onEmailSubmitted,
-                                title: emailAddress,
-                                prefixIcon: const Icon(Icons.email_outlined)),
-                          ),
-                          const SizedBox(
-                            height: 7,
-                          ),
-                          SizedBox(
-                            width: 0.94 * screenWidth,
-                            child: AuthTextField(
-                              onChanged: onPasswordChanged,
-                              onSubmitted: onPasswordSubmitted,
-                              focusNode: passwordFocusNode,
-                              prefixIcon: const Icon(Icons.lock),
-                              isPassword: true,
-                              title: passwordText,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 7,
-                          ),
-                          SizedBox(
-                            width: 0.94 * screenWidth,
-                            child: AuthTextField(
-                              prefixIcon: const Icon(Icons.lock),
-                              focusNode: confirmPasswordFocusNode,
-                              onChanged: onConfirmPasswordChanged,
-                              onSubmitted: onConfirmPasswordSubmitted,
-                              isPassword: true,
-                              title: confirmPasswordText,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 0.015 * screenHeight,
-                            // height: 10,
-                          ),
-                          MainActionButton(
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 7,
+                      ),
+                      SizedBox(
+                        width: 0.94 * screenWidth,
+                        child: AuthTextField(
+                            focusNode: emailFocusNode,
+                            onChanged: onEmailChanged,
+                            onSubmitted: onEmailSubmitted,
+                            title: emailAddress,
+                            prefixIcon: const Icon(Icons.email_outlined)),
+                      ),
+                      const SizedBox(
+                        height: 7,
+                      ),
+                      SizedBox(
+                        width: 0.94 * screenWidth,
+                        child: AuthTextField(
+                          onChanged: onPasswordChanged,
+                          onSubmitted: onPasswordSubmitted,
+                          focusNode: passwordFocusNode,
+                          prefixIcon: const Icon(Icons.lock),
+                          isPassword: true,
+                          title: passwordText,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 7,
+                      ),
+                      SizedBox(
+                        width: 0.94 * screenWidth,
+                        child: AuthTextField(
+                          prefixIcon: const Icon(Icons.lock),
+                          focusNode: confirmPasswordFocusNode,
+                          onChanged: onConfirmPasswordChanged,
+                          onSubmitted: onConfirmPasswordSubmitted,
+                          isPassword: true,
+                          title: confirmPasswordText,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 0.015 * screenHeight,
+                        // height: 10,
+                      ),
+                      BlocConsumer<AuthBloc, GeneralAuthState>(
+                        listener: (context, state) {
+                          print('hello');
+                          print('hello');
+                          print('hello');
+                          if (password == confirmPassword) {
+                            if (state is RegisterSuccess) {
+                              showSnackBarMethod(
+                                  context, registerSuccess, AppColors.green);
+                              context.goNamed("VerifyPage",
+                                  pathParameters: {'email': email});
+                            } else if (state is RegisterFail) {
+                              showSnackBarMethod(
+                                  context, state.error, AppColors.red);
+                            }
+                          } else {
+                            showSnackBarMethod(
+                                context, passwordAndConfirmSame, AppColors.red);
+                          }
+                          // if (state is SuccessToLoginWithGoogleState) {
+                          //   userRepo.setKey(isLogin, true);
+                          //   userRepo.setKey(isFirstTime, false);
+                          //   showSnackBarMethod(
+                          //       context, loginSuccess, AppColors.green);
+                          //   if (await userRepo.getKey(role) == 'freelancer') {
+                          //     context.go(
+                          //         '$mainRoute/$loginRoute/$freelancerHomePageRoute');
+                          //   } else if (await userRepo.getKey(role) == 'owner') {
+                          //     context.go(
+                          //         '$mainRoute/$loginRoute/$companyHomePageRoute');
+                          //   } else {
+                          //     context.go(
+                          //         '$mainRoute/$loginRoute/$customerHomePageRoute');
+                          //   }
+                          // } else if (state is FailedToLoginWithGoogleState) {
+                          //   showSnackBarMethod(
+                          //       context, loginWithGoogleFail, AppColors.red);
+                          // }
+                        },
+                        builder: (context, state) {
+                          var onTap = onSignUpTap;
+                          Widget? child;
+                          if (state is RegisterLoading) {
+                            onTap = () {};
+                            child = const LoadingIndicator(
+                              color: AppColors.white,
+                            );
+                          }
+                          return MainActionButton(
                             width: 0.86 * screenWidth,
                             height: 0.07 * screenHeight,
                             text: signUpText,
@@ -327,53 +347,42 @@ class _RegisterPageState extends State<RegisterPage>
                             yAxisOffset: 4,
                             shadowColor: AppColors.boxShadowColor1,
                             fontSize: 17.09,
-                            onTap: () {
-                              onSignUpTap(context);
-                            },
-                          ),
-                          SizedBox(
-                            height: 0.015 * screenHeight,
-                            // height: 10,
-                          ),
-                          const OrText(),
-                          SizedBox(
-                            height: 0.015 * screenHeight,
-                            // height: 10,
-                          ),
-                          ContinueWithGoogleBotton(onTap: () {
-                            onContinueWithGoogleTap(context);
-                          }),
-                          SizedBox(
-                            height: 0.015 * screenHeight,
-                            //height: 10,
-                          ),
-                          GlobalTextButton(
-                              text1: alreadyRegistered,
-                              text2: loginText,
-                              onTap: () {
-                                onLoginTap(context);
-                              }),
-                          SizedBox(
-                            height: 0.015 * screenHeight,
-                            // height: 10,
-                          ),
-                        ],
+                            onTap: onTap,
+                            child: child,
+                          );
+                        },
                       ),
-                    ))
-                  ],
-                ),
-              ),
-            );
-          } else {
-            return const SafeArea(
-              child: Scaffold(
-                body: Center(
-                  child: Text('error'),
-                ),
-              ),
-            );
-          }
-        },
+                      SizedBox(
+                        height: 0.015 * screenHeight,
+                        // height: 10,
+                      ),
+                      const OrText(),
+                      SizedBox(
+                        height: 0.015 * screenHeight,
+                        // height: 10,
+                      ),
+                      ContinueWithGoogleBotton(onTap: () {
+                        onContinueWithGoogleTap(context);
+                      }),
+                      SizedBox(
+                        height: 0.015 * screenHeight,
+                        //height: 10,
+                      ),
+                      GlobalTextButton(
+                          text1: alreadyRegistered,
+                          text2: loginText,
+                          onTap: onLoginTap),
+                      SizedBox(
+                        height: 0.015 * screenHeight,
+                        // height: 10,
+                      ),
+                    ],
+                  ),
+                ))
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
