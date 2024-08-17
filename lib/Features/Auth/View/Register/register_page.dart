@@ -177,210 +177,207 @@ class _RegisterPageState extends State<RegisterPage>
     double screenHeight = screenSize.height;
     double screenWidth = screenSize.width;
 
-    return BlocProvider(
-      create: (context) => config<AuthBloc>(),
-      child: BlocListener<AuthBloc, GeneralAuthState>(
-        listener: (context, state) {
-          if (state is RegisterSuccess) {
-            showSnackBarMethod(context, 'success', AppColors.green);
-          } else if (state is RegisterFail) {
-            showSnackBarMethod(context, state.error, AppColors.red);
-          }
-        },
-        child: SafeArea(
-          child: Scaffold(
-            body: Stack(
-              children: [
-                const EmpcoIcon(
-                  paddingTop: 10,
-                  paddingLeft: 10,
-                  iconHeight: 50,
-                  iconWidth: 50,
-                ),
-                Center(
-                    child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 0.045 * screenHeight,
-                        //height: 30,
-                      ),
-                      const TitleOfPage(text: registeringYou),
-                      SvgPicture.asset(
-                        signUpImage,
-                        height: 0.18 * screenHeight,
-                      ),
-                      const SignUpText(),
-                      SizedBox(
-                        height: 0.015 * screenHeight,
-                        // height: 10,
-                      ),
-                      Center(
-                        child: SizedBox(
-                          width: 0.94 * screenWidth,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                width: 0.45 * screenWidth,
-                                child: AuthTextField(
-                                  onChanged: onFirstNameChanged,
-                                  onSubmitted: onFirstNameSubmitted,
-                                  focusNode: firstNameFocusNode,
-                                  prefixIcon: const Icon(Icons.person),
-                                  title: firstNameText,
-                                ),
+    return BlocListener<AuthBloc, GeneralAuthState>(
+      listener: (context, state) {
+        if (state is RegisterSuccess) {
+          showSnackBarMethod(context, 'success', AppColors.green);
+        } else if (state is RegisterFail) {
+          showSnackBarMethod(context, state.error, AppColors.red);
+        }
+      },
+      child: SafeArea(
+        child: Scaffold(
+          body: Stack(
+            children: [
+              const EmpcoIcon(
+                paddingTop: 10,
+                paddingLeft: 10,
+                iconHeight: 50,
+                iconWidth: 50,
+              ),
+              Center(
+                  child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 0.045 * screenHeight,
+                      //height: 30,
+                    ),
+                    const TitleOfPage(text: registeringYou),
+                    SvgPicture.asset(
+                      signUpImage,
+                      height: 0.18 * screenHeight,
+                    ),
+                    const SignUpText(),
+                    SizedBox(
+                      height: 0.015 * screenHeight,
+                      // height: 10,
+                    ),
+                    Center(
+                      child: SizedBox(
+                        width: 0.94 * screenWidth,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: 0.45 * screenWidth,
+                              child: AuthTextField(
+                                onChanged: onFirstNameChanged,
+                                onSubmitted: onFirstNameSubmitted,
+                                focusNode: firstNameFocusNode,
+                                prefixIcon: const Icon(Icons.person),
+                                title: firstNameText,
                               ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              SizedBox(
-                                width: 0.45 * screenWidth,
-                                child: AuthTextField(
-                                    focusNode: lastNameFocusNode,
-                                    onChanged: onLastNameChanged,
-                                    onSubmitted: onLastNameSubmitted,
-                                    title: lastNameText,
-                                    prefixIcon: const Icon(Icons.person)),
-                              ),
-                            ],
-                          ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            SizedBox(
+                              width: 0.45 * screenWidth,
+                              child: AuthTextField(
+                                  focusNode: lastNameFocusNode,
+                                  onChanged: onLastNameChanged,
+                                  onSubmitted: onLastNameSubmitted,
+                                  title: lastNameText,
+                                  prefixIcon: const Icon(Icons.person)),
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 7,
+                    ),
+                    const SizedBox(
+                      height: 7,
+                    ),
+                    SizedBox(
+                      width: 0.94 * screenWidth,
+                      child: AuthTextField(
+                          focusNode: emailFocusNode,
+                          onChanged: onEmailChanged,
+                          onSubmitted: onEmailSubmitted,
+                          title: emailAddress,
+                          prefixIcon: const Icon(Icons.email_outlined)),
+                    ),
+                    const SizedBox(
+                      height: 7,
+                    ),
+                    SizedBox(
+                      width: 0.94 * screenWidth,
+                      child: AuthTextField(
+                        onChanged: onPasswordChanged,
+                        onSubmitted: onPasswordSubmitted,
+                        focusNode: passwordFocusNode,
+                        prefixIcon: const Icon(Icons.lock),
+                        isPassword: true,
+                        title: passwordText,
                       ),
-                      SizedBox(
-                        width: 0.94 * screenWidth,
-                        child: AuthTextField(
-                            focusNode: emailFocusNode,
-                            onChanged: onEmailChanged,
-                            onSubmitted: onEmailSubmitted,
-                            title: emailAddress,
-                            prefixIcon: const Icon(Icons.email_outlined)),
+                    ),
+                    const SizedBox(
+                      height: 7,
+                    ),
+                    SizedBox(
+                      width: 0.94 * screenWidth,
+                      child: AuthTextField(
+                        prefixIcon: const Icon(Icons.lock),
+                        focusNode: confirmPasswordFocusNode,
+                        onChanged: onConfirmPasswordChanged,
+                        onSubmitted: onConfirmPasswordSubmitted,
+                        isPassword: true,
+                        title: confirmPasswordText,
                       ),
-                      const SizedBox(
-                        height: 7,
-                      ),
-                      SizedBox(
-                        width: 0.94 * screenWidth,
-                        child: AuthTextField(
-                          onChanged: onPasswordChanged,
-                          onSubmitted: onPasswordSubmitted,
-                          focusNode: passwordFocusNode,
-                          prefixIcon: const Icon(Icons.lock),
-                          isPassword: true,
-                          title: passwordText,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 7,
-                      ),
-                      SizedBox(
-                        width: 0.94 * screenWidth,
-                        child: AuthTextField(
-                          prefixIcon: const Icon(Icons.lock),
-                          focusNode: confirmPasswordFocusNode,
-                          onChanged: onConfirmPasswordChanged,
-                          onSubmitted: onConfirmPasswordSubmitted,
-                          isPassword: true,
-                          title: confirmPasswordText,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 0.015 * screenHeight,
-                        // height: 10,
-                      ),
-                      BlocConsumer<AuthBloc, GeneralAuthState>(
-                        listener: (context, state) {
-                          print('hello');
-                          print('hello');
-                          print('hello');
-                          if (password == confirmPassword) {
-                            if (state is RegisterSuccess) {
-                              showSnackBarMethod(
-                                  context, registerSuccess, AppColors.green);
-                              context.goNamed("VerifyPage",
-                                  pathParameters: {'email': email});
-                            } else if (state is RegisterFail) {
-                              showSnackBarMethod(
-                                  context, state.error, AppColors.red);
-                            }
-                          } else {
+                    ),
+                    SizedBox(
+                      height: 0.015 * screenHeight,
+                      // height: 10,
+                    ),
+                    BlocConsumer<AuthBloc, GeneralAuthState>(
+                      listener: (context, state) {
+                        print('hello');
+                        print('hello');
+                        print('hello');
+                        if (password == confirmPassword) {
+                          if (state is RegisterSuccess) {
                             showSnackBarMethod(
-                                context, passwordAndConfirmSame, AppColors.red);
+                                context, registerSuccess, AppColors.green);
+                            context.goNamed("VerifyPage",
+                                pathParameters: {'email': email});
+                          } else if (state is RegisterFail) {
+                            showSnackBarMethod(
+                                context, state.error, AppColors.red);
                           }
-                          // if (state is SuccessToLoginWithGoogleState) {
-                          //   userRepo.setKey(isLogin, true);
-                          //   userRepo.setKey(isFirstTime, false);
-                          //   showSnackBarMethod(
-                          //       context, loginSuccess, AppColors.green);
-                          //   if (await userRepo.getKey(role) == 'freelancer') {
-                          //     context.go(
-                          //         '$mainRoute/$loginRoute/$freelancerHomePageRoute');
-                          //   } else if (await userRepo.getKey(role) == 'owner') {
-                          //     context.go(
-                          //         '$mainRoute/$loginRoute/$companyHomePageRoute');
-                          //   } else {
-                          //     context.go(
-                          //         '$mainRoute/$loginRoute/$customerHomePageRoute');
-                          //   }
-                          // } else if (state is FailedToLoginWithGoogleState) {
-                          //   showSnackBarMethod(
-                          //       context, loginWithGoogleFail, AppColors.red);
-                          // }
-                        },
-                        builder: (context, state) {
-                          var onTap = onSignUpTap;
-                          Widget? child;
-                          if (state is RegisterLoading) {
-                            onTap = () {};
-                            child = const LoadingIndicator(
-                              color: AppColors.white,
-                            );
-                          }
-                          return MainActionButton(
-                            width: 0.86 * screenWidth,
-                            height: 0.07 * screenHeight,
-                            text: signUpText,
-                            blurRadius: 4,
-                            yAxisOffset: 4,
-                            shadowColor: AppColors.boxShadowColor1,
-                            fontSize: 17.09,
-                            onTap: onTap,
-                            child: child,
+                        } else {
+                          showSnackBarMethod(
+                              context, passwordAndConfirmSame, AppColors.red);
+                        }
+                        // if (state is SuccessToLoginWithGoogleState) {
+                        //   userRepo.setKey(isLogin, true);
+                        //   userRepo.setKey(isFirstTime, false);
+                        //   showSnackBarMethod(
+                        //       context, loginSuccess, AppColors.green);
+                        //   if (await userRepo.getKey(role) == 'freelancer') {
+                        //     context.go(
+                        //         '$mainRoute/$loginRoute/$freelancerHomePageRoute');
+                        //   } else if (await userRepo.getKey(role) == 'owner') {
+                        //     context.go(
+                        //         '$mainRoute/$loginRoute/$companyHomePageRoute');
+                        //   } else {
+                        //     context.go(
+                        //         '$mainRoute/$loginRoute/$customerHomePageRoute');
+                        //   }
+                        // } else if (state is FailedToLoginWithGoogleState) {
+                        //   showSnackBarMethod(
+                        //       context, loginWithGoogleFail, AppColors.red);
+                        // }
+                      },
+                      builder: (context, state) {
+                        var onTap = onSignUpTap;
+                        Widget? child;
+                        if (state is RegisterLoading) {
+                          onTap = () {};
+                          child = const LoadingIndicator(
+                            color: AppColors.white,
                           );
-                        },
-                      ),
-                      SizedBox(
-                        height: 0.015 * screenHeight,
-                        // height: 10,
-                      ),
-                      const OrText(),
-                      SizedBox(
-                        height: 0.015 * screenHeight,
-                        // height: 10,
-                      ),
-                      ContinueWithGoogleBotton(onTap: () {
-                        onContinueWithGoogleTap(context);
-                      }),
-                      SizedBox(
-                        height: 0.015 * screenHeight,
-                        //height: 10,
-                      ),
-                      GlobalTextButton(
-                          text1: alreadyRegistered,
-                          text2: loginText,
-                          onTap: onLoginTap),
-                      SizedBox(
-                        height: 0.015 * screenHeight,
-                        // height: 10,
-                      ),
-                    ],
-                  ),
-                ))
-              ],
-            ),
+                        }
+                        return MainActionButton(
+                          width: 0.86 * screenWidth,
+                          height: 0.07 * screenHeight,
+                          text: signUpText,
+                          blurRadius: 4,
+                          yAxisOffset: 4,
+                          shadowColor: AppColors.boxShadowColor1,
+                          fontSize: 17.09,
+                          onTap: onTap,
+                          child: child,
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      height: 0.015 * screenHeight,
+                      // height: 10,
+                    ),
+                    const OrText(),
+                    SizedBox(
+                      height: 0.015 * screenHeight,
+                      // height: 10,
+                    ),
+                    ContinueWithGoogleBotton(onTap: () {
+                      onContinueWithGoogleTap(context);
+                    }),
+                    SizedBox(
+                      height: 0.015 * screenHeight,
+                      //height: 10,
+                    ),
+                    GlobalTextButton(
+                        text1: alreadyRegistered,
+                        text2: loginText,
+                        onTap: onLoginTap),
+                    SizedBox(
+                      height: 0.015 * screenHeight,
+                      // height: 10,
+                    ),
+                  ],
+                ),
+              ))
+            ],
           ),
         ),
       ),

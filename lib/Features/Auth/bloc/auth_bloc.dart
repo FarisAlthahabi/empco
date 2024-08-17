@@ -94,7 +94,6 @@ class AuthBloc extends Bloc<AuthEvent, GeneralAuthState> {
       );
       try {
         final data = await authService.login(userLogin);
-       // print(data);
         emit(SuccessToLoginState(token: data));
        // userRepo.setUser(data);
         authenticationBloc.add(

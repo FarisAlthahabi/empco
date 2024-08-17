@@ -5,6 +5,7 @@ import 'package:empco/Core/repos/user_repo/user_repo.dart';
 import 'package:empco/Core/utils/logger.dart';
 import 'package:empco/Features/auth_manager/bloc/auth_manager_bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppInterceptor extends Interceptor {
   @override
@@ -12,16 +13,29 @@ class AppInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+     String? token = prefs.getString('auth_token');
+
+     if (token != null) {
+      options.headers['Authorization'] = 'Bearer $token';
+       }
+
     options.headers['Accept'] = 'application/json';
 
     final userRepo = config<UserRepo>();
-    if (userRepo.isSignedIn) {
+    //if (userRepo.isSignedIn) {
+
       //options.headers['Authorization'] = 'Bearer ${globalToken?.token}';
-      options.headers['Authorization'] = 'Bearer ${userRepo.user?.token}';
+
+     // options.headers['Authorization'] = 'Bearer ${userRepo.user?.token}';
+     
       // options.headers['authorization'] = '${userRepo.user?.token}';
-      print("molham");
       debugPrint('Bearer ${userRepo.user?.token}');
-    }
+
+      print('Token in interceptor: $token');
+
+   // }
 
     return handler.next(options);
   }

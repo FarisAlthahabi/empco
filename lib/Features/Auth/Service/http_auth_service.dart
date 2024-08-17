@@ -11,6 +11,7 @@ import 'package:empco/Features/Auth/Models/user_reset_password_model/User_Reset_
 import 'package:empco/Features/Auth/Models/user_verify_model/User_Verify_Model.dart';
 import 'package:empco/Features/Auth/Service/Auth_Service.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 @injectable
 class HttpAuthService extends BaseService implements AuthService {
@@ -75,6 +76,9 @@ class HttpAuthService extends BaseService implements AuthService {
 
       // await userRepo
       //     .setUser(TokenModel.fromJson(body['data'] as Map<String, dynamic>));
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+     prefs.setString('auth_token', body['data']['token']);
       
       return TokenModel.fromJson(body['data'] as Map<String, dynamic>);
     } catch (e) {

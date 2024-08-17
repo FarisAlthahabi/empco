@@ -12,11 +12,20 @@ class HttpApplicationsRepo implements ApplicationsRepo {
         '/api/${await userRepo.getKey(role)}/applications',
       );
 
-      final body = (response.data as Map<String, dynamic>)['data'] as List;
-      return List.generate(
-        body.length,
-        (index) => ApplicationModel.fromJson(body[index]),
-      );
+      final dynamic body =
+          (response.data as Map<String, dynamic>)['data'] as List;
+
+      // if (body == null) {
+      //   List<ApplicationModel> applications = [];
+      //   return  applications;
+      // } else {
+
+        return List.generate(
+          body.length,
+          (index) => ApplicationModel.fromJson(body[index]),
+        );
+        
+     // }
     } catch (e) {
       if (e is NotFoundException) {
         throw e.message ?? 'something_went_wrong';
@@ -33,7 +42,6 @@ class HttpApplicationsRepo implements ApplicationsRepo {
       );
       final body = response.data;
       return AnswerApplicationModel.fromJson(body);
-
     } catch (e) {
       if (e is NotFoundException) {
         throw e.message ?? 'something_went_wrong';
@@ -43,14 +51,13 @@ class HttpApplicationsRepo implements ApplicationsRepo {
   }
 
   @override
-  Future<AnswerApplicationModel> rejectApplication(int applicationId)async {
+  Future<AnswerApplicationModel> rejectApplication(int applicationId) async {
     try {
       final response = await _dioClient.get(
         '/api/owner/reject-application/$applicationId',
       );
       final body = response.data;
       return AnswerApplicationModel.fromJson(body);
-      
     } catch (e) {
       if (e is NotFoundException) {
         throw e.message ?? 'something_went_wrong';

@@ -27,8 +27,8 @@ Future<void> runAppWithReporting(
       await FirebaseMessaging.instance.setAutoInitEnabled(true);
       final fcmToken = await FirebaseMessaging.instance.getToken();
       print("FCMToken $fcmToken");
-      await userRepo.setKey(fcmTokenRepo, 'fcmToken');
 
+      await userRepo.setKey(fcmTokenRepo, 'fcmToken');
       await preLaunch();
 
       SystemChrome.setPreferredOrientations([
