@@ -71,6 +71,11 @@ class HttpAuthService extends BaseService implements AuthService {
       );
 
       final body = response.data as Map<String, dynamic>;
+      //globalToken = TokenModel.fromJson(body['data'] as Map<String, dynamic>);
+
+      // await userRepo
+      //     .setUser(TokenModel.fromJson(body['data'] as Map<String, dynamic>));
+      
       return TokenModel.fromJson(body['data'] as Map<String, dynamic>);
     } catch (e) {
       if (e is DioException) {

@@ -42,7 +42,6 @@ class _SelectRolePageState extends State<SelectRolePage>
   
   @override
   onRoleSelected(int index) async {
-    await userRepo.setKey(isFirstTime, false);
     authenticationBloc.add(IsAuthenticatedOrFirstTime());
     userRepo.setKey(role, userRole[index]);
     userRepo.setKey(isFirstTime, false);

@@ -34,7 +34,7 @@ class UserRepo {
 
   Map<String, dynamic> properties;
 
-  TokenModel? _user;
+  static TokenModel? _user;
 
   TokenModel? get user => _user;
 

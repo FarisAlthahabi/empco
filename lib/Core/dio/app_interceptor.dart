@@ -16,7 +16,10 @@ class AppInterceptor extends Interceptor {
 
     final userRepo = config<UserRepo>();
     if (userRepo.isSignedIn) {
+      //options.headers['Authorization'] = 'Bearer ${globalToken?.token}';
       options.headers['Authorization'] = 'Bearer ${userRepo.user?.token}';
+      // options.headers['authorization'] = '${userRepo.user?.token}';
+      print("molham");
       debugPrint('Bearer ${userRepo.user?.token}');
     }
 
