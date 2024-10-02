@@ -33,7 +33,7 @@ class GuestRequested extends AuthenticationEvent {}
 class VerifyRequested extends AuthenticationEvent {
   const VerifyRequested(this.userVerify,);
 
-  final UserVerifyModel userVerify;
+  final VerifyEmailModel userVerify;
 
 }
 

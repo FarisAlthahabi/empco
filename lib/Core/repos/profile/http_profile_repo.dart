@@ -13,6 +13,9 @@ class HttpProfileRepo implements ProfileRepo {
       );
 
       final body = (response.data as Map<String, dynamic>)['data'];
+      // if (body == null) {
+      //   throw 'Create a profile first';
+      // }
       return ProfileModel.fromJson(body);
     } catch (e) {
       if (e is NotFoundException) {
@@ -21,5 +24,4 @@ class HttpProfileRepo implements ProfileRepo {
       rethrow;
     }
   }
-
 }

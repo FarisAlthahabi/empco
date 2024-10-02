@@ -6,7 +6,7 @@ import 'package:empco/Core/Widgets/loading_indicator.dart';
 import 'package:empco/Core/Widgets/main_show_bottom_sheet.dart';
 import 'package:empco/Core/di/di.dart';
 import 'package:empco/Core/router/Router.dart';
-import 'package:empco/Features/Auth/bloc/auth_bloc.dart';
+import 'package:empco/Features/Auth/cubit/auth_cubit.dart';
 import 'package:empco/Features/Roles/Freelancer/Jobs/View/Widgets/widgets.dart';
 import 'package:empco/Features/Roles/Freelancer/Jobs/cubit/jobs_cubit.dart';
 import 'package:empco/Features/Roles/common_pages/empco_home_page/main_drawer.dart';
@@ -75,7 +75,7 @@ class JobsView extends StatelessWidget {
       create: (context) => config<JobsCubit>(),
     ),
     BlocProvider(
-      create: (context) => config<AuthBloc>(),
+      create: (context) => config<AuthCubit>(),
     ),
     ], child: const JobsPage(),);
   }

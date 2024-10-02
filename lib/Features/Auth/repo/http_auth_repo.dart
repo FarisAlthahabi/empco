@@ -1,24 +1,13 @@
-import 'package:dio/dio.dart';
-import 'package:empco/Core/dio/dio_client.dart';
-import 'package:empco/Core/models/token_model/token_model.dart';
-import 'package:empco/Core/repos/Base_Service.dart';
-import 'package:empco/Core/repos/user_repo/user_repo.dart';
-import 'package:empco/Features/Auth/Models/User_model/User_Model.dart';
-import 'package:empco/Features/Auth/Models/user_check_code_model.dart/User_Chaeck_Code_model.dart';
-import 'package:empco/Features/Auth/Models/user_forget_password_model/User_Forget_Password_model.dart';
-import 'package:empco/Features/Auth/Models/user_login_model/User_Login_Model.dart';
-import 'package:empco/Features/Auth/Models/user_reset_password_model/User_Reset_Password_model.dart';
-import 'package:empco/Features/Auth/Models/user_verify_model/User_Verify_Model.dart';
-import 'package:empco/Features/Auth/Service/Auth_Service.dart';
-import 'package:injectable/injectable.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+part of 'auth_repo.dart';
 
-@injectable
-class HttpAuthService extends BaseService implements AuthService {
+@Injectable(as: AuthRepo)
+class HttpAuthRepo implements AuthRepo {
   final DioClient _dioClient = DioClient();
 
+   final UserRepo userRepo = UserRepo();
+
   @override
-  Future<TokenModel> register(UserModel user) async {
+  Future<TokenModel> register(UserPostModel user) async {
     try {
       final response = await _dioClient.post(
           '/api/${await userRepo.getKey(role)}/register',
@@ -41,6 +30,9 @@ class HttpAuthService extends BaseService implements AuthService {
         '/auth/redirect/${await userRepo.getKey(role)}',
       );
       final body = response.data;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+     prefs.setString('auth_token', body['token']);
+
       return TokenModel.fromJson(body);
     } catch (e) {
       if (e is DioException) {
@@ -51,7 +43,7 @@ class HttpAuthService extends BaseService implements AuthService {
   }
 
   @override
-  Future<void> verify(UserVerifyModel userVerify) async {
+  Future<void> verify(VerifyEmailModel userVerify) async {
     try {
       await _dioClient.post('/api/${await userRepo.getKey(role)}/verify',
           data: userVerify.toJson());
@@ -64,19 +56,15 @@ class HttpAuthService extends BaseService implements AuthService {
   }
 
   @override
-  Future<TokenModel> login(UserLoginModel userLogin) async {
+  Future<TokenModel> login(SignInModel signInModel) async {
     try {
       final response = await _dioClient.post(
         '/api/${await userRepo.getKey(role)}/login',
-        data: userLogin.toJson(),
+        data: signInModel.toJson(),
       );
 
       final body = response.data as Map<String, dynamic>;
-      //globalToken = TokenModel.fromJson(body['data'] as Map<String, dynamic>);
-
-      // await userRepo
-      //     .setUser(TokenModel.fromJson(body['data'] as Map<String, dynamic>));
-
+      
       SharedPreferences prefs = await SharedPreferences.getInstance();
      prefs.setString('auth_token', body['data']['token']);
       
@@ -105,11 +93,13 @@ class HttpAuthService extends BaseService implements AuthService {
 
   @override
   Future<void> forgetPassword(
-      UserForgetPasswordModel userForgetPassword) async {
+      String forgetPasswordEmail) async {
     try {
       await _dioClient.post(
           '/api/${await userRepo.getKey(role)}/forgetpassword',
-          data: userForgetPassword.toJson());
+          data: {
+            "email" : forgetPasswordEmail
+          });
     } catch (e) {
       if (e is DioException) {
         throw e.message ?? e;
@@ -119,15 +109,14 @@ class HttpAuthService extends BaseService implements AuthService {
   }
 
   @override
-  Future<UserCheckCodeModel> checkCode(TokenModel token) async {
+  Future<void> checkCode(String token) async {
     try {
-      final response = await _dioClient.post(
+       await _dioClient.post(
         '/api/${await userRepo.getKey(role)}/check-code',
-        data: token.toJson(),
+        data: {
+          "token" : token,
+        },
       );
-
-      final body = response.data as Map<String, dynamic>;
-      return UserCheckCodeModel.fromJson(body);
     } catch (e) {
       if (e is DioException) {
         throw e.message ?? e;
@@ -137,11 +126,11 @@ class HttpAuthService extends BaseService implements AuthService {
   }
 
   @override
-  Future<void> resetPassword(UserResetPasswordModel userResetPassword) async {
+  Future<void> resetPassword(ResetPasswordModel resetPasswordModel) async {
     try {
       await _dioClient.post(
         '/api/${await userRepo.getKey(role)}/resetpassword',
-        data: userResetPassword.toJson(),
+        data: resetPasswordModel.toJson(),
       );
     } catch (e) {
       if (e is DioException) {

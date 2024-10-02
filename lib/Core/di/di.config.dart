@@ -29,8 +29,8 @@ import 'package:empco/Core/repos/following_repo/following_repo.dart' as _i526;
 import 'package:empco/Core/repos/licence/licence_repo.dart' as _i688;
 import 'package:empco/Core/repos/profile/profile_repo.dart' as _i1011;
 import 'package:empco/Core/repos/user_repo/user_repo.dart' as _i592;
-import 'package:empco/Features/Auth/bloc/auth_bloc.dart' as _i990;
-import 'package:empco/Features/Auth/Service/http_auth_service.dart' as _i12;
+import 'package:empco/Features/Auth/cubit/auth_cubit.dart' as _i657;
+import 'package:empco/Features/Auth/repo/auth_repo.dart' as _i788;
 import 'package:empco/Features/auth_manager/bloc/auth_manager_bloc.dart'
     as _i393;
 import 'package:empco/Features/Roles/Company/jop_post/cubit/job_post_cubit.dart'
@@ -42,9 +42,9 @@ import 'package:empco/Features/Roles/Freelancer/apply_job/cubit/apply_job_cubit.
 import 'package:empco/Features/Roles/Freelancer/apply_job/repo/apply_job_repo.dart'
     as _i611;
 import 'package:empco/Features/Roles/Freelancer/Job_details/cubit/job_details_cubit.dart'
-    as _i581;
+    as _i727;
 import 'package:empco/Features/Roles/Freelancer/Job_details/Service/job_details_service.dart'
-    as _i83;
+    as _i976;
 import 'package:empco/Features/Roles/Freelancer/Jobs/cubit/jobs_cubit.dart'
     as _i457;
 import 'package:empco/Features/Roles/Freelancer/Jobs/Service/jobs_service.dart'
@@ -75,8 +75,6 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.factory<_i827.LocalizationCubit>(() => _i827.LocalizationCubit());
-    gh.factory<_i990.AuthBloc>(() => _i990.AuthBloc());
-    gh.factory<_i12.HttpAuthService>(() => _i12.HttpAuthService());
     gh.singleton<_i401.DioClient>(() => _i401.DioClient());
     await gh.singletonAsync<_i980.LanguageChanger>(
       () {
@@ -94,10 +92,11 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i688.LicenceRepo>(() => _i688.HttpLicenceRepo());
     gh.factory<_i638.JobsService>(() => _i638.HttpJobService());
+    gh.factory<_i976.JobDetailsService>(() => _i976.HttpJobDetailsService());
     gh.factory<_i611.ApplyJobRepo>(() => _i611.HttpApplyJobRepo());
     gh.factory<_i725.LicenceCubit>(
         () => _i725.LicenceCubit(gh<_i688.LicenceRepo>()));
-    gh.factory<_i83.JobDetailsService>(() => _i83.HttpJobDetailsService());
+    gh.factory<_i788.AuthRepo>(() => _i788.HttpAuthRepo());
     gh.factory<_i448.ApplicationsRepo>(() => _i448.HttpApplicationsRepo());
     gh.factory<_i526.FollowingRepo>(() => _i526.HttpFollowingRepo());
     gh.factory<_i801.ApplyJobCubit>(
@@ -115,10 +114,14 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i393.AuthenticationBloc(gh<_i592.UserRepo>()));
     gh.factory<_i353.ApplicationsCubit>(
         () => _i353.ApplicationsCubit(gh<_i448.ApplicationsRepo>()));
-    gh.factory<_i581.JobDetailsCubit>(
-        () => _i581.JobDetailsCubit(gh<_i83.JobDetailsService>()));
+    gh.factory<_i727.JobDetailsCubit>(
+        () => _i727.JobDetailsCubit(gh<_i976.JobDetailsService>()));
     gh.factory<_i112.ProfileCubit>(
         () => _i112.ProfileCubit(gh<_i1011.ProfileRepo>()));
+    gh.factory<_i657.AuthCubit>(() => _i657.AuthCubit(
+          gh<_i788.AuthRepo>(),
+          gh<_i592.UserRepo>(),
+        ));
     gh.factory<_i653.ServiceCubit>(
         () => _i653.ServiceCubit(gh<_i635.ServiceRepo>()));
     gh.factory<_i752.FollowingCubit>(

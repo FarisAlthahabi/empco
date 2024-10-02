@@ -1,5 +1,5 @@
 import 'package:empco/Core/di/di.dart';
-import 'package:empco/Features/Auth/bloc/auth_bloc.dart';
+import 'package:empco/Features/Auth/cubit/auth_cubit.dart';
 import 'package:empco/Features/Roles/Freelancer/Jobs/cubit/jobs_cubit.dart';
 import 'package:empco/Features/Roles/common_pages/empco_home_page/empco_home_page.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +46,7 @@ class _FreelancerHomePageState extends State<FreelancerHomePage>
           create: (context) => config<JobsCubit>(),
         ),
         BlocProvider(
-          create: (context) => config<AuthBloc>(),
+          create: (context) => config<AuthCubit>(),
         )
       ],
       child: EmpcoHomePageView(

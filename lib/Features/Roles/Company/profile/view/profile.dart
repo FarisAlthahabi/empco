@@ -53,7 +53,7 @@ class _CompanyProfilePageState extends State<CompanyProfilePage>
   void onEditTap(ProfileModel profile) {
     context.go(
         extra: profile,
-        '$mainRoute/$loginRoute/$companyHomePageRoute/$companyProfileRoute/${editCompanyProfileRoute.replaceFirst(
+        '$mainRoute/$loginRoute/$companyHomePageRoute/${editCompanyProfileRoute.replaceFirst(
           ':title',
           'Edit Profile',
         )}');

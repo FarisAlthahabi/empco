@@ -5,10 +5,9 @@ import 'package:empco/Core/dio/app_interceptor.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-//const baseUrl = 'http://10.0.2.2:8000/';
-const baseUrl = 'http://192.168.252.198:8000/';
+const baseUrl = 'http://10.0.2.2:8000/';
+//const baseUrl = 'http://192.168.252.198:8000/';
 
 @singleton
 class DioClient {

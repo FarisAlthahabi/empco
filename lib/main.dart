@@ -19,12 +19,7 @@ class EmpcoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return
-        // MaterialApp(
-        //     theme: lightTheme,
-        //     debugShowCheckedModeBanner: false,
-        //     home: const CompanyNavigationBar());
-        MultiRepositoryProvider(
+    return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(
           create: (_) => config<UserRepo>(),

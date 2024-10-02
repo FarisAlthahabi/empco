@@ -75,6 +75,7 @@ dependencies:
   i18n_extension: ^12.0.1
   gettext_parser: ^0.2.0
   url_launcher: ^6.3.0
+  path: ^1.9.0
 
 dev_dependencies:
   flutter_test:
@@ -134,3 +135,14 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+scripts:
+  inspect: dart format . & flutter analyze
+
+  clean: flutter clean ; flutter packages get
+
+  build: dart run build_runner build --delete-conflicting-outputs
+
+  watch: dart run build_runner watch --delete-conflicting-outputs
+
+  splash: dart run flutter_native_splash:create

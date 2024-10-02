@@ -39,21 +39,21 @@ Map<String, dynamic> _$JobModelToJson(JobModel instance) => <String, dynamic>{
     };
 
 const _$JobTypeEnumEnumMap = {
-  JobTypeEnum.fullTime: 'Full-time',
-  JobTypeEnum.partTime: 'Part-time',
+  JobTypeEnum.fullTime: 'fullTime',
+  JobTypeEnum.partTime: 'partTime',
 };
 
 const _$JobCategoryEnumEnumMap = {
-  JobCategoryEnum.transportation: 1,
-  JobCategoryEnum.it: 2,
-  JobCategoryEnum.ai: 3,
-  JobCategoryEnum.marketing: 4,
-  JobCategoryEnum.education: 5,
-  JobCategoryEnum.healthcare: 6,
+  JobCategoryEnum.transportation: 'transportation',
+  JobCategoryEnum.it: 'it',
+  JobCategoryEnum.ai: 'ai',
+  JobCategoryEnum.marketing: 'marketing',
+  JobCategoryEnum.education: 'education',
+  JobCategoryEnum.healthcare: 'healthcare',
 };
 
 const _$WorkNatureEnumEnumMap = {
-  WorkNatureEnum.onSite: 'on-site',
-  WorkNatureEnum.remote: 'Remote',
-  WorkNatureEnum.hybrid: 'Hybrid',
+  WorkNatureEnum.onSite: 'onSite',
+  WorkNatureEnum.remote: 'remote',
+  WorkNatureEnum.hybrid: 'hybrid',
 };

@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:empco/Core/models/licence_status_model/licence_status_model.dart';
 import 'package:empco/Core/models/upload_licence_response_model/upload_licence_response_model.dart';
 import 'package:empco/Core/repos/licence/licence_repo.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 
@@ -33,7 +32,7 @@ class LicenceCubit extends Cubit<GeneralLicenceState> {
     }
   }
 
-  Future<void> uploadLicence(PlatformFile? file) async {
+  Future<void> uploadLicence(String file) async {
     emit(UploadLicenceLoading());
     try {
       final data = await _licenceRepo.uploadLicence(file);

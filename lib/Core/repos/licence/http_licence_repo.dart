@@ -11,14 +11,13 @@ class HttpLicenceRepo implements LicenceRepo {
       final response = await _dioClient.get(
         '/api/${await userRepo.getKey(role)}/check-license',
       );
-      if(await userRepo.getKey(role) == 'owner'){
+      if (await userRepo.getKey(role) == 'owner') {
         final body = (response.data as Map<String, dynamic>)['data'] as List;
-      return LicenceStatusModel.fromJson(body[0]);
-      }else{
+        return LicenceStatusModel.fromJson(body[0]);
+      } else {
         final body = (response.data as Map<String, dynamic>)['data'];
-      return LicenceStatusModel.fromJson(body);
+        return LicenceStatusModel.fromJson(body);
       }
-      
     } catch (e) {
       if (e is NotFoundException) {
         throw e.message ?? 'something_went_wrong';
@@ -28,11 +27,18 @@ class HttpLicenceRepo implements LicenceRepo {
   }
 
   @override
-  Future<UploadLicenceResponseModel> uploadLicence(PlatformFile? file) async {
+  Future<UploadLicenceResponseModel> uploadLicence(String file) async {
     try {
+      final path = MultipartFile.fromFileSync(
+        file,
+        filename: basename(file),
+      );
+      final map = {"license_file": path};
+
       final response = await _dioClient.post(
-          '/api/${await userRepo.getKey(role)}/upload-license',
-          data: file);
+        '/api/${await userRepo.getKey(role)}/upload-license',
+        data: FormData.fromMap(map),
+      );
 
       final body = response.data as Map<String, dynamic>;
 

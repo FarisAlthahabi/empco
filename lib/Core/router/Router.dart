@@ -34,7 +34,7 @@ const introRoute = '/Intro';
 const loginRoute = '/Login';
 const selectRoleRoute = '/SelectRole';
 const signUpRoute = '/SignUp';
-const verifyRoute = 'Verify/:email';
+const verifyRoute = '/Verify';
 const forgetPasswordRoute = 'ForgetPassword';
 const freelancerHomePageRoute = 'freelancerHomePage';
 const companyHomePageRoute = 'companyHomePage';
@@ -74,15 +74,10 @@ GoRouter router = GoRouter(
     GoRoute(
       path: signUpRoute,
       builder: (context, state) => const RegisterView(),
-      routes: [
-        GoRoute(
-          path: verifyRoute,
-          name: 'VerifyPage',
-          builder: (context, state) => VerifyEamilView(
-            email: state.pathParameters['email']!,
-          ),
-        ),
-      ],
+    ),
+    GoRoute(
+      path: verifyRoute,
+      builder: (context, state) => const VerifyEamilView(),
     ),
     GoRoute(
       path: loginRoute,
@@ -166,18 +161,17 @@ GoRouter router = GoRouter(
             GoRoute(
               path: companyProfileRoute,
               builder: (context, state) => const CompanyProfileView(),
-              routes: [
-                GoRoute(
-                    path: editCompanyProfileRoute,
-                    name: 'editCompanyProfileRouteNamed',
-                    builder: (context, state) {
-                      ProfileModel? profileModel = state.extra as ProfileModel?;
-                      return EditProfileView(
-                        profileModel: profileModel,
-                        title: state.pathParameters['title'] ?? 'profile',
-                      );
-                    }),
-              ],
+            ),
+            GoRoute(
+              path: editCompanyProfileRoute,
+              name: 'editCompanyProfileRouteNamed',
+              builder: (context, state) {
+                ProfileModel? profileModel = state.extra as ProfileModel?;
+                return EditProfileView(
+                  profileModel: profileModel,
+                  title: state.pathParameters['title'] ?? 'profile',
+                );
+              },
             ),
             GoRoute(
               path: jobAppViewRoute,

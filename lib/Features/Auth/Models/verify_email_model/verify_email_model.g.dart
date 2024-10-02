@@ -1,18 +1,18 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'User_Verify_Model.dart';
+part of 'verify_email_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-UserVerifyModel _$UserVerifyModelFromJson(Map<String, dynamic> json) =>
-    UserVerifyModel(
-      email: json['email'] as String,
-      token: json['token'] as String,
+VerifyEmailModel _$VerifyEmailModelFromJson(Map<String, dynamic> json) =>
+    VerifyEmailModel(
+      email: json['email'] as String?,
+      token: json['token'] as String?,
     );
 
-Map<String, dynamic> _$UserVerifyModelToJson(UserVerifyModel instance) =>
+Map<String, dynamic> _$VerifyEmailModelToJson(VerifyEmailModel instance) =>
     <String, dynamic>{
       'email': instance.email,
       'token': instance.token,

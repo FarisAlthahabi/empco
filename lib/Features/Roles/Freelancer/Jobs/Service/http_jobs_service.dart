@@ -32,7 +32,7 @@ class HttpJobService implements JobsService {
     try {
       String endpoint = 'show-job-category';
       if (await userRepo.getKey(role) == 'owner') {
-        endpoint = 'show-jobs';
+        endpoint = 'show-jobs-by-category';
       }
       final response = await _dioClient.get(
         '/api/${await userRepo.getKey(role)}/$endpoint/${categoryId + 1}',

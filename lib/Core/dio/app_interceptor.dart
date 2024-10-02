@@ -1,10 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:empco/Core/di/di.dart';
 import 'package:empco/Core/dio/exceptions.dart';
-import 'package:empco/Core/repos/user_repo/user_repo.dart';
 import 'package:empco/Core/utils/logger.dart';
 import 'package:empco/Features/auth_manager/bloc/auth_manager_bloc.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppInterceptor extends Interceptor {
@@ -13,29 +12,19 @@ class AppInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-
     SharedPreferences prefs = await SharedPreferences.getInstance();
-     String? token = prefs.getString('auth_token');
-
-     if (token != null) {
+    String? token = prefs.getString('auth_token');
+    if (token != null) {
       options.headers['Authorization'] = 'Bearer $token';
-       }
-
+       debugPrint('Bearer $token');
+    }
     options.headers['Accept'] = 'application/json';
 
-    final userRepo = config<UserRepo>();
-    //if (userRepo.isSignedIn) {
-
-      //options.headers['Authorization'] = 'Bearer ${globalToken?.token}';
-
-     // options.headers['Authorization'] = 'Bearer ${userRepo.user?.token}';
-     
-      // options.headers['authorization'] = '${userRepo.user?.token}';
-      debugPrint('Bearer ${userRepo.user?.token}');
-
-      print('Token in interceptor: $token');
-
-   // }
+    //final userRepo = config<UserRepo>();
+    // if (userRepo.user?.token != null) {
+    //   options.headers['Authorization'] = 'Bearer ${userRepo.user?.token}';
+    //   debugPrint('Bearer ${userRepo.user?.token}');
+    // }
 
     return handler.next(options);
   }

@@ -3,7 +3,7 @@ import 'package:empco/Core/Resources/Constants/font_weights.dart';
 import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:empco/Core/Widgets/show_snack_bar_method.dart';
 import 'package:empco/Core/router/Router.dart';
-import 'package:empco/Features/Auth/bloc/auth_bloc.dart';
+import 'package:empco/Features/Auth/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -99,16 +99,16 @@ class MainDrawer extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: BlocConsumer<AuthBloc, GeneralAuthState>(
+                leading: BlocConsumer<AuthCubit, GeneralAuthState>(
                   listener: (context, state) {
-                    if (state is SuccessToLogoutState) {
+                    if (state is SignOutSuccessState) {
                       showSnackBarMethod(
                         context,
                         'Logout out Successfully',
                         AppColors.green,
                       );
                       context.go('$mainRoute/$loginRoute');
-                    } else if (state is FailedToLogoutState) {
+                    } else if (state is SignOutFailState) {
                       showSnackBarMethod(
                         context,
                         state.error,
@@ -117,7 +117,7 @@ class MainDrawer extends StatelessWidget {
                     }
                   },
                   builder: (context, state) {
-                    if (state is LoadingState) {
+                    if (state is SignOutLoadingState) {
                       return const SizedBox(
                         width: 20,
                         height: 20,

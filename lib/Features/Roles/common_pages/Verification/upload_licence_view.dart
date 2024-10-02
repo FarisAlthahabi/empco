@@ -61,11 +61,12 @@ class _UploadLicencePageState extends State<UploadLicencePage>
   @override
   Future<void> onUploadTap() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
-    if (result != null) {
-      file = result.files.first;
+    final path = result?.files.single.path;
+    if (path != null) {
+      // file = result.files.first;
       //file == null ? false : OpenAppFile.open(file!.path.toString());
-     // print(file!.path.toString());
-      licenceCubit.uploadLicence(file);
+      // print(file!.path.toString());
+      licenceCubit.uploadLicence(path);
     }
   }
 

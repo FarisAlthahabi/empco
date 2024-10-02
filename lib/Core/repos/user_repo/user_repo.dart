@@ -38,6 +38,10 @@ class UserRepo {
 
   TokenModel? get user => _user;
 
+  String? _fcmToken;
+
+  String? get fcmToken => _fcmToken;
+
   @PostConstruct(preResolve: true)
   Future<void> init() async {
     await _checkIfFirstRunForIOS();

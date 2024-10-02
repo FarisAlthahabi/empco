@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:empco/Core/bloc/Bloc_Observer.dart';
 import 'package:empco/Core/repos/user_repo/user_repo.dart';
-import 'package:empco/Features/Auth/Models/user_login_model/User_Login_Model.dart';
-import 'package:empco/Features/Auth/Service/http_auth_service.dart';
 import 'package:empco/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -25,8 +23,8 @@ Future<void> runAppWithReporting(
       );
 
       await FirebaseMessaging.instance.setAutoInitEnabled(true);
-      final fcmToken = await FirebaseMessaging.instance.getToken();
-      print("FCMToken $fcmToken");
+      //final fcmToken = await FirebaseMessaging.instance.getToken();
+      //print("FCMToken $fcmToken");
 
       await userRepo.setKey(fcmTokenRepo, 'fcmToken');
       await preLaunch();

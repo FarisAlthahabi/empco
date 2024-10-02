@@ -434,7 +434,7 @@ class _EditProfilePageState extends State<EditProfilePage>
                     padding:
                         const EdgeInsets.only(left: 185, top: 180, right: 150),
                     child: InkWell(
-                      onTap: onCancel,
+                      onTap: onEditImage,
                       child: Row(
                         children: [
                           SvgPicture.asset(
@@ -465,6 +465,7 @@ class _EditProfilePageState extends State<EditProfilePage>
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     MainActionButton(
+                      onTap: onCancel,
                       textColor: AppColors.black,
                       text: 'Cancel',
                       buttonColor: const Color(0xffEFF2F5),

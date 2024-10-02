@@ -20,7 +20,7 @@ import 'package:empco/Core/extensions/date_time_x.dart';
 import 'package:empco/Core/models/licence_status_model/licence_status_model.dart';
 import 'package:empco/Core/repos/user_repo/user_repo.dart';
 import 'package:empco/Core/router/Router.dart';
-import 'package:empco/Features/Auth/bloc/auth_bloc.dart';
+import 'package:empco/Features/Auth/cubit/auth_cubit.dart';
 import 'package:empco/Features/Roles/Company/jop_post/models/job_category_enum/job_category_enum.dart';
 import 'package:empco/Features/Roles/Freelancer/Jobs/Model/job_model/job_model.dart';
 import 'package:empco/Features/Roles/Freelancer/Jobs/cubit/jobs_cubit.dart';
@@ -150,7 +150,7 @@ class EmpcoHomePage extends StatefulWidget {
 
 class _EmpcoHomePageState extends State<EmpcoHomePage>
     implements EmpcoHomePageCallBacks {
-  late final AuthBloc authBloc = context.read();
+  late final AuthCubit authCubit = context.read();
 
   late final JobsCubit jobsCubit = context.read();
 
@@ -314,6 +314,9 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
     final licenceStatusModel = widget.licenceStatusModel;
 
     print(licenceStatusModel);
+    print('hello , is uploaded?');
+    print(await userRepo.getKey(isLicenceUploaded));
+    print('hello');
 
     if (await userRepo.getKey(isLicenceUploaded, defaultValue: false) == true &&
         licenceStatusModel != null) {
@@ -360,7 +363,7 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
 
   @override
   void onLogoutTap() {
-    authBloc.add(LogoutEvent());
+    authCubit.signOut();
   }
 
   @override
@@ -376,7 +379,7 @@ class _EmpcoHomePageState extends State<EmpcoHomePage>
         context.go('$loginRoute/$companyHomePageRoute/$companyProfileRoute');
       } else {
         context.go(
-            '$mainRoute/$loginRoute/$companyHomePageRoute/$companyProfileRoute/${editCompanyProfileRoute.replaceFirst(
+            '$mainRoute/$loginRoute/$companyHomePageRoute/${editCompanyProfileRoute.replaceFirst(
           ':title',
           'create Profile',
         )}');
