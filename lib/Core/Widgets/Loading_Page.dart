@@ -8,10 +8,9 @@ class LoadingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return const SafeArea(
       child: Scaffold(
-        appBar: AppBar(),
-        body: const Center(
+        body: Center(
           child: CircularProgressIndicator(),
         ),
       ),

@@ -1,6 +1,6 @@
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:empco/Core/Resources/Constants/Colors.dart';
 import 'package:empco/Core/Resources/Constants/Font_Weights.dart';
 import 'package:empco/Core/Resources/Constants/assets.dart';
 import 'package:empco/Features/Auth/View/Register/widgets/Texts.dart';
@@ -24,14 +24,15 @@ class GlobalTextButton extends StatelessWidget {
       child: Text.rich(
         textAlign: TextAlign.center,
         TextSpan(
-            style:
-                TextStyle(color: blue, fontSize: 12, fontWeight: weightlevel8),
+            style: const TextStyle(
+                color: AppColors.blue, fontSize: 12, fontWeight: weightlevel8),
             text: text1,
             children: [
               if (text2 != null)
                 TextSpan(
                     text: text2,
-                    style: const TextStyle(color: bottomAuthPageTextColor2)),
+                    style: const TextStyle(
+                        color: AppColors.bottomAuthPageTextColor2)),
             ]),
       ),
     );
@@ -80,7 +81,7 @@ class MainActionButton extends StatelessWidget {
   final double? yAxisOffset;
   final Color? shadowColor;
   final double? fontSize;
-  final Widget? icon;
+  final String? icon;
   final Color? buttonColor;
   final Border? border;
   final Color? textColor;
@@ -88,9 +89,13 @@ class MainActionButton extends StatelessWidget {
   final double? borderRadius;
   final TextStyle? textStyle;
   final List<BoxShadow>? shadow;
+  final Widget? child;
+  final double? padding;
+  final double? iconHeight;
+  final double? iconWidth;
 
   const MainActionButton({
-    super.key,
+  super.key,
     required this.text,
     this.fontSize,
     this.border,
@@ -105,49 +110,79 @@ class MainActionButton extends StatelessWidget {
     this.shadowColor,
     this.borderRadius,
     this.textStyle,
-    this.shadow, 
+    this.shadow,
+    this.child,
+    this.padding,
+    this.iconHeight,
+    this.iconWidth,
   });
 
   @override
   Widget build(BuildContext context) {
+    final icon = this.icon;
     return InkWell(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(5),
+        padding: EdgeInsets.all(padding ?? 5),
         width: width,
         height: height,
         decoration: BoxDecoration(
-            color: buttonColor ?? blue,
-            borderRadius: BorderRadius.circular(borderRadius ?? 327.16),
-            boxShadow: shadow ??
-                [
-                  BoxShadow(
-                      offset: Offset(0, yAxisOffset ?? 0),
-                      spreadRadius: 0,
-                      blurRadius: blurRadius ?? 0,
-                      color: shadowColor ?? white)
-                ]),
-        child: Center(
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(
-                text,
-                style: textStyle ??
-                    GoogleFonts.poppins(
-                      textStyle: TextStyle(
-                          color: textColor ?? white,
-                          fontSize: fontSize,
-                          fontWeight: weightlevel7),
-                    ),
-                textAlign: TextAlign.center,
-              ),
-              if (icon != null) icon!
-            ],
-          ),
+          color: buttonColor ?? AppColors.blue,
+          borderRadius: BorderRadius.circular(borderRadius ?? 327.16),
+          boxShadow: shadow ??
+              [
+                BoxShadow(
+                  offset: Offset(0, yAxisOffset ?? 0),
+                  spreadRadius: 0,
+                  blurRadius: blurRadius ?? 0,
+                  color: shadowColor ?? AppColors.white,
+                ),
+              ],
         ),
+        child: child ??
+            Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [ 
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  if (icon != null)
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SvgPicture.asset(
+                          icon,
+                          height: iconHeight,
+                          width: iconWidth,
+                          // ignore: deprecated_member_use
+                          color: textColor,
+                        ),
+                      ],
+                    ),
+                  Center(
+                    child: Text(
+                      text,
+                      style: textStyle ??
+                          GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                              color: textColor ?? AppColors.white,
+                              fontSize: fontSize,
+                              fontWeight: weightlevel7,
+                            ),
+                          ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  if (icon != null)
+                  const SizedBox(width: 8,)
+                ],
+              ),
+            ),
       ),
     );
   }
@@ -175,8 +210,8 @@ class BackTextButton extends StatelessWidget {
               onTap: onTap,
               child: Text(
                 text,
-                style: TextStyle(
-                    color: const Color.fromRGBO(75, 72, 72, 1),
+                style: const TextStyle(
+                    color: Color.fromRGBO(75, 72, 72, 1),
                     fontSize: 12,
                     fontWeight: weightlevel7),
                 textAlign: TextAlign.center,

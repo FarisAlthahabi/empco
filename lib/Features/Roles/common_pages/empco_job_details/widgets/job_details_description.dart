@@ -1,6 +1,6 @@
-import 'package:empco/Core/Resources/Constants/colors.dart';
 import 'package:empco/Core/Resources/Constants/font_weights.dart';
-import 'package:empco/Features/Roles/common_pages/empco_job_details/widgets/texts.dart';
+import 'package:empco/Core/Theme/components/colors.dart';
+import 'package:empco/Features/Roles/Freelancer/Jobs/Model/job_model/job_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -10,9 +10,11 @@ class JobDetailsDescription extends StatelessWidget {
   const JobDetailsDescription({
     super.key,
     required this.screenWidth,
+    required this.job,
   });
 
   final double screenWidth;
+  final JobModel job;
 
   @override
   Widget build(BuildContext context) {
@@ -28,39 +30,49 @@ class JobDetailsDescription extends StatelessWidget {
             child: Text(
               'Description',
               style: GoogleFonts.poppins(
-                textStyle: TextStyle(
-                    color: black, fontSize: 12.35, fontWeight: weightlevel7),
+                textStyle: const TextStyle(
+                  color: AppColors.black,
+                  fontSize: 12.35,
+                  fontWeight: weightlevel7,
+                ),
               ),
               textAlign: TextAlign.center,
             ),
           ),
         ),
         const SizedBox(
+          height: 15,
+        ),
+        Text(
+          job.body,
+          style: const TextStyle(fontWeight: weightlevel4),
+        ),
+        const SizedBox(
           height: 10,
         ),
-        Padding(
-          padding: const EdgeInsets.only(right: 25),
-          child: SizedBox(
-           // height: 200,
-            child: ListView.separated(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true ,
-              separatorBuilder: (context, index) {
-                return const SizedBox(
-                  height: 5,
-                );
-              },
-              itemCount: jobDetails.length,
-              itemBuilder: (context, index) {
-                return JobDescriptionText(
-                  text: jobDetails[index],
-                  fontWeight:
-                      index == 2 || index == 6 ? weightlevel7 : weightlevel4,
-                );
-              },
-            ),
-          ),
+        const Text(
+          'Skills Required:',
+          style: TextStyle(fontWeight: weightlevel7),
         ),
+        const SizedBox(
+          height: 6,
+        ),
+        Text(
+          job.requiredSkills,
+          style: const TextStyle(fontWeight: weightlevel4),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        const Text(
+          'Responsibilities:',
+          style: TextStyle(fontWeight: weightlevel7),
+        ),
+        const SizedBox(
+          height: 6,
+        ),
+        const Text(
+            'Responsibilities'),
         const SizedBox(
           height: 10,
         ),
@@ -68,15 +80,3 @@ class JobDetailsDescription extends StatelessWidget {
     );
   }
 }
-
-List<String> jobDetails = [
-  '1 . We,re seeking a passionate UI/UX Designer to help shape the user experience of our products, leveraging cutting-edge design principles and technologies.',
-  '2 . Be at the forefront of innovation as a UI/UX Designer at our company, collaborating with cross-functional teams to translate user needs into engaging and impactful design solutions.',
-  'Skills Required:',
-  '. Bachelor,s or Master,s degree in Human-Computer Interaction, Psychology, Design, or a related field.',
-  '. 2-3 years of of experience in User experience, User interface design',
-  '. Excellent communication skills, including the ability to present research findings to diverse stakeholders.',
-  'Responsibilities:',
-  '. Conduct in-depth digital user research to gather insights that inform product design and development decisions.',
-  '. Utilize a variety of research methods, including usability testing, interviews, surveys, and analytics, to understand user behavior and preferences.'
-];

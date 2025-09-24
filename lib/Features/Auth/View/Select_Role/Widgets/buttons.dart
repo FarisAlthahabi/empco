@@ -1,6 +1,6 @@
 import 'package:empco/Core/Resources/Constants/shadows.dart';
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:empco/Core/Resources/Constants/Colors.dart';
 import 'package:empco/Core/Resources/Constants/font_weights.dart';
 import 'package:empco/Core/Resources/Constants/Texts.dart';
 
@@ -23,9 +23,9 @@ class SelectRoleButton extends StatelessWidget {
         // width: 323.21,
         height: 49.13,
         decoration: BoxDecoration(
-            color: white,
+            color: AppColors.white,
             border: Border.all(
-              color: roleColors[index],
+              color: AppColors.roleColors[index],
               width: 1.3,
             ),
             borderRadius: BorderRadius.circular(303.3),
@@ -33,8 +33,8 @@ class SelectRoleButton extends StatelessWidget {
         child: Center(
           child: Text(
             roleSelected[index],
-            style: TextStyle(
-                color: black, fontSize: 19.73, fontWeight: weightlevel7),
+            style: const TextStyle(
+                color: AppColors.black, fontSize: 19.73, fontWeight: weightlevel7),
             textAlign: TextAlign.center,
           ),
         ),

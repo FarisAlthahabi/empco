@@ -1,0 +1,170 @@
+import 'package:empco/Core/Resources/Constants/assets.dart';
+import 'package:empco/Core/Theme/components/colors.dart';
+import 'package:empco/Core/Widgets/buttons.dart';
+
+import 'package:empco/Core/Widgets/empco_app_bar.dart';
+import 'package:empco/Features/Roles/Company/is_empty_view.dart';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+class FreelanceProjectsView extends StatelessWidget {
+  const FreelanceProjectsView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const FreelanceProjectsPage();
+  }
+}
+
+class FreelanceProjectsPage extends StatefulWidget {
+  const FreelanceProjectsPage({super.key});
+
+  @override
+  State<FreelanceProjectsPage> createState() => _FreelanceProjectsPageState();
+}
+
+class _FreelanceProjectsPageState extends State<FreelanceProjectsPage> {
+  List<String> list = ["Ui Ux Designer", " Ux Designer", "Ui Ux Designer"];
+
+  List<String> listicon = [ordredIcon, completedIcon, processingIcon];
+
+  List<String> listTitle = ["ordred", "completed", "InProgress"];
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+        child: Scaffold(
+            appBar: const EmpcoAppBar(
+              automaticallyImplyLeading: true,
+              title: Text(
+                'Freelance Projects',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: Color(0xff1D5BA4)),
+              ),
+            ),
+            body: list.isNotEmpty
+                ? ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: 3,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: const Color(0xff3F5772), width: 4),
+                              borderRadius: BorderRadius.circular(15),
+                              color: const Color(0xffF8F8F8)),
+                          width: 200,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 12.0, left: 17, bottom: 10),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          laptopIcon,
+                                          width: 20,
+                                        ),
+                                        const SizedBox(
+                                          width: 12.5,
+                                        ),
+                                        Text(
+                                          list[index],
+                                          style: GoogleFonts.poppins(
+                                            textStyle: const TextStyle(
+                                                color: Color(0xff3F5772),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 17),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 12,
+                                    ),
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          personServiceIcon,
+                                          width: 20,
+                                          // ignore: deprecated_member_use
+                                          color: const Color(0xffDD5A5A),
+                                        ),
+                                        const SizedBox(
+                                          width: 15.5,
+                                        ),
+                                        Text(
+                                          'name person',
+                                          style: GoogleFonts.poppins(
+                                            textStyle: const TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                color: AppColors.black,
+                                                fontSize: 12),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 9,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 50,
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.only(right: 16),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 13),
+                                      child: MainActionButton(
+                                        icon: inProgressIcon,
+                                        textColor: AppColors.white,
+                                        buttonColor: Color(0xffFF8A00),
+                                        height: 25.02,
+                                        text: 'In progress',
+                                        blurRadius: 1.36,
+                                        yAxisOffset: 1.36,
+                                        shadowColor: AppColors.boxShadowColor2,
+                                        fontSize: 9.81,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 10),
+                                      child: MainActionButton(
+                                        icon: completedIcon,
+                                        textColor: AppColors.white,
+                                        buttonColor: Color(0xff36B194),
+                                        height: 25.02,
+                                        text: 'Completed',
+                                        blurRadius: 1.36,
+                                        yAxisOffset: 1.36,
+                                        shadowColor: AppColors.boxShadowColor2,
+                                        fontSize: 9.81,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    })
+                : const EmptyView(
+                    textt: 'You haven’t applied to any job yet!')));
+  }
+}

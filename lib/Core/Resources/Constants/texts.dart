@@ -90,13 +90,8 @@ const List<String> jobDetailsTitle = [
   'Type',
   'Deadline:'
 ];
-const List<String> jobDetailsData = [
-  'Damascus,Syria',
-  'On-Site',
-  '2000,000 SP',
-  'Full Time',
-  '3/7/2024'
-];
+List<String> serviceDetailsTitle = ['Cost', 'Esitmated time'];
+List<String> serviceDetailsData = ['100,000', '2 days'];
 
 const filterText = 'Filters';
 const typeText = 'Type';
@@ -113,5 +108,6 @@ const minimumSalaryExampleText = '20,000';
 const cancelText = 'Cancel';
 const applyFiltersText = 'Apply Filters';
 
-
-
+//! profile view
+const String profile = 'profile';
+const String editprofile = 'edit profile';

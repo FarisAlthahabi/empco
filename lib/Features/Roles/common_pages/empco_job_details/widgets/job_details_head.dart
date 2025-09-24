@@ -1,4 +1,5 @@
-import 'package:empco/Core/Resources/Constants/Colors.dart';
+import 'package:empco/Core/Theme/components/colors.dart';
+import 'package:empco/Features/Roles/Freelancer/Jobs/Model/job_model/job_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -8,20 +9,26 @@ class JobDetailsHead extends StatelessWidget {
     this.onAddToFavoriteTap,
     this.onEdit,
     this.onDelete,
+    required this.job,
   });
 
   final VoidCallback? onAddToFavoriteTap;
-  final VoidCallback? onEdit;
-  final VoidCallback? onDelete;
+  final ValueSetter<JobModel>? onEdit;
+  final ValueSetter<int>? onDelete;
+  final JobModel job;
 
   @override
   Widget build(BuildContext context) {
+    final onAddToFavoriteTap = this.onAddToFavoriteTap;
+    final onEdit = this.onEdit;
+    final onDelete = this.onDelete;
+
     return ListTile(
         leading: const SizedBox(
           width: 45,
         ),
         title: Text(
-          'Ui Ux Designer',
+          job.title,
           style: GoogleFonts.poppins(
             textStyle: const TextStyle(
                 color: Color.fromRGBO(29, 91, 164, 1),
@@ -33,24 +40,29 @@ class JobDetailsHead extends StatelessWidget {
         trailing: onAddToFavoriteTap != null
             ? InkWell(
                 onTap: onAddToFavoriteTap,
-                child: Icon(
+                child: const Icon(
                   Icons.bookmark_outline,
                   size: 40,
-                  color: black,
-                ))
+                  color: AppColors.black,
+                ),
+              )
             : SizedBox(
-              width: 50,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                      onTap: onEdit,
-                      child: const Icon(Icons.edit_outlined)),
-                  InkWell(
-                      onTap: onDelete,
-                      child: const Icon(Icons.delete_outline_outlined)),
-                ],
-              ),
-            ));
+                width: 50,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    if (onEdit != null)
+                      InkWell(
+                        onTap: () => onEdit(job),
+                        child: const Icon(Icons.edit_outlined),
+                      ),
+                    if (onDelete != null)
+                      InkWell(
+                        onTap: () => onDelete(job.id),
+                        child: const Icon(Icons.delete_outline_outlined),
+                      ),
+                  ],
+                ),
+              ));
   }
 }

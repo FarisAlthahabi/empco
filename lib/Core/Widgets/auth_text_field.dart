@@ -1,5 +1,5 @@
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:empco/Core/Resources/Constants/Colors.dart';
 import 'package:empco/Core/Resources/Constants/font_weights.dart';
 
 
@@ -38,8 +38,8 @@ class _AuthTextFieldState extends State<AuthTextField> {
       children: [
         Text(
           widget.title,
-          style: TextStyle(
-              color: textFieldTitleColor,
+          style: const TextStyle(
+              color: AppColors.textFieldTitleColor,
               fontSize: 11.06,
               fontWeight: weightlevel7),
           textAlign: TextAlign.center,
@@ -47,8 +47,8 @@ class _AuthTextFieldState extends State<AuthTextField> {
         Center(
           child: Container(
             height: 39,
-            decoration: BoxDecoration(
-              color: textFieldBackgroundColor,
+            decoration: const BoxDecoration(
+              color: AppColors.textFieldBackgroundColor,
             ),
             child: TextField(
               focusNode: widget.focusNode,
@@ -58,7 +58,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
               decoration: InputDecoration(
                 border: InputBorder.none,
                 prefixIcon: widget.prefixIcon,
-                prefixIconColor: iconColor,
+                prefixIconColor: AppColors.iconColor,
                 suffixIcon: widget.isPassword
                     ? IconButton(
                         onPressed: () {
@@ -75,7 +75,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
                           ),
                       )
                     : widget.suffixIcon,
-                suffixIconColor: iconColor,
+                suffixIconColor: AppColors.iconColor,
               ),
             ),
           ),

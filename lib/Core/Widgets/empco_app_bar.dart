@@ -23,6 +23,8 @@ class EmpcoAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      elevation: 3,
+      shadowColor: Colors.black,
       toolbarHeight: kToolbarHeight,
       title: title,
       automaticallyImplyLeading: automaticallyImplyLeading,

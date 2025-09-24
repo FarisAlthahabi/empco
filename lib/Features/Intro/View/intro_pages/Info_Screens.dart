@@ -1,9 +1,10 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:empco/Core/Config/router/Router.dart';
-import 'package:empco/Core/Resources/Constants/colors.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:empco/Core/Resources/Constants/Texts.dart';
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:empco/Core/Widgets/Buttons.dart';
+import 'package:empco/Core/router/Router.dart';
 import 'package:empco/Features/Intro/View/widgets/Assets.dart';
 import 'package:empco/Features/Intro/View/widgets/Circles_For_Current_Page.dart';
 import 'package:empco/Features/Intro/View/widgets/Texts.dart';
@@ -13,7 +14,17 @@ import 'package:go_router/go_router.dart';
 abstract class InfoViewCallBacks {
   onGetStartedTap(BuildContext context);
 
-  onSignUpTap(BuildContext context);
+  onGoSignInTap(BuildContext context);
+}
+
+@RoutePage()
+class IntroView extends StatelessWidget {
+  const IntroView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const InfoScreens();
+  }
 }
 
 class InfoScreens extends StatelessWidget implements InfoViewCallBacks {
@@ -21,12 +32,12 @@ class InfoScreens extends StatelessWidget implements InfoViewCallBacks {
 
   @override
   onGetStartedTap(BuildContext context) {
-    context.go('$mainRoute$introRoute/$selectRoleRoute');
+    context.go('$mainRoute/$selectRoleRoute');
   }
 
   @override
-  onSignUpTap(BuildContext context) {
-    context.go('$mainRoute$introRoute/$loginRoute');
+  onGoSignInTap(BuildContext context) {
+    context.go('$mainRoute/$loginRoute');
   }
 
   @override
@@ -68,7 +79,7 @@ class InfoScreens extends StatelessWidget implements InfoViewCallBacks {
                   height: 0.08 * screenHeight,
                   yAxisOffset: 4,
                   blurRadius: 4,
-                  shadowColor: boxShadowColor1,
+                  shadowColor: AppColors.boxShadowColor1,
                   text: start,
                   fontSize: 17.09,
                   onTap: () {
@@ -80,7 +91,7 @@ class InfoScreens extends StatelessWidget implements InfoViewCallBacks {
                 ),
                 GlobalTextButton(
                   onTap: () {
-                    onSignUpTap(context);
+                    onGoSignInTap(context);
                   },
                   text1: haveAccount,
                   text2: loginText,

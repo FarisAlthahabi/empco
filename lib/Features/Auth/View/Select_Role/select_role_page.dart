@@ -1,28 +1,51 @@
-import 'package:empco/Core/Config/router/Router.dart';
-import 'package:empco/Core/Config/Shared_Preferences.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:empco/Core/router/Router.dart';
 import 'package:empco/Core/Resources/Constants/Texts.dart';
 import 'package:empco/Core/Resources/Constants/assets.dart';
 import 'package:empco/Core/Widgets/empcoIcon_and_empcoText.dart';
 import 'package:empco/Core/Widgets/text_widgets.dart';
+import 'package:empco/Core/repos/user_repo/user_repo.dart';
 import 'package:empco/Features/Auth/View/Select_Role/Widgets/buttons.dart';
 import 'package:empco/Features/Auth/View/Select_Role/Widgets/texts.dart';
+import 'package:empco/Features/auth_manager/bloc/auth_manager_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class SelectRoleViewCallBacks {
-  onRoleSelected(int index, BuildContext context);
+  onRoleSelected(int index);
 }
 
-class SelectRolePage extends StatelessWidget
-    implements SelectRoleViewCallBacks {
+@RoutePage()
+class SelectRoleView extends StatelessWidget {
+  const SelectRoleView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const SelectRolePage();
+  }
+}
+
+class SelectRolePage extends StatefulWidget {
   const SelectRolePage({super.key});
 
   @override
-  onRoleSelected(int index, BuildContext context) {
-    config.get<SharedPreferences>().setString(role, userRole[index]);
-    context.go('$mainRoute$introRoute/$signUpRoute');
+  State<SelectRolePage> createState() => _SelectRolePageState();
+}
+
+class _SelectRolePageState extends State<SelectRolePage>
+    implements SelectRoleViewCallBacks {
+  late final AuthenticationBloc authenticationBloc = context.read();
+
+  late final UserRepo userRepo = context.read();
+  
+  @override
+  onRoleSelected(int index) async {
+    authenticationBloc.add(IsAuthenticatedOrFirstTime());
+    userRepo.setKey(role, userRole[index]);
+    userRepo.setKey(isFirstTime, false);
+    context.go('$mainRoute/$signUpRoute');
   }
 
   @override
@@ -46,11 +69,11 @@ class SelectRolePage extends StatelessWidget
                   const SizedBox(
                     height: 50,
                   ),
-                  TitleOfPage(text: selectRolePageTitle),
+                  const TitleOfPage(text: selectRolePageTitle),
                   SvgPicture.asset(
                     chooseRoleImage,
                   ),
-                 const SelectRoleTextWidget(),
+                  const SelectRoleTextWidget(),
                   SizedBox(
                     height: 250,
                     child: ListView.builder(
@@ -65,7 +88,7 @@ class SelectRolePage extends StatelessWidget
                                 screenWidth: screenWidth,
                                 index: index,
                                 onTap: () {
-                                  onRoleSelected(index, context);
+                                  onRoleSelected(index);
                                 },
                               )
                             ],

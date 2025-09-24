@@ -1,11 +1,13 @@
 import 'package:empco/Core/Resources/Constants/assets.dart';
-import 'package:empco/Core/Resources/Constants/colors.dart';
 import 'package:empco/Core/Resources/Constants/font_weights.dart';
 import 'package:empco/Core/Resources/Constants/shadows.dart';
 import 'package:empco/Core/Resources/Constants/text_styles.dart';
 import 'package:empco/Core/Resources/Constants/texts.dart';
+import 'package:empco/Core/Theme/components/colors.dart';
 import 'package:empco/Core/Widgets/buttons.dart';
 import 'package:empco/Core/Widgets/jop_post_text_field.dart';
+import 'package:empco/Features/Roles/Company/jop_post/models/job_type_enum/job_type_enum.dart';
+import 'package:empco/Features/Roles/Company/jop_post/models/job_work_nature_enum/job_work_nature_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -45,7 +47,7 @@ class FilterBottomSheet extends StatelessWidget {
         children: [
           const Center(
             child: Divider(
-              color: black,
+              color: AppColors.black,
               thickness: 2,
               endIndent: 130,
               indent: 130,
@@ -78,23 +80,23 @@ class FilterBottomSheet extends StatelessWidget {
             height: 20,
           ),
           Row(
-            children: [
-              MainActionButton(
-                text: fullTimeText,
-                textStyle: TextStyles.bodyLarge,
-                width: 85,
-                height: 30,
-                buttonColor: darkBlue,
-              ),
-              const SizedBox(width: 20),
-              MainActionButton(
-                text: partTimeText,
-                textStyle: TextStyles.bodyLarge.copyWith(color: black),
-                width: 85,
-                height: 30,
-                buttonColor: whiteShade,
-              ),
-            ],
+            children: JobTypeEnum.values
+                .map(
+                  (jobType) => Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      MainActionButton(
+                        onTap: onTypeSelected,
+                        text: jobType.displayName,
+                        textStyle: TextStyles.bodyLarge,
+                        height: 30,
+                        buttonColor: AppColors.darkBlue,
+                      ),
+                      const SizedBox(width: 20),
+                    ],
+                  ),
+                )
+                .toList(),
           ),
           const SizedBox(
             height: 20,
@@ -108,31 +110,23 @@ class FilterBottomSheet extends StatelessWidget {
             height: 20,
           ),
           Row(
-            children: [
-              MainActionButton(
-                text: onSiteText,
-                textStyle: TextStyles.bodyLarge,
-                width: 85,
-                height: 30,
-                buttonColor: darkBlue,
-              ),
-              const SizedBox(width: 20),
-              MainActionButton(
-                text: remoteText,
-                textStyle: TextStyles.bodyLarge.copyWith(color: black),
-                width: 85,
-                height: 30,
-                buttonColor: whiteShade,
-              ),
-              const SizedBox(width: 20),
-              MainActionButton(
-                text: hybridText,
-                textStyle: TextStyles.bodyLarge.copyWith(color: black),
-                width: 85,
-                height: 30,
-                buttonColor: whiteShade,
-              ),
-            ],
+            children:WorkNatureEnum.values
+                .map(
+                  (workNature) => Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      MainActionButton(
+                        onTap: onWorkNatureSelected,
+                        text: workNature.displayName,
+                        textStyle: TextStyles.bodyLarge,
+                        height: 30,
+                        buttonColor: AppColors.darkBlue,
+                      ),
+                      const SizedBox(width: 20),
+                    ],
+                  ),
+                )
+                .toList(),
           ),
           const SizedBox(
             height: 20,
@@ -178,29 +172,27 @@ class FilterBottomSheet extends StatelessWidget {
               children: [
                 MainActionButton(
                   onTap: onCancelTap,
-                  buttonColor: whiteShade,
-                  width: 100,
+                  buttonColor: AppColors.whiteShade,
                   height: 32,
                   text: cancelText,
                   blurRadius: 3.5,
                   yAxisOffset: 3.5,
                   shadow: AppShadows.boxShadow1,
                   textStyle: TextStyles.bodyLarge.copyWith(
-                    color: black,
+                    color: AppColors.black,
                     fontWeight: weightlevel7,
                   ),
                 ),
                 const SizedBox(width: 10),
                 MainActionButton(
                   onTap: onApplyFiltersTap,
-                  width: 100,
                   height: 32,
                   text: applyFiltersText,
                   blurRadius: 3.5,
                   yAxisOffset: 3.5,
                   shadow: AppShadows.boxShadow1,
                   textStyle: TextStyles.bodyLarge.copyWith(
-                    color: white,
+                    color: AppColors.white,
                     fontWeight: weightlevel7,
                   ),
                 ),
